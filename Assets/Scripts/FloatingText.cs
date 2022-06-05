@@ -23,14 +23,17 @@ public class FloatingText
        go.SetActive(false);
    }
 
-   public void UpdateFloatingText(){
+   public void UpdateFloatingTexts(){
 
+
+           go.transform.position += motion * Time.deltaTime;//This will update the text in direction motion
        if(!active){
            return;
        }
        if(Time.time - lastShown > duration){// this is a check for how long something has existed and becomes false when duration is bigger than how long its been shown
+       
+
            Hide();
-           go.transform.position += motion * Time.deltaTime;//This will update the text in direction motion
        }
    }
 }

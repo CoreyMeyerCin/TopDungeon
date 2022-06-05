@@ -29,9 +29,20 @@ public class GameManager : MonoBehaviour
     public Player player;
         //public Weapon weapon; etc..
 
+    public FloatingTextManager floatingTextManager;
+
     //Logic
     public int gold;
     public int experience;
+
+
+//Floating Text
+    public void ShowText(string msg, int fontSize, Color color, Vector3 position, Vector3 motion, float duration){
+
+        floatingTextManager.Show(msg,fontSize,color,position,motion,duration);//we do this like this because we dont want to have a reference to FloatingTextManager everywhere
+                                                                                //Since GameManager is static everywhere else can call FloatingTextManager now
+    }
+
 
     //Save state of game
     /*
@@ -57,7 +68,7 @@ public class GameManager : MonoBehaviour
 
         if(!PlayerPrefs.HasKey("SaveState")){
             return;//If there has been no SaveState yet,like at the start of a run, we will not get an error.
-            Debug.Log("Did not Find key SaveState");
+            UnityEngine.Debug.Log("Did not Find key SaveState");
         }
 
         string[] data = PlayerPrefs.GetString("SaveState").Split('|');//This Gets our SaveState string and then, use ' ' for it here, This will allow us to split the values of the string on |

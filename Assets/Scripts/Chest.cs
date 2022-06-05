@@ -12,7 +12,8 @@ public class Chest : Collectable
             if(!collected){
                 collected = true;
                 GetComponent<SpriteRenderer>().sprite= emptyChest;
-                UnityEngine.Debug.Log("Grant "+ goldAmount + " gold!");
+                                                                                                        //      Vector3.up*50 says I want to go up and move 50px/second
+                GameManager.instance.ShowText("+ " + goldAmount + "gold!", 25, Color.yellow, transform.position, Vector3.up*25f, 3.0f);//new Color(rgb) for custom colors
             }
         }
     
