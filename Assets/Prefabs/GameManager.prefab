@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5737556460169659804}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,9 +45,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSprites: []
-  weaponSprite: []
-  weaponPrices: 
+  weaponSprite:
+  - {fileID: -1906535724, guid: bb5eb99d61655564588e794444964628, type: 3}
+  - {fileID: 2020436386, guid: bb5eb99d61655564588e794444964628, type: 3}
+  - {fileID: 1155155409, guid: bb5eb99d61655564588e794444964628, type: 3}
+  - {fileID: 2119431697, guid: bb5eb99d61655564588e794444964628, type: 3}
+  - {fileID: 1762870356, guid: bb5eb99d61655564588e794444964628, type: 3}
+  - {fileID: -38201042, guid: bb5eb99d61655564588e794444964628, type: 3}
+  - {fileID: -867459252, guid: bb5eb99d61655564588e794444964628, type: 3}
+  - {fileID: 1836360455, guid: bb5eb99d61655564588e794444964628, type: 3}
+  - {fileID: -1800008044, guid: bb5eb99d61655564588e794444964628, type: 3}
+  - {fileID: -655304682, guid: bb5eb99d61655564588e794444964628, type: 3}
+  weaponPrices: 64000000c80000002c01000090010000f401000058020000bc0200002003000084030000
   xpTable: 
   player: {fileID: 0}
+  weapon: {fileID: 0}
+  floatingTextManager: {fileID: 0}
   gold: 0
   experience: 0
