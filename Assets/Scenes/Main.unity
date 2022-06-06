@@ -917,7 +917,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 318729962}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 891258401}
+        m_TargetAssemblyTypeName: CharacterMenu, Assembly-CSharp
+        m_MethodName: OnArrowClick
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &318729962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4074,7 +4086,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1156121417}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 891258401}
+        m_TargetAssemblyTypeName: CharacterMenu, Assembly-CSharp
+        m_MethodName: OnArrowClick
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1156121417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16148,6 +16172,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: playerSprites.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
       propertyPath: weaponPrices.Array.data[0]
       value: 100
       objectReference: {fileID: 0}
@@ -16223,6 +16251,14 @@ PrefabInstance:
       propertyPath: weaponSprite.Array.data[9]
       value: 
       objectReference: {fileID: -655304682, guid: bb5eb99d61655564588e794444964628, type: 3}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: playerSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: -775883154, guid: bb5eb99d61655564588e794444964628, type: 3}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: playerSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: -984720999, guid: bb5eb99d61655564588e794444964628, type: 3}
     - target: {fileID: 5737556460169659805, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
       propertyPath: m_RootOrder
       value: 9
