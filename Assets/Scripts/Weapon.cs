@@ -13,6 +13,7 @@ public class Weapon : Collidable
     private SpriteRenderer spriteRenderer;//this is to change the look of our weapon when we upgrade
 
     //Swing
+    private Animator anim;//reference to the Animator
     private float cooldown = 0.5f;//how fast can we swing again
     private float lastSwing;//timer on when our last swing was
 
@@ -21,6 +22,7 @@ public class Weapon : Collidable
     {
         base.Start();
         spriteRenderer=GetComponent<SpriteRenderer>();// this will update our weapon look when we load 'this' in
+        anim = GetComponent<Animator>();
     }
 
     protected override void Update()
@@ -59,7 +61,8 @@ public class Weapon : Collidable
     }
 
     private void Swing(){
-        UnityEngine.Debug.Log("Swing");
+        anim.SetTrigger("Swing");//this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
+
     }
 
 
