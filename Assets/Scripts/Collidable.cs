@@ -39,6 +39,6 @@ public class Collidable : MonoBehaviour
     }
     protected virtual void OnCollide(Collider2D coll){
 
-        Debug.Log(coll.name);
+        Debug.Log("OnCollide want not implemented in" + this.name);//This check to see if our collision layer is being hit on an object
     }
 }
