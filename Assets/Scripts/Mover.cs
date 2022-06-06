@@ -30,6 +30,11 @@ public abstract class Mover : Fighter//abstract means that it has to be inherite
         }else if(moveDelta.x <0){
             transform.localScale = new Vector3(-1, 1, 1);
         }
+        //Add push vector, if any
+        moveDelta += pushDirection;
+
+        //Reduce push for every frame, based off of recovery speed
+        pushDirection = Vector3.Lerp(pushDirection, Vector3.zero, pushRecoverySpeed);// this allows the push to end after pushRecoverySpeed amount of time
 
         //this will check to see if our Player is able to walk throough certain layers
                                //current position|| this.BoxCollider||angle||where were trying to move||how far we are trying to move|| which masks are we not allowed to move through
