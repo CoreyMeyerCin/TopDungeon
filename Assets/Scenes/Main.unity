@@ -218,6 +218,18 @@ MonoBehaviour:
           m_StringArgument: show
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 891258401}
+        m_TargetAssemblyTypeName: CharacterMenu, Assembly-CSharp
+        m_MethodName: UpdateMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &42132457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -744,7 +756,7 @@ GameObject:
   - component: {fileID: 317941389}
   - component: {fileID: 317941388}
   m_Layer: 5
-  m_Name: Health (1)
+  m_Name: Gold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1887,6 +1899,7 @@ GameObject:
   - component: {fileID: 891258395}
   - component: {fileID: 891258400}
   - component: {fileID: 891258399}
+  - component: {fileID: 891258401}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -2009,6 +2022,26 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &891258401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891258394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75bbf7aa92c4ce34bae7a1f6a1f16b69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelText: {fileID: 1230274470}
+  hitpointText: {fileID: 409345666}
+  goldText: {fileID: 317941388}
+  upgradedCostText: {fileID: 1133903544}
+  xpText: {fileID: 1546731425}
+  characterSelectionSprite: {fileID: 986046504}
+  weaponSprite: {fileID: 638312943}
+  xpBar: {fileID: 495567223}
 --- !u!1 &937295656
 GameObject:
   m_ObjectHideFlags: 0
@@ -15989,6 +16022,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5422238519342369365, guid: 7a012dc4eaded7e45abbb1d7f0095d30, type: 3}
+      propertyPath: hitpoint
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5422238519342369365, guid: 7a012dc4eaded7e45abbb1d7f0095d30, type: 3}
+      propertyPath: maxHitpoint
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5422238519342369365, guid: 7a012dc4eaded7e45abbb1d7f0095d30, type: 3}
       propertyPath: pushRecoverySpeed
       value: 0.1
       objectReference: {fileID: 0}
@@ -16072,6 +16113,50 @@ PrefabInstance:
       propertyPath: floatingTextManager
       value: 
       objectReference: {fileID: 973568206}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: weaponSprite.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: weaponSprite.Array.data[0]
+      value: 
+      objectReference: {fileID: -1906535724, guid: bb5eb99d61655564588e794444964628, type: 3}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: weaponSprite.Array.data[1]
+      value: 
+      objectReference: {fileID: 2020436386, guid: bb5eb99d61655564588e794444964628, type: 3}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: weaponSprite.Array.data[2]
+      value: 
+      objectReference: {fileID: 1155155409, guid: bb5eb99d61655564588e794444964628, type: 3}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: weaponSprite.Array.data[3]
+      value: 
+      objectReference: {fileID: 2119431697, guid: bb5eb99d61655564588e794444964628, type: 3}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: weaponSprite.Array.data[4]
+      value: 
+      objectReference: {fileID: 1762870356, guid: bb5eb99d61655564588e794444964628, type: 3}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: weaponSprite.Array.data[5]
+      value: 
+      objectReference: {fileID: -38201042, guid: bb5eb99d61655564588e794444964628, type: 3}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: weaponSprite.Array.data[6]
+      value: 
+      objectReference: {fileID: -867459252, guid: bb5eb99d61655564588e794444964628, type: 3}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: weaponSprite.Array.data[7]
+      value: 
+      objectReference: {fileID: 1836360455, guid: bb5eb99d61655564588e794444964628, type: 3}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: weaponSprite.Array.data[8]
+      value: 
+      objectReference: {fileID: -1800008044, guid: bb5eb99d61655564588e794444964628, type: 3}
+    - target: {fileID: 5737556460169659804, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
+      propertyPath: weaponSprite.Array.data[9]
+      value: 
+      objectReference: {fileID: -655304682, guid: bb5eb99d61655564588e794444964628, type: 3}
     - target: {fileID: 5737556460169659805, guid: fb654bfbae9ea7a4fa9edd1e5a878945, type: 3}
       propertyPath: m_RootOrder
       value: 9
