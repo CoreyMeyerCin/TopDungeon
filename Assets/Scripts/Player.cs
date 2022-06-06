@@ -21,5 +21,14 @@ public class Player : Mover
    public void SwapSprite(int skinId){
       spriteRenderer.sprite= GameManager.instance.playerSprites[skinId];
    }
+   public void OnLevelUp(){
+      maxHitpoint++;
+      hitpoint = maxHitpoint;
+   }
+   public void SetLevel(int Level){
+      for(int i=0; i<Level; i++){
+         OnLevelUp();
+      }
+   }
     
 }

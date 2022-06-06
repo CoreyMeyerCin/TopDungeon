@@ -63,12 +63,28 @@ public class CharacterMenu : MonoBehaviour
         }
         upgradedCostText.text = 
         //Meta
-        levelText.text = "NOT IMPLEMENTED";
+        levelText.text = GameManager.instance.GetCurrentLevel().ToString();
         hitpointText.text = GameManager.instance.player.hitpoint.ToString();
         goldText.text = GameManager.instance.gold.ToString();
 
         //XP Bar
-        xpText.text = "NOT IMPLEMENTED";
-        xpBar.localScale= new Vector3(0.5f,0,0);// this means half way
+
+        int currLevel = GameManager.instance.GetCurrentLevel();
+
+        if(GameManager.instance.GetCurrentLevel()== GameManager.instance.xpTable.Count){
+            xpText.text = GameManager.instance.experience.ToString() + "Total experience points";//Display total xp if we are max level
+            xpBar.localScale=Vector3.one;// this will fill the whole bar
+        }   
+        else{
+            int prevLevelXp=GameManager.instance.GetXpToLevel(currLevel-1);//the highest we have achieved
+            int currLevelXp=GameManager.instance.GetXpToLevel(currLevel);// our next level up number
+
+            int diff = currLevelXp - prevLevelXp;// how much we need to level up
+            int currXpIntoLevel = GameManager.instance.experience - prevLevelXp;// how far into this level's xp we are in
+
+            float completionRatio=(float)currXpIntoLevel/(float)diff;//Our ratio from current xp to how much is needed
+            xpBar.localScale = new Vector3(completionRatio,1,1);
+            xpText.text = currXpIntoLevel.ToString() + "/" + diff; // this is what we want displayed on the XpBar in the Menu
+        }
     }
 }

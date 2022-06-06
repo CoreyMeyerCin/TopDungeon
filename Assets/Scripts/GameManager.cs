@@ -53,6 +53,46 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+
+    //EXPERIENCE System
+
+    public int GetCurrentLevel(){
+
+        int r =0;   //return value
+        int add =0; 
+
+        while(experience >=add){    //loop through our levels and return the level that it gets back
+            add+=xpTable[r];
+            r++;
+        }
+        return r;
+        if(r == xpTable.Count){     // if we are maxLevel
+            return r;
+        }
+    }
+
+    public int GetXpToLevel(int level){
+
+        int r =0;
+        int xp=0;
+        while(r < level){
+            xp+=xpTable[r];
+            r++;
+        }
+        return xp;
+    }
+
+    public void GrantXp(int xp){
+        int currLevel = GetCurrentLevel();
+        experience += xp;
+        if(currLevel<GetCurrentLevel()){
+            OnLevelUp();
+        }
+    }
+    public void OnLevelUp(){
+        player.OnLevelUp();
+    }
+
     //Save state of game
     /*
     * INT preferredSkin
@@ -92,6 +132,11 @@ public class GameManager : MonoBehaviour
         gold = int.Parse(data[1]);// this will convert our String at position [1] to an int
         //Current Experience
         experience = int.Parse(data[2]);// this will convert our String at position [1] to an int
+        if(GetCurrentLevel() != 1){
+            player.SetLevel(GetCurrentLevel());
+        }
+        //Current Level
+        player.SetLevel(GetCurrentLevel());
         //Players Current Weapon Level
         weapon.SetWeaponLevel(int.Parse(data[3]));
         
