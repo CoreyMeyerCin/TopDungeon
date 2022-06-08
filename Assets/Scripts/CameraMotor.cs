@@ -9,6 +9,11 @@ public class CameraMotor : MonoBehaviour
     public float boundX = 0.15f;//these two are how far our player can move before it snaps back to them(0.15f with our scene settings is 15 pixels)
     public float boundY = 0.05f;
 
+    private void Start(){
+        lookAt = GameObject.Find("Player").transform;
+        GameManager.instance.player.transform.position= GameObject.Find("SpawnPoint").transform.position;
+    }
+
 
     private void LateUpdate()//we do a late update for this(Order of operations FixedUpdate => Update => LateUpdate) we use this here to move the camera AFTER the player moves
     {

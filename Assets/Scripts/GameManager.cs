@@ -8,11 +8,27 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;//by making this static EVERY other class in our code may call GameManager without GetComponent<GameManager>(); use GameManager.instance
     private void Awake(){
+        this.InstantiateController();
 
-        instance=this;
-        SceneManager.sceneLoaded +=LoadState;
-        
+
     }
+    private void InstantiateController()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else if(this != instance){
+            Debug.Log("Destroying extra GameManager");
+            Destroy(this.gameObject);
+        }
+
+        //instance = this;
+        //DontDestroyOnLoad(gameObject);
+        //SceneManager.sceneLoaded += LoadState;
+    }
+    
 
     //Resources for the game
     public List<Sprite> playerSprites;
@@ -142,8 +158,10 @@ public class GameManager : MonoBehaviour
         
                     //weapon.SetWeaponLevel(int.Parse(data[3]));
             //we current leave this blank because we have no weapon levels yet
-            SceneManager.sceneLoaded -=LoadState;
-            Debug.Log("SaveState was found" + gold + experience);
+        // sets spawn point to our spawn point within the scene
+
+        SceneManager.sceneLoaded -=LoadState;
+        Debug.Log("SaveState was found" + gold + experience);
     }               
 
 }
