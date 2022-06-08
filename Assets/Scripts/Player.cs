@@ -7,32 +7,16 @@ public class Player : Mover
     public static Player instance;
    private SpriteRenderer spriteRenderer;
 
-    private void Awake()
+    private void Start()
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        DontDestroyOnLoad(gameObject);
-        this.InstantiateController();
-
 
     }
-    private void InstantiateController()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else if (this != instance)
-        {
-            Debug.Log("Destroying extra Players");
-            Destroy(this.gameObject);
-        }
-
         //instance = this;
         //DontDestroyOnLoad(gameObject);
         //SceneManager.sceneLoaded += LoadState;
-    }
+    
   
    private void FixedUpdate(){
        
@@ -52,7 +36,8 @@ public class Player : Mover
    public void SetLevel(int Level){
       for(int i=0; i<Level; i++){
          OnLevelUp();
-      }
-   }
-    
+        }
+    }
 }
+
+    

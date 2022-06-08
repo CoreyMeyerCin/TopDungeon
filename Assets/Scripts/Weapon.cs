@@ -1,3 +1,4 @@
+using System.ComponentModel.Design;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,6 +72,7 @@ public class Weapon : Collidable
     public void UpgradeWeapon(){
         weaponLevel++;
         spriteRenderer.sprite = GameManager.instance.weaponSprite[weaponLevel];
+
 
         //Change stats
     }

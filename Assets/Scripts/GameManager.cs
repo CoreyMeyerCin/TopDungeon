@@ -18,10 +18,14 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this.player.gameObject);
+            DontDestroyOnLoad(this.floatingTextManager);
         }
-        else if(this != instance){
+        else if(instance != null){
             Debug.Log("Destroying extra GameManager");
             Destroy(this.gameObject);
+            Destroy(player.gameObject);
+            Destroy(floatingTextManager.gameObject);
         }
 
         //instance = this;
@@ -125,9 +129,8 @@ public class GameManager : MonoBehaviour
         s += experience.ToString() + "|";
         s += weapon.weaponLevel.ToString();                      //place holder for weapon level
 
-
-
         PlayerPrefs.SetString("SaveState", s);// this takes the value of s(which should be a long string with lots of |'s and then call it: SaveState)
+        UnityEngine.Debug.Log("Saved State confirmed");
     }
     public void LoadState(Scene s, LoadSceneMode mode){// To be honest Im not 100% sure what is going on here but it is needed to get string s
 
@@ -160,7 +163,7 @@ public class GameManager : MonoBehaviour
             //we current leave this blank because we have no weapon levels yet
         // sets spawn point to our spawn point within the scene
 
-        SceneManager.sceneLoaded -=LoadState;
+        // SceneManager.sceneLoaded -=LoadState;
         Debug.Log("SaveState was found" + gold + experience);
     }               
 
