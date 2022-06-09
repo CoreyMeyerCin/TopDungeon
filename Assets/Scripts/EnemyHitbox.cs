@@ -19,7 +19,6 @@ public class EnemyHitbox : Collidable
                 origin = transform.position,
                 pushForce=pushForce
             };
-
             coll.SendMessage("ReceiveDamage",dmg);// this will send the damage over to the enemy using ReceiveDamage()
         }
     }
