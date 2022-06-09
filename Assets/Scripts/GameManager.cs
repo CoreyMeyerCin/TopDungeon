@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
         saveParams.Add(CreateSaveStringKvp(EXPERIENCE_SAVE_STRING_KEY, experience.ToString()));
         saveParams.Add(CreateSaveStringKvp(WEAPON_LEVEL_SAVE_STRING_KEY, weapon.weaponLevel.ToString()));
 
-        var saveStateString = AssembleSaveString(saveParams, SAVE_STRING_PARAM_DELIMETER);
+        var saveStateString = AssembleSaveString(saveParams);
 
         PlayerPrefs.SetString("SaveState", saveStateString); //take the assembled save string and then call it: SaveState
         Debug.Log("Saved State confirmed");
@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
         return saveStringKvp;
 	}
 
-    private string AssembleSaveString(List<string> KeyValuePairs, string delimeter) // concatenate all passed in parameters into a single string
+    private string AssembleSaveString(List<string> KeyValuePairs) // concatenate all passed in parameters into a single string
 	{
         StringBuilder s = new StringBuilder();
         for(int i = 0; i < KeyValuePairs.Count; i++)
@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
             }
 			else
 			{
-                s.Append($"{KeyValuePairs[i]}{delimeter}");
+                s.Append($"{KeyValuePairs[i]}{SAVE_STRING_PARAM_DELIMETER}");
             }
 		}
 
