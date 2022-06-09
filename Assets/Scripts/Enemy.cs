@@ -29,28 +29,33 @@ public class Enemy : Mover
 
     }
 
-    protected void FixedUpdate(){
-
-
+    protected void FixedUpdate()
+    {
         //Is the player in range for chasing?
-        if(Vector3.Distance(playerTransform.position, startingPosition) < chaseLength){
+        if(Vector3.Distance(playerTransform.position, startingPosition) < chaseLength)
+        {
 
-            if(Vector3.Distance(playerTransform.position, startingPosition)< triggerLength){//start chasing
+            if(Vector3.Distance(playerTransform.position, startingPosition)< triggerLength)
+            {
                 chasing = true;
             }
 
-            if(chasing){
-                if(!collidingWithPlayer){
+            if(chasing)
+            {
+                if(!collidingWithPlayer)
+                {
                     UpdateMotor((playerTransform.position - transform.position).normalized);
                 }
                 
             }
-            else{
-                UpdateMotor(startingPosition-transform.position);//go back to where we were
+            else
+            {
+                UpdateMotor(startingPosition-transform.position); //go back to where we were
             }
 
         }
-        else{
+        else
+        {
             UpdateMotor(startingPosition - transform.position);
             chasing=false;//this works for anytime the player is out of range, it will make our chasing go to false again
         }
@@ -68,18 +73,20 @@ public class Enemy : Mover
 
             //Debug.Log(hits[i].name);//this will check all 10 collision slots of our array
 
-                if(hits[i].tag == "Fighter" && hits[i].name == "Player"){
-                    collidingWithPlayer = true;
-                }
+            if(hits[i].tag == "Fighter" && hits[i].name == "Player")
+            {
+                collidingWithPlayer = true;
+            }
 
-                //The array is not cleaned up, so we di it ourself
-                hits[i] = null;
+            //The array is not cleaned up, so we di it ourself
+            hits[i] = null;
             
         }
 
         UpdateMotor(Vector3.zero);
     }
-    protected override void Death(){
+    protected override void Death()
+    {
         Destroy(gameObject);
 
         GameManager.instance.GrantXp(xpValue);// where xp is granted
