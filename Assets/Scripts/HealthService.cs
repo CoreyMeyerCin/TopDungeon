@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthManager : MonoBehaviour
+public class HealthService : MonoBehaviour
 {
     [SerializeField] private int maxHealth;
     [SerializeField] private int currentHealth;
@@ -30,7 +30,7 @@ public class HealthManager : MonoBehaviour
         currentHealth -= damage;
         if(currentHealth <= 0)
 		{
-            //die
+            //TODO: die
 		}
 	}
 
