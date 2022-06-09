@@ -8,17 +8,20 @@ public class Portal : Collidable
 {
     public string[] sceneNames;
 
-    protected override void OnCollide(Collider2D coll){
-        UnityEngine.Debug.Log(coll + "Touched a portal");
-        if(coll.name == "Player"){
+    protected override void OnCollide(Collider2D coll)
+    {
+		Debug.Log(coll + " touched a portal");
+    
+        if(coll.name.Equals("Player"))
+        {
             //Teleport the player
             
             GameManager.instance.SaveState();
-            string sceneName = sceneNames[UnityEngine.Random.Range(0, sceneNames.Length)];// this is going to assign the scene name we go to as a random scene that exists in our sceneName collection 
+            string sceneName = sceneNames[UnityEngine.Random.Range(0, sceneNames.Length)]; // this is going to assign the scene name we go to as a random scene that exists in our sceneName collection 
             SceneManager.LoadScene(sceneName);
-            UnityEngine.Debug.Log("going to " + sceneName);
-
+            Debug.Log("going to " + sceneName);
 
         }
     }
+
 }
