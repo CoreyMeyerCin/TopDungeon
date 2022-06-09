@@ -4,17 +4,6 @@ using UnityEngine;
 
 public class HealingFountain : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     // while player is collided with healing fountain:
     // every .3 seconds -> this.HealthManager.HealByPercentageOfMax(5);
