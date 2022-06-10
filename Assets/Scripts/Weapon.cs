@@ -21,7 +21,7 @@ public class Weapon : Collidable
 
 	public WeaponType weaponType;// (maybe add fire, ice, force etc)
 	public Transform firePoint;
-	public GameObject throwingDaggerPrefab;
+	public GameObject daggerPrefab;
 
 	private void Awake()
 	{
@@ -80,7 +80,7 @@ public class Weapon : Collidable
 	}
 	private void Shoot()
     {
-		Instantiate(throwingDaggerPrefab, firePoint.position, firePoint.rotation);
+		Instantiate(daggerPrefab,firePoint.position, firePoint.rotation);
     }
 
 	private void Swing()
