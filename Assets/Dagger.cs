@@ -17,13 +17,19 @@ public class Dagger : MonoBehaviour
     private Collider2D[] hits = new Collider2D[10];
     public ContactFilter2D filter;
     private bool hasCollided;
+
+    public float lifespan;
+    public float spawnTime;
     
     // Start is called before the first frame update
     void Start()
     {
-
-        rb.velocity = transform.right * speed;
+        //rb.velocity = transform.right * speed;
         boxCollider = GetComponent<BoxCollider2D>();
+        spawnTime = Time.time;
+
+
+        SetProjectileDirection(GameManager.instance.player.playerDirection);
     }
 
     private void Update()
@@ -44,7 +50,64 @@ public class Dagger : MonoBehaviour
             hits[i] = null;
 
         }
+        TimeCheckOut();
 
+    }
+    private void TimeCheckOut()
+    {
+        if (Time.time - spawnTime > lifespan)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+
+    private void SetProjectileDirection(double playerDirection)
+    {
+        Debug.Log("Connected");
+
+        if (playerDirection == 0)
+        {
+            //transform.position += transform.forward * speed * Time.deltaTime;
+            rb.velocity = new Vector3(1,0,0) * speed;
+            transform.rotation = Quaternion.Euler(0, 0, -90);
+            //transform.right *speed*Time.deltaTime;
+        }
+        else if (playerDirection == 0.5)
+        {
+            rb.velocity = new Vector3(1, -1, 0) * speed;
+            transform.rotation = Quaternion.Euler(0, 0, -135);
+        }
+        else if (playerDirection == 1)
+        {
+            rb.velocity = new Vector3(0, -1, 0) * speed;
+            transform.rotation = Quaternion.Euler(0, 0, -180);
+        }
+        else if (GameManager.instance.player.playerDirection == 1.5)
+        {
+            rb.velocity = new Vector3(-1, -1, 0) * speed;
+            transform.rotation = Quaternion.Euler(0, 0, -225);
+        }
+        else if (GameManager.instance.player.playerDirection == 2)
+        {
+            rb.velocity = new Vector3(-1, 0, 0) * speed;
+            transform.rotation = Quaternion.Euler(0, 0, -270);
+        }
+        else if (GameManager.instance.player.playerDirection == 2.5)
+        {
+            rb.velocity = new Vector3(-1, 1, 0) * speed;
+            transform.rotation = Quaternion.Euler(0, 0, -315);
+        }
+        else if (GameManager.instance.player.playerDirection == 3)
+        {
+            rb.velocity = new Vector3(0, 1, 0) * speed;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (GameManager.instance.player.playerDirection == 3.5)
+        {
+            rb.velocity = new Vector3(1, 1, 0) * speed;
+            transform.rotation = Quaternion.Euler(0, 0, -45);
+        }
     }
     private void OnCollide(Collider2D coll)
     {
