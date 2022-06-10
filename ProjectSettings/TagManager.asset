@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Fighter
   - GameManager
+  - Projectile
+  - Enemy
+  - NPC
   layers:
   - Default
   - TransparentFX

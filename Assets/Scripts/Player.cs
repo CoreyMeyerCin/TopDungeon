@@ -72,27 +72,6 @@ public class Player : Mover
         
     }
 
-    public void GetPlayerDirection(int playerDirection)
-    {
-        if (playerDirection == 0)
-        {
-            playerDirection = 0;
-        }
-        else if (playerDirection == 1)
-        {
-            playerDirection = 1;
-        }
-        else if (playerDirection == 2)
-        {
-            playerDirection = 2;
-        }
-        else if (playerDirection == 3)
-        {
-            playerDirection = 3;
-        }
-
-    }
-
     public void SwapSprite(int skinId)
     {
         spriteRenderer.sprite= GameManager.instance.playerSprites[skinId];
