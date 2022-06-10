@@ -27,7 +27,7 @@ public class Fighter : MonoBehaviour
             hitpoints -= dmg.damageAmount;
             pushDirection = (transform.position - dmg.origin).normalized * dmg.pushForce; // this will make the hit object move AWAY from the dmg.origin(player that hit them.)
 
-            GameManager.instance.ShowText(dmg.damageAmount.ToString(), 25,Color.red, transform.position, Vector3.zero, 0.5f);
+            GameManager.instance.ShowText(dmg.damageAmount.ToString(), 25, Color.red, transform.position, Vector3.zero, 0.5f);
 
             if(hitpoints <= 0)
             {
