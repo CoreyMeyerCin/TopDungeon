@@ -19,7 +19,7 @@ public class Weapon : Collidable
 	private float cooldown = 0.5f; //how fast can we swing again
 	private float lastSwing; //timer on when our last swing was
 
-	public string weaponType;//Melle, Ranged, Magic(maybe add fire, ice, force etc)
+	public WeaponType weaponType;// (maybe add fire, ice, force etc)
 	public Transform firePoint;
 	public GameObject throwingDaggerPrefab;
 
@@ -39,7 +39,7 @@ public class Weapon : Collidable
 	{
 		base.Update();
 
-		if (Input.GetKeyDown(KeyCode.Space) && weaponType == "Melle") //track weapon swing cooldown
+		if (Input.GetKeyDown(KeyCode.Space) && weaponType == WeaponType.Melee) //track weapon swing cooldown
 		{
 			if (Time.time - lastSwing > cooldown)
 			{
@@ -47,7 +47,7 @@ public class Weapon : Collidable
 				Swing();
 			}
 		}
-		if (Input.GetKeyDown(KeyCode.Space) && weaponType == "Ranged") //track weapon swing cooldown
+		if (Input.GetKeyDown(KeyCode.Space) && weaponType == WeaponType.Ranged) //track weapon swing cooldown
 		{
 			if (Time.time - lastSwing > cooldown)
 			{
@@ -98,4 +98,12 @@ public class Weapon : Collidable
 		weaponLevel = level;
 		this.spriteRenderer.sprite = GameManager.instance.weaponSprite[level];
 	}
+
+	public enum WeaponType
+	{
+		Melee,
+		Ranged,
+		Magic
+	}
+
 }
