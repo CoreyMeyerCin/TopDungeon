@@ -19,9 +19,14 @@ public class Weapon : Collidable
 	private float cooldown = 0.5f; //how fast can we swing again
 	private float lastSwing; //timer on when our last swing was
 
+	public string weaponType;//Melle, Ranged, Magic(maybe add fire, ice, force etc)
+	public Transform firePoint;
+	public GameObject throwingDaggerPrefab;
+
 	private void Awake()
 	{
 		spriteRenderer = GetComponent<SpriteRenderer>();
+		firePoint.position = this.transform.position;
 	}
 	protected override void Start()
 	{
@@ -34,12 +39,20 @@ public class Weapon : Collidable
 	{
 		base.Update();
 
-		if (Input.GetKeyDown(KeyCode.Space)) //track weapon swing cooldown
+		if (Input.GetKeyDown(KeyCode.Space) && weaponType == "Melle") //track weapon swing cooldown
 		{
 			if (Time.time - lastSwing > cooldown)
 			{
 				lastSwing = Time.time;
 				Swing();
+			}
+		}
+		if (Input.GetKeyDown(KeyCode.Space) && weaponType == "Ranged") //track weapon swing cooldown
+		{
+			if (Time.time - lastSwing > cooldown)
+			{
+				lastSwing = Time.time;
+				Shoot();
 			}
 		}
 	}
@@ -59,10 +72,17 @@ public class Weapon : Collidable
 		}
 
 	}
+	private void Shoot()
+    {
+		//shooting logic
+		Instantiate(throwingDaggerPrefab, firePoint.position, firePoint.rotation);
+
+    }
 
 	private void Swing()
 	{
 		anim.SetTrigger("Swing"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
+		
 	}
 
 	public void UpgradeWeapon()
