@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this);
             DontDestroyOnLoad(this.player.gameObject);
-            DontDestroyOnLoad(this.floatingTextManager);
+            DontDestroyOnLoad(this.floatingTextManager.gameObject);
         }
         else
         {
@@ -41,11 +41,11 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             Destroy(player.gameObject);
             Destroy(floatingTextManager.gameObject);
+            SceneManager.sceneLoaded += LoadState;
         }
 
         //instance = this;
         //DontDestroyOnLoad(gameObject);
-        //SceneManager.sceneLoaded += LoadState;
     }
     
 
@@ -220,46 +220,46 @@ public class GameManager : MonoBehaviour
         player.SetLevel(GetCurrentLevel());
 
         // sets spawn point to our spawn point within the scene
-        // SceneManager.sceneLoaded -=LoadState;
+        SceneManager.sceneLoaded -= LoadState;
         Debug.Log($"SaveState was found - Gold: {gold}, Exp: {experience}");
     }
 
-	//public void LoadState(Scene s, LoadSceneMode mode) // To be honest Im not 100% sure what is going on here but it is needed to get string s
-	//{
-	//	if (!PlayerPrefs.HasKey("SaveState"))
-	//	{
-	//		Debug.Log("Did not Find key SaveState"); //If there has been no SaveState yet, like at the start of a run, we will not get an error.
-	//		return;
-	//	}
+    //public void LoadState(Scene s, LoadSceneMode mode) // To be honest Im not 100% sure what is going on here but it is needed to get string s
+    //{
+    //	if (!PlayerPrefs.HasKey("SaveState"))
+    //	{
+    //		Debug.Log("Did not Find key SaveState"); //If there has been no SaveState yet, like at the start of a run, we will not get an error.
+    //		return;
+    //	}
 
-	//	string[] data = PlayerPrefs.GetString("SaveState").Split('|');//This Gets our SaveState string and then, use ' ' for it here, This will allow us to split the values of the string on |
-	//																  //Example SaveString: "0|10|150|0" >>   "0"
-	//																  //                                      "10"
-	//																  //                                      "150"
-	//																  //                                      "0"
-	//																  //this shows: preferredSkin|gold|experience|weaponValue
-	//																  //Change Player Skin
-	//																  //we current leave this blank because we have no skins
-	//																  //Current Gold
-	//	gold = int.Parse(data[1]);// this will convert our String at position [1] to an int
-	//							  //Current Experience
-	//	experience = int.Parse(data[2]);// this will convert our String at position [1] to an int
-	//	if (GetCurrentLevel() != 1)
-	//	{
-	//		player.SetLevel(GetCurrentLevel());
-	//	}
-	//	//Current Level
-	//	player.SetLevel(GetCurrentLevel());
-	//	//Players Current Weapon Level
-	//	weapon.SetWeaponLevel(int.Parse(data[3]));
+    //	string[] data = PlayerPrefs.GetString("SaveState").Split('|');//This Gets our SaveState string and then, use ' ' for it here, This will allow us to split the values of the string on |
+    //																  //Example SaveString: "0|10|150|0" >>   "0"
+    //																  //                                      "10"
+    //																  //                                      "150"
+    //																  //                                      "0"
+    //																  //this shows: preferredSkin|gold|experience|weaponValue
+    //																  //Change Player Skin
+    //																  //we current leave this blank because we have no skins
+    //																  //Current Gold
+    //	gold = int.Parse(data[1]);// this will convert our String at position [1] to an int
+    //							  //Current Experience
+    //	experience = int.Parse(data[2]);// this will convert our String at position [1] to an int
+    //	if (GetCurrentLevel() != 1)
+    //	{
+    //		player.SetLevel(GetCurrentLevel());
+    //	}
+    //	//Current Level
+    //	player.SetLevel(GetCurrentLevel());
+    //	//Players Current Weapon Level
+    //	weapon.SetWeaponLevel(int.Parse(data[3]));
 
-	//	//weapon.SetWeaponLevel(int.Parse(data[3]));
-	//	//we current leave this blank because we have no weapon levels yet
+    //	//weapon.SetWeaponLevel(int.Parse(data[3]));
+    //	//we current leave this blank because we have no weapon levels yet
 
-	//	// sets spawn point to our spawn point within the scene
+    //	// sets spawn point to our spawn point within the scene
 
-	//	// SceneManager.sceneLoaded -=LoadState;
-	//	Debug.Log($"SaveState was found - Gold: {gold}, Exp: {experience}");
-	//}
+    //SceneManager.sceneLoaded -=LoadState;
+    //	Debug.Log($"SaveState was found - Gold: {gold}, Exp: {experience}");
+    //}
 
 }
