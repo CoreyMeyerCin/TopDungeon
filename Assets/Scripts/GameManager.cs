@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this);
             DontDestroyOnLoad(this.player.gameObject);
-            DontDestroyOnLoad(this.floatingTextManager);
+            DontDestroyOnLoad(this.floatingTextManager.gameObject);
             SceneManager.sceneLoaded += LoadState;
         }
         else
@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             Destroy(player.gameObject);
             Destroy(floatingTextManager.gameObject);
+            SceneManager.sceneLoaded += LoadState;
         }
 
         //instance = this;

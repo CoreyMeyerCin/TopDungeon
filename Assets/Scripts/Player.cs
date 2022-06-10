@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : Mover
 {
-    public static Player instance;
+    public static Player instance; 
     private SpriteRenderer spriteRenderer;
 
     private void Start()

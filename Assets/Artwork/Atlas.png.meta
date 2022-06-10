@@ -1711,6 +1711,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: player_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 806afb8829e513842919123093d0c976
+      internalID: -263310695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -1756,6 +1777,7 @@ TextureImporter:
       floor_regular: -1423563585
       weapon_8: -1800008044
       floor_2: 1135621970
+      player_2: -263310695
       pillar_without_wall_middle: 942509005
       torch_bottom_3: 1782550705
       weapon_3: 2119431697
