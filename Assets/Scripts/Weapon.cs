@@ -39,21 +39,27 @@ public class Weapon : Collidable
 	{
 		base.Update();
 
-		if (Input.GetKeyDown(KeyCode.Space) && weaponType == WeaponType.Melee) //track weapon swing cooldown
+		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			if (Time.time - lastSwing > cooldown)
-			{
-				lastSwing = Time.time;
-				Swing();
-			}
+			Attack();
 		}
-		if (Input.GetKeyDown(KeyCode.Space) && weaponType == WeaponType.Ranged) //track weapon swing cooldown
+
+	}
+
+	private void Attack()
+	{
+		switch (weaponType)
 		{
-			if (Time.time - lastSwing > cooldown)
-			{
-				lastSwing = Time.time;
+			case WeaponType.Melee:
+				Swing();
+				break;
+			case WeaponType.Ranged:
 				Shoot();
-			}
+				break;
+			case WeaponType.Magic:
+				Cast();
+				break;
+				
 		}
 	}
 
@@ -74,15 +80,17 @@ public class Weapon : Collidable
 	}
 	private void Shoot()
     {
-		//shooting logic
 		Instantiate(throwingDaggerPrefab, firePoint.position, firePoint.rotation);
-
     }
 
 	private void Swing()
 	{
 		anim.SetTrigger("Swing"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
-		
+	}
+
+	private void Cast()
+	{
+		//cast magic
 	}
 
 	public void UpgradeWeapon()
