@@ -25,7 +25,7 @@ public class Weapon : Collidable
 
 	private void Awake()
 	{
-		spriteRenderer = GetComponent<SpriteRenderer>();
+		//spriteRenderer = GetComponent<SpriteRenderer>();
 		firePoint.position = this.transform.position;
 	}
 	protected override void Start()

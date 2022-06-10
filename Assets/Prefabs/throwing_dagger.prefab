@@ -148,3 +148,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   rb: {fileID: 6760712048465498144}
+  player: {fileID: 0}
+  lifespan: 2

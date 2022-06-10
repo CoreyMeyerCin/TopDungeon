@@ -2,16 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class projectile : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
     public float speed = 2f;
     public Rigidbody2D rb;
     public Player player;
+    public float lifespan;
+    public float spawnTime;
 
     private void Start()
     {
         player = GetComponent<Player>();
         SetProjectileDirection();
+        spawnTime = Time.time;
+    }
+
+    public void Update()
+    {
+        TimeOutCheck();
+    }
+    private void TimeOutCheck()
+    {
+        if(Time.time - spawnTime > lifespan)
+        {
+            Destroy(this.gameObject);
+        }
     }
     private void SetProjectileDirection()
     {
