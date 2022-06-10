@@ -19,7 +19,7 @@ public class Weapon : Collidable
 	private float cooldown = 0.5f; //how fast can we swing again
 	private float lastSwing; //timer on when our last swing was
 
-	public WeaponType weaponType;//Melle, Ranged, Magic(maybe add fire, ice, force etc)
+	public WeaponType weaponType;// (maybe add fire, ice, force etc)
 	public Transform firePoint;
 	public GameObject throwingDaggerPrefab;
 
@@ -102,7 +102,8 @@ public class Weapon : Collidable
 	public enum WeaponType
 	{
 		Melee,
-		Ranged
+		Ranged,
+		Magic
 	}
 
 }
