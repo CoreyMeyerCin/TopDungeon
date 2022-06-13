@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private static readonly string SKIN_SAVE_STRING_KEY = "SKIN_SAVE";
     private static readonly string GOLD_SAVE_STRING_KEY = "GOLD_SAVE";
     private static readonly string EXPERIENCE_SAVE_STRING_KEY = "EXP_SAVE";
-    private static readonly string WEAPON_LEVEL_SAVE_STRING_KEY = "WEP_LVL_SAVE";
+    //private static readonly string WEAPON_LEVEL_SAVE_STRING_KEY = "WEP_LVL_SAVE";
 
 
 
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
         saveParams.Add(CreateSaveStringKvp(SKIN_SAVE_STRING_KEY, "skin_placeholder"));
         saveParams.Add(CreateSaveStringKvp(GOLD_SAVE_STRING_KEY, gold.ToString()));
         saveParams.Add(CreateSaveStringKvp(EXPERIENCE_SAVE_STRING_KEY, experience.ToString()));
-        saveParams.Add(CreateSaveStringKvp(WEAPON_LEVEL_SAVE_STRING_KEY, weapon.weaponLevel.ToString()));
+        //saveParams.Add(CreateSaveStringKvp(WEAPON_LEVEL_SAVE_STRING_KEY, weapon.weaponLevel.ToString()));
 
         var saveStateString = AssembleSaveString(saveParams);
 
@@ -250,7 +250,7 @@ public class GameManager : MonoBehaviour
 
         gold = int.Parse(saveDataDict[GOLD_SAVE_STRING_KEY]);
         experience = int.Parse(saveDataDict[EXPERIENCE_SAVE_STRING_KEY]);
-        weapon.SetWeaponLevel(int.Parse(saveDataDict[WEAPON_LEVEL_SAVE_STRING_KEY])); //we currently leave this blank because we have no weapon levels yet
+        //weapon.SetWeaponLevel(int.Parse(saveDataDict[WEAPON_LEVEL_SAVE_STRING_KEY])); //we currently leave this blank because we have no weapon levels yet
 
         if (GetCurrentLevel() != 1) //what is this block doing? either way the same method gets called
         {
