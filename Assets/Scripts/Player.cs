@@ -90,6 +90,11 @@ public class Player : Mover
             OnLevelUp();
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        UnityEngine.Debug.Log("This has collided");
+    }
 }
 
     
