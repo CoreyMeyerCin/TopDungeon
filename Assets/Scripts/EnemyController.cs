@@ -35,23 +35,28 @@ public class EnemyController : MonoBehaviour
     private Vector3 randomDir; //sets initial moving direction
     public GameObject bulletPrefab; // put the instance of the bullet here, this allows us to use magic and projectiles the same way. We just have to build the prefabs to do what we want.
     //Damage dmg;
-    public bool isWalking = false;
     public float wanderCooldown = 1f;
     public float wanderStart;
     public Vector3 wanderGoal;
-    public Vector2 enemyPosition;
+    public Vector3 currentPosition;
+    public Vector3 homePosition;
+    public float homeStretch;//used for seeing how far we are
 
-    void Start()
+    private void Awake()
+    {
+
+        homePosition = transform.position;
+    }
+        void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");//this is why we use GameObject... Using the Tag is strong here
         Debug.Log($"Found Player: {player.name}");
-        enemyPosition = transform.position;
-        wanderGoal = transform.position;
+        currentPosition = transform.position;
     }
 
     private void Update()
     {
-        enemyPosition = transform.position;
+        currentPosition = transform.position;
         switch(currState)
         {
 
@@ -78,7 +83,19 @@ public class EnemyController : MonoBehaviour
     private bool IsPlayerInRange(float range)
     {
         Debug.Log("Play is within range");
-        return Vector3.Distance(transform.position, player.transform.position) <= range;//this checks to see if the player is within range by taking the players position and our position and comparing them using Vector3.Distance
+        return Vector3.Distance(currentPosition, player.transform.position) <= range;//this checks to see if the player is within range by taking the players position and our position and comparing them using Vector3.Distance
+    }
+    private bool IsAwayFromHome(float homeStretch)
+    {
+        return Vector3.Distance(currentPosition, homePosition) >= homeStretch;
+    }
+    private void ReturnHome()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, homePosition, speed * Time.deltaTime);
+    }
+    private void SetWander()
+    {
+        wanderGoal = new Vector3(homePosition.x += Random.Range(-1, 1), homePosition.y += Random.Range(-1, 1));
     }
 
     private IEnumerator ChooseDirection()
@@ -106,13 +123,19 @@ public class EnemyController : MonoBehaviour
         {
             currState = EnemyState.Follow;
         }
-        if (!IsPlayerInRange(range) && transform.position == wanderGoal)
+
+        if (!IsPlayerInRange(range))
         {
-            wanderGoal = new Vector2(enemyPosition.x += Random.Range(-1, 1), enemyPosition.y += Random.Range(-1, 1));
-            transform.position = Vector2.MoveTowards(transform.position, wanderGoal, speed * Time.deltaTime);
-        }
-        else
-        {
+            if (IsAwayFromHome(homeStretch))
+            {
+                wanderGoal = homePosition;
+                Debug.Log("Enemy is outside of home range");
+                ReturnHome();
+            }
+            if (!IsAwayFromHome(homeStretch))
+            {
+                SetWander();
+            }
             transform.position = Vector2.MoveTowards(transform.position, wanderGoal, speed * Time.deltaTime);
         }
             //isWalking = true;
