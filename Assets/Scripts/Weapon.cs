@@ -3,6 +3,23 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using UnityEngine;
 
+
+public enum WeaponType
+{
+	Melee,
+	Ranged,
+	Magic
+}
+public enum DamageType
+{
+	Slashing,
+	Bludgeoning,
+	Piercing,
+	Fire,
+	Ice,
+	Lightning,
+	Force
+}
 public class Weapon : Collidable
 {
 	//Damage struct
@@ -19,7 +36,9 @@ public class Weapon : Collidable
 	private float cooldown = 0.5f; //how fast can we swing again
 	private float lastSwing; //timer on when our last swing was
 
-	public WeaponType weaponType;// (maybe add fire, ice, force etc)
+	public WeaponType weaponType = WeaponType.Melee;
+	public DamageType damageType = DamageType.Slashing;// (maybe add fire, ice, force etc)
+
 	public Transform firePoint;
 	public GameObject daggerPrefab;
 
