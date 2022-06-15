@@ -6,7 +6,9 @@ public class Player : Mover
 {
     public static Player instance; 
     private SpriteRenderer spriteRenderer;
+
     public double playerDirection;
+    public int gold;
 
     private void Start()
     {
@@ -74,27 +76,12 @@ public class Player : Mover
 
     public void SwapSprite(int skinId)
     {
-        spriteRenderer.sprite= GameManager.instance.playerSprites[skinId];
-    }
-
-    public void OnLevelUp()
-    {
-        maxHitpoints++;
-        hitpoints = maxHitpoints;
-    }
-
-    public void SetLevel(int Level)
-    {
-        for(int i=0; i<Level; i++)
-        {
-            OnLevelUp();
-        }
+        spriteRenderer.sprite = GameManager.instance.playerSprites[skinId];
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        UnityEngine.Debug.Log("This has collided");
+        Debug.Log("Player has collided with something");
     }
-}
 
-    
+}

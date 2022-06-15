@@ -83,7 +83,7 @@ public class CharacterMenu : MonoBehaviour
         //XP Bar
         int currLevel = GameManager.instance.GetCurrentLevel();
 
-        if(GameManager.instance.GetCurrentLevel()== GameManager.instance.xpTable.Count)
+        if(GameManager.instance.GetCurrentLevel()== GameManager.instance.expTable.Count)
         {
             xpText.text = GameManager.instance.experience.ToString() + "Total experience points"; //Display total xp if we are max level
             xpBar.localScale = Vector3.one; // this will fill the whole bar
