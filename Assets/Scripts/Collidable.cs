@@ -19,6 +19,7 @@ public class Collidable : MonoBehaviour
     protected virtual void Update()
     {
         //Collision work
+        boxCollider = GetComponent<BoxCollider2D>();
         boxCollider.OverlapCollider(filter, hits); //take BoxCollider and look for other collision and put its into the hits[]
         for (int i = 0; i < hits.Length; i++)
         {

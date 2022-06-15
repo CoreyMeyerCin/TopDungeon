@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Item : Collectable
 {
+    public string name; //for ui
+    public string description;// for ui
+    public Sprite itemSprite;
     public Sprite[] spriteList;
     public Item[] itemList;
     private int itemIndex;
