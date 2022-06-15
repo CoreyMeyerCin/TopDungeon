@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this);
             DontDestroyOnLoad(this.player.gameObject);
             DontDestroyOnLoad(this.floatingTextManager.gameObject);
+            DontDestroyOnLoad(this.healthService);
             SceneManager.sceneLoaded += LoadState;
         }
         else
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             Destroy(player.gameObject);
             Destroy(floatingTextManager.gameObject);
+            Destroy(healthService.gameObject);
             SceneManager.sceneLoaded += LoadState;
         }
 
@@ -64,6 +66,7 @@ public class GameManager : MonoBehaviour
     //References
     public Player player;
     public Weapon weapon;
+    public HealthService healthService;
 
     public FloatingTextManager floatingTextManager;
 
@@ -78,21 +81,21 @@ public class GameManager : MonoBehaviour
     }
 
     //Upgrade weapon
-    public bool TryUpgradeWeapon()
-    {    
-        if(weaponPrices.Count <= weapon.weaponLevel) //is the weapon max level?
-        {
-            return false;
-        }
+    //public bool TryUpgradeWeapon()
+    //{    
+    //    if(weaponPrices.Count <= weapon.weaponLevel) //is the weapon max level?
+    //    {
+    //        return false;
+    //    }
 
-        if(gold >= weaponPrices[weapon.weaponLevel])
-        {
-            gold -= weaponPrices[weapon.weaponLevel];
-            weapon.UpgradeWeapon();
-            return true;
-        }
-        return false;
-    }
+    //    if(gold >= weaponPrices[weapon.weaponLevel])
+    //    {
+    //        gold -= weaponPrices[weapon.weaponLevel];
+    //        weapon.UpgradeWeapon();
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
 
     //************************************************

@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         player = GetComponent<Player>();
-        pT = GameManager.instance.weapon.firePoint;
+        pT = GameManager.instance.player.firePoint;
         SetProjectileDirection();
         spawnTime = Time.time;
     }

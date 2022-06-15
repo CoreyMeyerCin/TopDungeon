@@ -5,17 +5,19 @@ using UnityEngine;
 public class Fighter : MonoBehaviour
 {
     //Public fields
-    public int hitpoints; //current hitpoints
-    public int maxHitpoints; //maximum hitpoints
+    public float hitpoints; //current hitpoints
+    public float maxHitpoints; //maximum hitpoints
     public float pushRecoverySpeed = 0.2f;//how long it takes to recover after being knocked back
 
     //Immunity
     protected float immuneTime = 1.0f;// this is how long you have i-frames
     protected float lastImmune;//tracks when you started immunity
-
     //Push
 
     protected Vector3 pushDirection; //which direction do you fly
+
+    //Attack Stats
+
 
     //All fighters can ReceiveDAmage / Die
 

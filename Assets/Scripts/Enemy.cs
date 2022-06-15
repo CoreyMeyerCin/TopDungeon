@@ -73,7 +73,7 @@ public class Enemy : Mover
 
             //Debug.Log(hits[i].name);//this will check all 10 collision slots of our array
 
-            if(hits[i].tag == "Fighter" && hits[i].name == "Player")
+            if(hits[i].tag == "Player" && hits[i].name == "Player")
             {
                 collidingWithPlayer = true;
             }
