@@ -16,8 +16,6 @@ public enum EnemyType
     Melee,
     Ranged
 }
-
-
 public class EnemyController : MonoBehaviour
 {
     GameObject player; // this will point at the player.instance... we should use GameObject for now on instead of public Player player because GameObject has more tools for us to use.
@@ -64,7 +62,6 @@ public class EnemyController : MonoBehaviour
         
         switch(currState)
         {
-
             case (EnemyState.Idle):
                 Idle();   // Right now enemies just kind of aimlessly wander. If we want them to stand still we can make this
                 break;
@@ -76,15 +73,14 @@ public class EnemyController : MonoBehaviour
             case (EnemyState.Follow):
                 Follow();
                 break;
-            //case (EnemyState.Die)://we already have this in the Enemy.cs
+
+            //case (EnemyState.Die)://we already have this in the Enemy.cs but might want to transfer it to here
             //    break;
-            case (EnemyState.Attack):
+            case (EnemyState.Attack)://currently this doesnt do anything, once we have ranged enemies it will though
                 Attack();
                 break;
-
         }
     }
-    
     private bool IsPlayerInRange(float range)
     {
         Debug.Log("Play is within range");
@@ -93,14 +89,6 @@ public class EnemyController : MonoBehaviour
     private bool IsAwayFromHome(float homeStretch)
     {
         return Vector3.Distance(currentPosition, homePosition) >= homeStretch;
-    }
-    private void ReturnHome()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, homePosition, speed * Time.deltaTime);
-    }
-    private void SetWander()
-    {
-        wanderGoal = Vector3.MoveTowards(currentPosition, new Vector3(homePosition.x += Random.Range(-1, 1), homePosition.y += Random.Range(-1,1), 0), speed*Time.deltaTime);
     }
 
     private IEnumerator ChooseDirection()// this loops over all the times within it put together
@@ -139,78 +127,12 @@ public class EnemyController : MonoBehaviour
         {
             currState = EnemyState.Follow;
         }
-         // we can always "move" in the same realitive direction becuase ChooseDirection changes this for us.
-        //if (IsPlayerInRange(range))
-        //{
-        //    currState = EnemyState.Follow;
-        //}
-
-        //if (!IsPlayerInRange(range))
-        //{
-        //    if (IsAwayFromHome(homeStretch))
-        //    {
-        //        currState = EnemyState.Idle;  
-        //    }
-        //    if (!IsAwayFromHome(homeStretch))
-        //    {
-        //        SetWander();
-        //    }
-        //    transform.position = wanderGoal;
-        //}
-            //isWalking = true;
-            //int RandomNumber = Random.Range(0, 7);
-            //wanderStart = Time.time;
-
-            //        switch (RandomNumber)
-            //        {
-            //            case 0:
-            //                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y+10,0), speed *Time.deltaTime);
-            //                break;
-            //            case 1:
-            //                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x+7, transform.position.y + 7, 0), speed * Time.deltaTime);
-            //                break;
-            //            case 2:
-            //                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x + 10, transform.position.y, 0), speed * Time.deltaTime);
-            //                break;
-            //            case 3:
-            //                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x + 7, transform.position.y - 7, 0), speed * Time.deltaTime);
-            //                break;
-            //            case 4:
-            //                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y - 10, 0), speed * Time.deltaTime);
-
-            //                break;
-            //            case 5:
-            //            transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x-7, transform.position.y - 7, 0), speed * Time.deltaTime);
-
-            //            break;  
-            //            case 6:
-            //            transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x - 10, transform.position.y, 0), speed * Time.deltaTime);
-
-            //            break;
-            //            case 7:
-            //            transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x - 7, transform.position.y+7, 0), speed * Time.deltaTime);
-
-            //            break;
-            //        }
-
-
-
-            //chooseDir = true;
-
-        
     }
   
 
     void Follow()
     {
-        //if (IsPlayerInRange(range))
-        //{
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);//this is nice
-        //}
-        //else
-        //{
-        //    currState = EnemyState.Wander;
-        //}
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);//this is nice 
     }
 
     void Attack()
@@ -229,8 +151,6 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
-
-
     private IEnumerator CoolDown()
     {
         coolDownAttack = true;
@@ -244,3 +164,15 @@ public class EnemyController : MonoBehaviour
     //}
 
 }
+
+
+///////////////////////////////////////////////////////////
+///////////////////////ARCHIVED METHODS////////////////////
+    //private void ReturnHome()
+    //{
+    //    transform.position = Vector3.MoveTowards(transform.position, homePosition, speed * Time.deltaTime);
+    //}
+    //private void SetWander()
+    //{
+    //    wanderGoal = Vector3.MoveTowards(currentPosition, new Vector3(homePosition.x += Random.Range(-1, 1), homePosition.y += Random.Range(-1,1), 0), speed*Time.deltaTime);
+    //}
