@@ -17,6 +17,7 @@ public class CollectionController : Collidable
     public float pushRecovery;
     private HealthService healthService;
     public Weapon weapon;
+    public Transform trans;
  
 
     protected override void Start()
@@ -25,7 +26,7 @@ public class CollectionController : Collidable
         GetComponent<SpriteRenderer>().sprite = itemSprite;
         Destroy(GetComponent<BoxCollider2D>());
         gameObject.AddComponent<BoxCollider2D>();
-
+        transform.position = trans.position;
     }
 
     protected override void OnCollide(Collider2D coll)

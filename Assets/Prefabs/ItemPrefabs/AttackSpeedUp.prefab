@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7641478176879902322}
   - component: {fileID: 7641478176879902323}
   - component: {fileID: 7641478176879902324}
+  - component: {fileID: 4135749252022170748}
   m_Layer: 0
   m_Name: AttackSpeedUp
   m_TagString: Untagged
@@ -28,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 7641478176879902325}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.682, y: -0.367, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 213901411
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1800008044, guid: bb5eb99d61655564588e794444964628, type: 3}
+  m_Sprite: {fileID: 6440375, guid: 88b39d6be2296fb42b2e24e967dd0b77, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,18 +100,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.000058909878, y: -0.000058906386}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.1010101, y: 0.3030303}
+    oldSize: {x: 0.016, y: 0.016}
     newSize: {x: 0.1010101, y: 0.3030303}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1010101, y: 0.3030303}
+  m_Size: {x: 0.012328465, y: 0.012097502}
   m_EdgeRadius: 0
 --- !u!114 &7641478176879902324
 MonoBehaviour:
@@ -140,7 +141,30 @@ MonoBehaviour:
     maxNormalAngle: 0
   name: Bow
   description: AttackSpeed++
-  itemSprite: {fileID: -923764328, guid: bb5eb99d61655564588e794444964628, type: 3}
-  healthChange: 0
+  itemSprite: {fileID: 6440375, guid: 88b39d6be2296fb42b2e24e967dd0b77, type: 3}
+  currHitPoint: 0
+  maxHitPoint: 0
   moveSpeed: 0
   attackSpeed: 0.25
+  pushRecovery: 0
+  weapon: {fileID: 0}
+--- !u!95 &4135749252022170748
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7641478176879902325}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fbc561a573847b049a853ea8141ead30, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
