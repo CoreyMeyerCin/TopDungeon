@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this);
             DontDestroyOnLoad(this.player.gameObject);
             DontDestroyOnLoad(this.floatingTextManager.gameObject);
+            DontDestroyOnLoad(this.healthService);
             SceneManager.sceneLoaded += LoadState;
         }
         else
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             Destroy(player.gameObject);
             Destroy(floatingTextManager.gameObject);
+            Destroy(healthService.gameObject);
             SceneManager.sceneLoaded += LoadState;
         }
 
@@ -64,6 +66,7 @@ public class GameManager : MonoBehaviour
     //References
     public Player player;
     public Weapon weapon;
+    public HealthService healthService;
 
     public FloatingTextManager floatingTextManager;
 

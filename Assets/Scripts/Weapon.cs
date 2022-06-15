@@ -33,8 +33,9 @@ public class Weapon : Collidable
 
 	//Swing
 	private Animator anim; //reference to the Animator
-	private float cooldown = 0.5f; //how fast can we swing again
-	private float lastSwing; //timer on when our last swing was
+	public float cooldown = 1f; //how fast can we swing again
+	private float lastUse; //timer on when our last swing was
+	private bool attackAvailable;
 
 	public WeaponType weaponType = WeaponType.Melee;
 	public DamageType damageType = DamageType.Slashing;// (maybe add fire, ice, force etc)
@@ -58,28 +59,38 @@ public class Weapon : Collidable
 	{
 		base.Update();
 
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			Attack();
+		if(Time.time - lastUse > cooldown)
+        {
+			attackAvailable = true;
 		}
 
+		if (Input.GetKeyDown(KeyCode.Space) && attackAvailable) ;
+		{
+			
+				Attack();
+			
+		}
 	}
+	public void ChangeCooldown(float cooldownMod)
+    {
+		cooldown -= cooldownMod;
+    }
 
 	private void Attack()
 	{
-		switch (weaponType)
-		{
-			case WeaponType.Melee:
-				Swing();
-				break;
-			case WeaponType.Ranged:
-				Shoot();
-				break;
-			case WeaponType.Magic:
-				Cast();
-				break;
-				
-		}
+			switch (weaponType)
+			{
+				case WeaponType.Melee:
+					Swing();
+					break;
+				case WeaponType.Ranged:
+					Shoot();
+					break;
+				case WeaponType.Magic:
+					Cast();
+					break;
+
+			}
 	}
 
 	protected override void OnCollide(Collider2D coll)
@@ -100,7 +111,9 @@ public class Weapon : Collidable
 	private void Shoot()
     {
 		Instantiate(daggerPrefab,firePoint.position, firePoint.rotation);
-    }
+		attackAvailable = false;
+		lastUse = Time.time;
+	}
 
 	private void Swing()
 	{

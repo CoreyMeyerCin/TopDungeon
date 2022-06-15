@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Mover
 {
@@ -8,7 +9,18 @@ public class Player : Mover
     private SpriteRenderer spriteRenderer;
     public double playerDirection;
 
-    private void Start()
+    public Text collectedText;
+    public static int collectedAmount = 0;
+
+
+    public HealthService healthService;
+    public GameObject projectilePrefab;//holds the weapons prefab, might be able to do this in a better way
+    public float projectileSpeed;
+    private float lastFire;
+    public float fireDelay;
+    public float attackSpeed;
+
+    protected override void Start()
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -94,6 +106,10 @@ public class Player : Mover
     private void OnTriggerEnter2D(Collider2D collision)
     {
         UnityEngine.Debug.Log("This has collided");
+        if (collision.tag.Equals("Collectable"))
+        {
+
+        }
     }
 }
 
