@@ -10,10 +10,13 @@ public class CollectionController : Collidable
     public string name; //for ui
     public string description;// for ui
     public Sprite itemSprite;
-    public float healthChange;
+    public float currHitPoint;
+    public float maxHitPoint;
     public float moveSpeed;
     public float attackSpeed;
+    public float pushRecovery;
     private HealthService healthService;
+    public Weapon weapon;
  
 
     protected override void Start()
@@ -33,9 +36,12 @@ public class CollectionController : Collidable
 
             Player.collectedAmount++;
             UnityEngine.Debug.Log("Collsion here!");
-            //GameManager.instance.player.healthService.HealByFlatAmount(healthChange);
-            GameManager.instance.player.MoveSpeedChange(moveSpeed);
-            //GameManager.instance.weapon.ChangeCooldown(attackSpeed);
+            GameManager.instance.player.CurrentHitPointChange(currHitPoint);//in Player
+            GameManager.instance.player.MaxHitPointsChange(maxHitPoint);
+            GameManager.instance.player.MoveSpeedChange(moveSpeed);// in Mover
+            GameManager.instance.player.AttackSpeedChange(attackSpeed);// in User. Uses multiplication so 0.93 would be a 7% increase
+            GameManager.instance.player.PushRecoveryChange(pushRecovery);// in User. Uses multiplication so 0.93 would be a 7% increase
+            GameManager.instance.player.ChangeCurrentWeapon(weapon);
             Destroy(gameObject);
         }
     }

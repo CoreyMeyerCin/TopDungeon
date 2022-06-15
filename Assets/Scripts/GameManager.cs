@@ -81,21 +81,21 @@ public class GameManager : MonoBehaviour
     }
 
     //Upgrade weapon
-    public bool TryUpgradeWeapon()
-    {    
-        if(weaponPrices.Count <= weapon.weaponLevel) //is the weapon max level?
-        {
-            return false;
-        }
+    //public bool TryUpgradeWeapon()
+    //{    
+    //    if(weaponPrices.Count <= weapon.weaponLevel) //is the weapon max level?
+    //    {
+    //        return false;
+    //    }
 
-        if(gold >= weaponPrices[weapon.weaponLevel])
-        {
-            gold -= weaponPrices[weapon.weaponLevel];
-            weapon.UpgradeWeapon();
-            return true;
-        }
-        return false;
-    }
+    //    if(gold >= weaponPrices[weapon.weaponLevel])
+    //    {
+    //        gold -= weaponPrices[weapon.weaponLevel];
+    //        weapon.UpgradeWeapon();
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
 
     //************************************************
