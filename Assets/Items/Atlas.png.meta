@@ -1762,7 +1762,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1783,7 +1783,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1804,7 +1804,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1812,6 +1812,27 @@ TextureImporter:
       bones: []
       spriteID: c66e3d599c1f6464a93160a2641fde6f
       internalID: -157432599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocker_top_small
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 130
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee08f735482450f4094505ac7662ca15
+      internalID: 2023779029
       vertices: []
       indices: 
       edges: []
@@ -1886,6 +1907,7 @@ TextureImporter:
       torch_top_3: -2024798421
       floor_breaking_BL: -85619563
       stairs_top_L: -1437889674
+      blocker_top_small: 2023779029
       stairs_top_R: 1547482609
       pillar_with_wall_middle: -1672246356
       torch_bottom_4: 639006124
