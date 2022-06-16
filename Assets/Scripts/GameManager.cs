@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this.player.gameObject);
             DontDestroyOnLoad(this.floatingTextManager.gameObject);
             DontDestroyOnLoad(this.healthService);
+            DontDestroyOnLoad(this.weapon);
             SceneManager.sceneLoaded += LoadState;
         }
         else
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
             Destroy(player.gameObject);
             Destroy(floatingTextManager.gameObject);
             Destroy(healthService.gameObject);
+            Destroy(this.weapon);
             SceneManager.sceneLoaded += LoadState;
         }
 
@@ -71,7 +73,7 @@ public class GameManager : MonoBehaviour
     public FloatingTextManager floatingTextManager;
 
     //Logic
-    public int gold;
+    //public int gold; // NOW EXISTS IN PLAYER
     public int experience;
 
     //Floating Text
@@ -155,7 +157,7 @@ public class GameManager : MonoBehaviour
     {
         List<string> saveParams = new List<string>(); // this list gets passed in to AssembleSaveString() which creates the final string
         saveParams.Add(CreateSaveStringKvp(SKIN_SAVE_STRING_KEY, "skin_placeholder"));
-        saveParams.Add(CreateSaveStringKvp(GOLD_SAVE_STRING_KEY, gold.ToString()));
+        saveParams.Add(CreateSaveStringKvp(GOLD_SAVE_STRING_KEY, player.gold.ToString()));
         saveParams.Add(CreateSaveStringKvp(EXPERIENCE_SAVE_STRING_KEY, experience.ToString()));
         //saveParams.Add(CreateSaveStringKvp(WEAPON_LEVEL_SAVE_STRING_KEY, weapon.weaponLevel.ToString()));
 
@@ -251,7 +253,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        gold = int.Parse(saveDataDict[GOLD_SAVE_STRING_KEY]);
+        player.gold = int.Parse(saveDataDict[GOLD_SAVE_STRING_KEY]);
         experience = int.Parse(saveDataDict[EXPERIENCE_SAVE_STRING_KEY]);
         //weapon.SetWeaponLevel(int.Parse(saveDataDict[WEAPON_LEVEL_SAVE_STRING_KEY])); //we currently leave this blank because we have no weapon levels yet
 
@@ -263,7 +265,7 @@ public class GameManager : MonoBehaviour
 
         // sets spawn point to our spawn point within the scene
         SceneManager.sceneLoaded -= LoadState;
-        Debug.Log($"SaveState was found - Gold: {gold}, Exp: {experience}");
+        Debug.Log($"SaveState was found - Gold: {player.gold}, Exp: {experience}");
     }
 
 }

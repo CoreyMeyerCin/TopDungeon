@@ -6,28 +6,37 @@ using UnityEngine.UI;
 public class Player : Mover
 {
     //Mover > Fighter contains floats for maxHitpoints, hitPoints, pushRecoverySpeed, and immuneTime
-    public static Player instance; 
+    public static Player instance;
+    public Vector3 currentPosition;
     private SpriteRenderer spriteRenderer;
     public double playerDirection;
     public Text collectedText;
     public static int collectedAmount = 0;
 
     public HealthService healthService;
-    public GameObject projectilePrefab;//holds the weapons prefab, might be able to do this in a better way to do this in the weapon
+    //public Projectile projectilePrefab;//holds the weapons prefab, might be able to do this in a better way to do this in the weapon
+    public Dagger projectilePrefab;
     public Weapon weapon;
     public Transform firePoint;
 
+    public int gold;
     public float projectileSpeed;
     private float lastFire;
     public float fireDelay;
     public float attackSpeed = 1f;
     public float cooldown = 1f;
 
+    public float lifespan=1f;//this is used for *projectile range* in Dagger.cs
+
     protected override void Start()
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        firePoint.position = transform.position;
+        currentPosition = transform.position;
+        firePoint = this.transform;
+        projectilePrefab = GetComponentInChildren<Weapon>().projectilePrefab;
+        weapon = GetComponentInChildren<Weapon>();
+        //projectilePrefab = GameManager.instance.player.transform.GetChild(0).GetComponent<Projectile>();
     }
 
     //instance = this;
@@ -37,7 +46,11 @@ public class Player : Mover
     private void Update()
     {
         GetPlayerDirection();
+        firePoint = this.transform;
         
+        //projectilePrefab = GameManager.instance.player.transform.GetChild(0).gameObject.GetComponent<Projectile>();
+
+
     }
     private void FixedUpdate()
     {
@@ -45,11 +58,30 @@ public class Player : Mover
         float y = Input.GetAxisRaw("Vertical"); // same thing but with the y axis with w,s, or no input
         //Reset MoveDelta
         UpdateMotor(new Vector3(x, y, 0));
+        currentPosition = transform.position;
     }
-
+    public void ProjectileLifespanChange(float lifesp)
+    {
+        lifespan += lifesp;
+    }
+    public void ChangeCurrentProjectile(Dagger proj,Weapon weap)
+    {
+        weapon = weap;
+        projectilePrefab = proj;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
+        transform.GetChild(0).GetComponent<Weapon>().weaponDamage = weap.weaponDamage;
+        transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
+        transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
+        transform.GetChild(0).GetComponent<Weapon>().weaponDamage = weap.weaponDamage;
+    }
     public void ChangeCurrentWeapon(Weapon weap)
     {
         weapon = weap;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
+        transform.GetChild(0).GetComponent<Weapon>().weaponDamage = weap.weaponDamage;
+        transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
+        transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
+        transform.GetChild(0).GetComponent<Weapon>().weaponDamage = weap.weaponDamage;
     }
     public void CurrentHitPointChange(float currHitPoint)
     {

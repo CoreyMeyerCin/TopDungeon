@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 88b39d6be2296fb42b2e24e967dd0b77
+guid: 1fe31d539493a77419d323a16caf119f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -44,10 +44,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1000
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -70,7 +70,7 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
-    compressionQuality: 50
+    compressionQuality: 100
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -116,28 +116,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Donut_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5ccbd8ad695e0f948b69c893f399f381
-      internalID: 375578440
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Donut_1
+      name: Frog_1
       rect:
         serializedVersion: 2
         x: 0
@@ -145,20 +124,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b93550051033d5c42ae9cfa83af6bfee
-      internalID: 6440375
+      spriteID: 99b81256f5d852d45ac0361671c7574c
+      internalID: 2115872796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Donut_4
+      name: Frog_2
       rect:
         serializedVersion: 2
         x: 16
@@ -166,119 +145,56 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4f20a360c533034d8f635475d9bba7d
-      internalID: -575815112
+      spriteID: ebdb7618cba9cbc419e40c79d928ca37
+      internalID: -1539781638
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Donut_3
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 99243756c51d8ca469f4c07b60691391
-      internalID: 596351409
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Donut_5
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 16
-        width: 15
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 92711d2ee855918409f5721d72d39511
-      internalID: 383655076
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Donut_6
+      name: Frog_3
       rect:
         serializedVersion: 2
         x: 32
         y: 0
-        width: 15
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4fb677808176aed44b7a05e94b7f1ac5
-      internalID: 950692396
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Donut_7
-      rect:
-        serializedVersion: 2
-        x: 47
-        y: 16
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56929a3480e8b494b8fedc6dc26264f2
-      internalID: 1157690666
+      spriteID: 74854d97d7588204ea89ddb6ec7ee372
+      internalID: 574765134
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Donut_8
+      name: Frog_4
       rect:
         serializedVersion: 2
-        x: 47
+        x: 48
         y: 0
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a8989fd261986f4b9c251cd056f0577
-      internalID: -1764941080
+      spriteID: 30a79d28c3ef53842ae5795a75891532
+      internalID: -965833202
       vertices: []
       indices: 
       edges: []
@@ -294,14 +210,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Donut_5: 383655076
-      Donut_1: 6440375
-      Donut_8: -1764941080
-      Donut_7: 1157690666
-      Donut_0: 375578440
-      Donut_6: 950692396
-      Donut_4: -575815112
-      Donut_3: 596351409
+      Frog_1: 2115872796
+      Frog_3: 574765134
+      Frog_4: -965833202
+      Frog_2: -1539781638
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

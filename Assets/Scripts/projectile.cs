@@ -5,15 +5,17 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float speed = 2f;
-    public Player player;
+    private Player player;
     public float lifespan;
     public float spawnTime;
-    public Transform pT;
-    public Vector3 moveDelta;
+    private Transform pT;
+    private Vector3 moveDelta;
+    public Weapon weapon;
+    public Sprite sprite;
 
     private void Start()
     {
-        player = GetComponent<Player>();
+        player = GameManager.instance.player;
         pT = GameManager.instance.player.firePoint;
         SetProjectileDirection();
         spawnTime = Time.time;
