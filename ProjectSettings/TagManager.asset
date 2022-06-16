@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Fighter
   - GameManager
+  - Projectile
+  - Enemy
+  - NPC
+  - Weapon
+  - Wall
+  - Collectable
   layers:
   - Default
   - TransparentFX
@@ -17,9 +23,9 @@ TagManager:
   - 
   - Blocking
   - Actor
-  - 
-  - 
-  - 
+  - Weapon
+  - Player
+  - Item
   - 
   - 
   - 
@@ -46,11 +52,11 @@ TagManager:
   - name: Floor
     uniqueID: 42815107
     locked: 0
-  - name: Actor
-    uniqueID: 213901411
-    locked: 0
   - name: Interactable
     uniqueID: 219428421
+    locked: 0
+  - name: Actor
+    uniqueID: 213901411
     locked: 0
   - name: Weapon
     uniqueID: 3295282415

@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 0
     path: 
-    guid: 2cda990e2423bbf4892e6590ba056729
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 9639cd0e12e39fc478883ad3c484392c
@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Dungeon2.unity
     guid: d6e30a3868131a54cbbb95b2bde8c221
+  - enabled: 1
+    path: Assets/Scenes/Dungeon3.unity
+    guid: b4b63b6a14140114196407623dbf54f7
   m_configObjects: {}

@@ -5,37 +5,42 @@ using UnityEngine;
 public class Fighter : MonoBehaviour
 {
     //Public fields
-    public int hitpoint;//current hitpoints
-    public int maxHitpoint;//maximum hitpoints
+    public float hitpoints; //current hitpoints
+    public float maxHitpoints; //maximum hitpoints
     public float pushRecoverySpeed = 0.2f;//how long it takes to recover after being knocked back
 
     //Immunity
     protected float immuneTime = 1.0f;// this is how long you have i-frames
     protected float lastImmune;//tracks when you started immunity
-
     //Push
 
-protected Vector3 pushDirection; //which direction do you fly
+    protected Vector3 pushDirection; //which direction do you fly
 
-//All fighters can ReceiveDAmage / Die
+    //Attack Stats
 
-protected virtual void ReceiveDamage(Damage dmg){
 
-    if(Time.time-lastImmune > immuneTime){//check to see if we are still immune
-        lastImmune = Time.time;
-        hitpoint -= dmg.damageAmount;
-        pushDirection = (transform.position - dmg.origin).normalized * dmg.pushForce;// this will make the hit object move AWAY from the dmg.origin(player that hit them.)
+    //All fighters can ReceiveDAmage / Die
 
-        GameManager.instance.ShowText(dmg.damageAmount.ToString(), 25,Color.red, transform.position, Vector3.zero, 0.5f);
+    protected virtual void ReceiveDamage(Damage dmg){
 
-        if(hitpoint <=0){
-            hitpoint = 0;
-            Death();
+        if(Time.time - lastImmune > immuneTime) //check to see if we are still immune
+        {
+            lastImmune = Time.time;
+            hitpoints -= dmg.damageAmount;
+            pushDirection = (transform.position - dmg.origin).normalized * dmg.pushForce; // this will make the hit object move AWAY from the dmg.origin(player that hit them.)
+
+            GameManager.instance.ShowText(dmg.damageAmount.ToString(), 25, Color.red, transform.position, Vector3.zero, 0.5f);
+
+            if(hitpoints <= 0)
+            {
+                hitpoints = 0;
+                Death();
+            }
         }
     }
-}
 
-protected virtual void Death(){
+    protected virtual void Death()
+    {
 
-}
+    }
 }

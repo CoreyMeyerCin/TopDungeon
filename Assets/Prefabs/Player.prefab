@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 213901411
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -775883154, guid: bb5eb99d61655564588e794444964628, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -98,6 +98,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22e8e8aa86ac024faacf5aa2000ae41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitpoints: 0
+  maxHitpoints: 0
+  pushRecoverySpeed: 0.2
+  speed: 0
+  playerDirection: 0
+  collectedText: {fileID: 0}
+  healthService: {fileID: 0}
+  projectilePrefab: {fileID: 0}
+  weapon: {fileID: 0}
+  firePoint: {fileID: 5422238519342369371}
+  gold: 0
+  projectileSpeed: 0
+  fireDelay: 0
+  attackSpeed: 1
+  cooldown: 1
 --- !u!61 &5422238519342369364
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -115,7 +130,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
+    oldSize: {x: 0.16161616, y: 0.16161616}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

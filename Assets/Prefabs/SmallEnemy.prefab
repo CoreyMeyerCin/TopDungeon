@@ -265,8 +265,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ee264c48af60b4bb6d892405189dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitpoint: 3
-  maxHitpoint: 3
+  hitpoints: 10
+  maxHitpoints: 0
   pushRecoverySpeed: 0.2
   xpValue: 10
   triggerLength: 0.3
