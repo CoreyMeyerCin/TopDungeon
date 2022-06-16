@@ -157,6 +157,7 @@ public class EnemyController : MonoBehaviour
         coolDownAttack = false;
     }
 
+
     //public void Death()
     //{
         //we have this in the Enemy.cs

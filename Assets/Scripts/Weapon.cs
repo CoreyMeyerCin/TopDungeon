@@ -12,7 +12,8 @@ public class Weapon : Collidable
 	private Player player;
 	//Upgrade
 	//public int weaponLevel = 0; //the current level of the weapon, later this will be used to determine what damage point and pushForce equal through logic
-	public SpriteRenderer spriteRenderer; //this is to change the look of our weapon when we upgrade
+	//public SpriteRenderer spriteRenderer; //this is to change the look of our weapon when we upgrade
+	public Sprite sprite;
 	public float weaponDamage;
 	public float knockBack;
 	//Swing
@@ -20,6 +21,7 @@ public class Weapon : Collidable
 	//public float cooldown = 1f; //how fast can we swing again
 	private float lastUse; //timer on when our last swing was
 	private bool attackAvailable;
+	public Dagger projectilePrefab;
 
 	public WeaponType weaponType = WeaponType.Melee;
 	public DamageType damageType = DamageType.Slashing;// (maybe add fire, ice, force etc)
@@ -28,13 +30,13 @@ public class Weapon : Collidable
 	private void Awake()
 	{
 
-		player = GetComponent<Player>();
+		player = gameObject.GetComponentInParent<Player>();
 		//spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 	protected override void Start()
 	{
 		base.Start();
-		spriteRenderer = GetComponent<SpriteRenderer>(); // this will update our weapon look when we load 'this' in
+		//spriteRenderer = GetComponent<SpriteRenderer>(); // this will update our weapon look when we load 'this' in
 		anim = GetComponent<Animator>();
 	}
 
@@ -46,7 +48,7 @@ public class Weapon : Collidable
         {
 			attackAvailable = true;
 		}
-		if (Input.GetKeyDown(KeyCode.Space) && attackAvailable) ;
+		if (Input.GetKeyDown(KeyCode.Space) && attackAvailable)
 		{
 				Attack();
 		}

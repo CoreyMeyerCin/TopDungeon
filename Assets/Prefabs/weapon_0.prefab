@@ -139,21 +139,9 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  damage: 0100000002000000030000000400000005000000060000000700000008000000090000000a000000
-  knockbackDistance:
-  - 2
-  - 2.2
-  - 2.4
-  - 2.6
-  - 2.8
-  - 3
-  - 3.2
-  - 3.4
-  - 3.6
-  - 3.8
-  player: {fileID: 0}
-  weaponLevel: 0
-  spriteRenderer: {fileID: 0}
+  sprite: {fileID: 0}
+  weaponDamage: 5
+  knockBack: 2
   weaponType: 0
   damageType: 0
 --- !u!95 &681516500406987087

@@ -17,7 +17,9 @@ public class CollectionController : Collidable
     public float pushRecovery;
     private HealthService healthService;
     public Weapon weapon;
+    public Dagger projectile;
     public Transform trans;
+    public float lifespan;//used for projectile range
  
 
     protected override void Start()
@@ -26,9 +28,9 @@ public class CollectionController : Collidable
         GetComponent<SpriteRenderer>().sprite = itemSprite;
         Destroy(GetComponent<BoxCollider2D>());
         gameObject.AddComponent<BoxCollider2D>();
-        transform.position = trans.position;
     }
 
+   
     protected override void OnCollide(Collider2D coll)
     {
 
@@ -42,7 +44,16 @@ public class CollectionController : Collidable
             GameManager.instance.player.MoveSpeedChange(moveSpeed);// in Mover
             GameManager.instance.player.AttackSpeedChange(attackSpeed);// in User. Uses multiplication so 0.93 would be a 7% increase
             GameManager.instance.player.PushRecoveryChange(pushRecovery);// in User. Uses multiplication so 0.93 would be a 7% increase
-            GameManager.instance.player.ChangeCurrentWeapon(weapon);
+            if (weapon.weaponType == Weapon.WeaponType.Melee)
+                {
+                GameManager.instance.player.ChangeCurrentWeapon(weapon);
+                }
+            if (weapon.weaponType == Weapon.WeaponType.Ranged) 
+                {
+                GameManager.instance.player.ChangeCurrentProjectile(projectile,weapon);
+                GameManager.instance.player.ChangeCurrentWeapon(weapon); 
+                }
+            GameManager.instance.player.ProjectileLifespanChange(lifespan);
             Destroy(gameObject);
         }
     }
