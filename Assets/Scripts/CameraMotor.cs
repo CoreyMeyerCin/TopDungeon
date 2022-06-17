@@ -5,12 +5,12 @@ using UnityEngine;
 public class CameraMotor : MonoBehaviour
 {
     public Transform lookAt;//put our camera focus on a specific item
-
+    GameObject player;
     public float boundX = 0.15f;//these two are how far our player can move before it snaps back to them(0.15f with our scene settings is 15 pixels)
     public float boundY = 0.05f;
 
     private void Start(){
-        lookAt = GameObject.Find("Player").transform;
+        lookAt = GameObject.FindGameObjectWithTag("Player").transform;
         GameManager.instance.player.transform.position= GameObject.Find("SpawnPoint").transform.position;
     }
 
