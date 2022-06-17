@@ -104,6 +104,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2897208738703870436, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: moveSpeed
+      value: 1.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870436, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
       propertyPath: itemSprite
       value: 
       objectReference: {fileID: 375578440, guid: 88b39d6be2296fb42b2e24e967dd0b77, type: 3}

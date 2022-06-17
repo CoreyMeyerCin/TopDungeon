@@ -143,7 +143,7 @@ MonoBehaviour:
   itemSprite: {fileID: -1906535724, guid: bb5eb99d61655564588e794444964628, type: 3}
   currHitPoint: 0
   maxHitPoint: 0
-  moveSpeed: 0
+  moveSpeed: 1
   attackSpeed: 0
   pushRecovery: 0
   weapon: {fileID: 6204654468369193029, guid: a5f10825f95ed0841af1787ee8877cc9, type: 3}
@@ -153,3 +153,4 @@ MonoBehaviour:
   critChance: 0
   critMultiplier: 0
   playerDamage: 0
+  lifesteal: 0

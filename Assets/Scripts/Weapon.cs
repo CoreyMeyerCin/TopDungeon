@@ -24,6 +24,7 @@ public class Weapon : Collidable
 	private float lastUse; //timer on when our last swing was
 	private bool attackAvailable;
 	public Dagger projectilePrefab;
+	public BoxCollider2D boxCollider;
 
 
 
@@ -57,18 +58,17 @@ public class Weapon : Collidable
 				Attack();
 		}
 	}
-	public double CalculateDamage(float weaponBaseDamage, float weaponExtraDamage ,float critChance, float critMultiplier)
+	public int CalculateDamage(float weaponBaseDamage, float weaponExtraDamage ,float critChance, float critMultiplier, float playerDamage)
     {
-		double totalDamage=0.0;
+		double hybridDamage= weaponBaseDamage+ playerDamage;
+
+
+		double totalDamage= hybridDamage;
+	
 
 		if(Random.Range(0,100) <= critChance)
         {
-			totalDamage += ((double)weaponBaseDamage*(double)critMultiplier);
-        }
-
-        else
-        {
-			totalDamage += weaponBaseDamage;
+			totalDamage *= (double)critMultiplier;
         }
 
         if (hasExtraDamage)
@@ -76,7 +76,9 @@ public class Weapon : Collidable
 			totalDamage += (double)weaponExtraDamage;
         }
 
-		return totalDamage;
+		player.CurrentHitPointChange((float)totalDamage*player.lifesteal);
+
+		return (int)totalDamage;
 
     }
 	
@@ -100,11 +102,11 @@ public class Weapon : Collidable
 	{
 		if (coll.tag.Equals("Enemy"))
 		{
-			Damage dmg = new Damage() //send Damage object to fighter we've hit
+			Damage dmg = new Damage()
 			{
-				damageAmount = (int)weaponBaseDamage,
+				damageAmount = (int)CalculateDamage(weaponBaseDamage, weaponExtraDamage, player.critChance, player.critMultiplier, player.playerDamage),
 				origin = transform.position,
-				pushForce = knockBack,
+				pushForce = knockBack
 			};
 			coll.SendMessage("ReceiveDamage", dmg); // send the damage over to the enemy using ReceiveDamage()
 		}

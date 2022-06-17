@@ -21,7 +21,7 @@ public abstract class Mover : Fighter//abstract means that it has to be inherite
     
     public void MoveSpeedChange(float addSpeed)
     {
-        speed += addSpeed;
+        speed *= addSpeed;
     }
 
     protected virtual void UpdateMotor(Vector3 input)

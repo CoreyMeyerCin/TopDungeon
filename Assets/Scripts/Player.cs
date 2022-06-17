@@ -35,6 +35,8 @@ public class Player : Mover
 
     public float lifespan=1f;//this is used for *projectile range* in Dagger.cs
 
+    public float lifesteal;
+
     protected override void Start()
     {
         if (instance == null)
@@ -70,6 +72,10 @@ public class Player : Mover
         //Reset MoveDelta
         UpdateMotor(new Vector3(x, y, 0));
         currentPosition = transform.position;
+    }
+    public void LifestealChange(float lifest)
+    {
+        lifesteal += lifest;
     }
     public void PlayerDamageChange(float playerDmg)
     {
@@ -108,7 +114,14 @@ public class Player : Mover
     }
     public void CurrentHitPointChange(float currHitPoint)
     {
-        hitpoints += currHitPoint;
+        if (currHitPoint + hitpoints > maxHitpoints)
+        {
+            hitpoints = maxHitpoints;
+        }
+        else
+        {
+            hitpoints += currHitPoint;
+        }
     }
     public void MaxHitPointsChange(float maxHitPoint)
     {
@@ -136,8 +149,8 @@ public class Player : Mover
 
     public void OnLevelUp()
     {
-        maxHitpoints++;
-        hitpoints = maxHitpoints;
+        MaxHitPointsChange(5f);
+        PlayerDamageChange(4f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
