@@ -1741,7 +1741,7 @@ TextureImporter:
         width: 8
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 1, y: 0, z: 1, w: 0}
       outline: []
       physicsShape: []
@@ -1749,6 +1749,90 @@ TextureImporter:
       bones: []
       spriteID: b1afb1f9b8eeca243a75e356e61be511
       internalID: 96357205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boss_1
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 48
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ec82f4ee6c6320469cc156d443532e3
+      internalID: 1192749625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Atlas_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d660784920c511f409ece1cb6eb83a16
+      internalID: -744051748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 48
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c66e3d599c1f6464a93160a2641fde6f
+      internalID: -157432599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blocker_top_small
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 130
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee08f735482450f4094505ac7662ca15
+      internalID: 2023779029
       vertices: []
       indices: 
       edges: []
@@ -1779,6 +1863,7 @@ TextureImporter:
       Wall_1: 901823282
       Crates_2: -923764328
       floor_breaking_Bottom_0: -1606619617
+      Boss_1: 1192749625
       Chest_0: -208868465
       weapon_2: 1155155409
       player_0: -775883154
@@ -1808,6 +1893,7 @@ TextureImporter:
       Wall_6: -1002251925
       floor_breaking_center_1: -996840014
       torch_bottom_6: 1933062399
+      boss_1: -157432599
       floor_0: -300453026
       player_1: -984720999
       weapon_0: -1906535724
@@ -1821,6 +1907,7 @@ TextureImporter:
       torch_top_3: -2024798421
       floor_breaking_BL: -85619563
       stairs_top_L: -1437889674
+      blocker_top_small: 2023779029
       stairs_top_R: 1547482609
       pillar_with_wall_middle: -1672246356
       torch_bottom_4: 639006124
