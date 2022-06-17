@@ -119,7 +119,7 @@ public class Dagger : MonoBehaviour
             {
                 Damage dmg = new Damage()
                 {
-                    damageAmount = (int)weapon.weaponDamage,
+                    damageAmount = (int)weapon.weaponBaseDamage,
                     origin = transform.position,
                     pushForce = weapon.knockBack
                 };

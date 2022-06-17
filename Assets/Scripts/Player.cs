@@ -24,6 +24,10 @@ public class Player : Mover
     private float lastFire;
     public float fireDelay;
     public float attackSpeed = 1f;
+    public float playerDamage;
+
+    public float critChance = 5f;
+    public float critMultiplier = 1.05f;
     public float cooldown = 1f;
 
     public float lifespan=1f;//this is used for *projectile range* in Dagger.cs
@@ -60,28 +64,40 @@ public class Player : Mover
         UpdateMotor(new Vector3(x, y, 0));
         currentPosition = transform.position;
     }
+    public void PlayerDamageChange(float playerDmg)
+    {
+        playerDamage += playerDmg;
+    }
     public void ProjectileLifespanChange(float lifesp)
     {
         lifespan += lifesp;
+    }
+    public void CritMultiplierChange(float CritDmg)
+    {
+        critMultiplier += CritDmg;
+    }
+    public void CritChanceChange(float critCh)
+    {
+        critChance += critCh;
     }
     public void ChangeCurrentProjectile(Dagger proj,Weapon weap)
     {
         weapon = weap;
         projectilePrefab = proj;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
-        transform.GetChild(0).GetComponent<Weapon>().weaponDamage = weap.weaponDamage;
+        transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
-        transform.GetChild(0).GetComponent<Weapon>().weaponDamage = weap.weaponDamage;
+        transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
     }
     public void ChangeCurrentWeapon(Weapon weap)
     {
         weapon = weap;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
-        transform.GetChild(0).GetComponent<Weapon>().weaponDamage = weap.weaponDamage;
+        transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
-        transform.GetChild(0).GetComponent<Weapon>().weaponDamage = weap.weaponDamage;
+        transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
     }
     public void CurrentHitPointChange(float currHitPoint)
     {
