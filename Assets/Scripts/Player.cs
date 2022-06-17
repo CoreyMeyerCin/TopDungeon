@@ -23,7 +23,6 @@ public class Player : Mover
     public Weapon weapon;
     public Transform firePoint;
 
-    public int gold;
     public float projectileSpeed;
     private float lastFire;
     public float fireDelay;
@@ -116,21 +115,13 @@ public class Player : Mover
 
     public void SwapSprite(int skinId)
     {
-        spriteRenderer.sprite= GameManager.instance.playerSprites[skinId];
+        spriteRenderer.sprite = GameManager.instance.playerSprites[skinId];
     }
 
     public void OnLevelUp()
     {
         maxHitpoints++;
         hitpoints = maxHitpoints;
-    }
-
-    public void SetLevel(int Level)
-    {
-        for(int i=0; i<Level; i++)
-        {
-            OnLevelUp();
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -182,21 +173,6 @@ public class Player : Mover
 
        
         
-    }
-
-    public void SwapSprite(int skinId)
-    {
-        spriteRenderer.sprite= GameManager.instance.playerSprites[skinId];
-    }
-
-    public void SwapSprite(int skinId)
-    {
-        spriteRenderer.sprite = GameManager.instance.playerSprites[skinId];
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("Player has collided with something");
     }
 
     //************************************************

@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
     public Weapon weapon;
     public HealthService healthService;
 
-    public FloatingTextManager floatingTextManager;
     public EventManager eventManager;
     public FloatingTextManager floatingTextManager;
     public ExperienceManager experienceManager;
