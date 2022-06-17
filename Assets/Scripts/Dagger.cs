@@ -5,11 +5,9 @@ using UnityEngine;
 public class Dagger : MonoBehaviour
 {
 
-    public int[] damage = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //amount of damage each weapon with upgrade does
-    public float[] knockbackDistance = { 2.0f, 2.2f, 2.4f, 2.6f, 2.8f, 3.0f, 3.2f, 3.4f, 3.6f, 3.8f }; //how far you push enemy back for each rank
-
-    public int weaponLevel = 0;
-    public SpriteRenderer spriteRenderer;
+    //public int[] damage = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //amount of damage each weapon with upgrade does
+    //public float[] knockbackDistance = { 2.0f, 2.2f, 2.4f, 2.6f, 2.8f, 3.0f, 3.2f, 3.4f, 3.6f, 3.8f }; //how far you push enemy back for each rank
+    //public int weaponLevel;
 
     public float speed = 2f;
     public Rigidbody2D rb;
@@ -17,17 +15,21 @@ public class Dagger : MonoBehaviour
     private Collider2D[] hits = new Collider2D[10];
     public ContactFilter2D filter;
     private bool hasCollided;
+    public Weapon weapon;
+    public Player player;
 
-    public float lifespan;
-    public float spawnTime;
+    //public float lifespan;//MOVED TO PLAYER
+    private float spawnTime;
     
     // Start is called before the first frame update
     void Start()
     {
         //rb.velocity = transform.right * speed;
+        player = GameManager.instance.player;
         boxCollider = GetComponent<BoxCollider2D>();
         spawnTime = Time.time;
-
+        rb = GetComponent<Rigidbody2D>();
+        weapon = GameManager.instance.player.weapon;
 
         SetProjectileDirection(GameManager.instance.player.playerDirection);
     }
@@ -55,7 +57,7 @@ public class Dagger : MonoBehaviour
     }
     private void TimeCheckOut()
     {
-        if (Time.time - spawnTime > lifespan)
+        if (Time.time - spawnTime > player.lifespan)
         {
             Destroy(this.gameObject);
         }
@@ -113,13 +115,13 @@ public class Dagger : MonoBehaviour
     {
         for (int i = 0; i < hits.Length; i++)
         {
-            if (coll.tag == "Enemy" && !coll.name.Equals("Player"))
+            if (coll.tag.Equals("Enemy"))
             {
                 Damage dmg = new Damage()
                 {
-                    damageAmount = 3,
+                    damageAmount = (int)weapon.weaponDamage,
                     origin = transform.position,
-                    pushForce = 2
+                    pushForce = weapon.knockBack
                 };
                 coll.SendMessage("ReceiveDamage", dmg);
 

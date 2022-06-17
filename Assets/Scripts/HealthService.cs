@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class HealthService : MonoBehaviour
 {
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int currentHealth;
+    [SerializeField] private static float maxHealth;
+    [SerializeField] private static float currentHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +20,7 @@ public class HealthService : MonoBehaviour
 
     }
 
-    void DamageByFlatAmount(int damage)
+    void DamageByFlatAmount(float damage)
 	{
         if(currentHealth < damage) //prevent hp from going negative
 		{
@@ -34,13 +34,13 @@ public class HealthService : MonoBehaviour
 		}
 	}
 
-    void DamageByPercentOfMax(int percentDamage)
+    void DamageByPercentOfMax(float percentDamage)
 	{
         var asFlatDamage = maxHealth / percentDamage; //this is only configured for ints atm. Otherwise needs (int)Math.Ceiling(flatDamage) to convert rounded up
         DamageByFlatAmount(asFlatDamage);
 	}
 
-    void DamageByPercentOfCurrent(int percentDamage)
+    void DamageByPercentOfCurrent(float percentDamage)
 	{
         var asFlatDamage = currentHealth / percentDamage;
         if(asFlatDamage < 1)
@@ -51,7 +51,7 @@ public class HealthService : MonoBehaviour
         DamageByFlatAmount(asFlatDamage);
     }
     
-    void HealByFlatAmount(int healing)
+    public void HealByFlatAmount(float healing)
 	{
         var healthMissing = maxHealth - currentHealth;
 
@@ -65,13 +65,13 @@ public class HealthService : MonoBehaviour
         currentHealth += healing;
 	}
 
-    void HealByPercentageOfMax(int percentageHealing)
+    void HealByPercentageOfMax(float percentageHealing)
 	{
         var asFlatHealing = maxHealth / percentageHealing;
         HealByFlatAmount(asFlatHealing);
 	}
 
-    void HealByPercentageOfCurrent(int percentageHealing) //idk if this would ever be useful whatsoever but w/e
+    void HealByPercentageOfCurrent(float percentageHealing) //idk if this would ever be useful whatsoever but w/e
 	{
         var asFlatHealing = currentHealth / percentageHealing;
         if(asFlatHealing < 1)

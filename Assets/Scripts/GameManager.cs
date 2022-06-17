@@ -33,7 +33,9 @@ public class GameManager : MonoBehaviour
     //References
     public Player player;
     public Weapon weapon;
+    public HealthService healthService;
 
+    public FloatingTextManager floatingTextManager;
     public EventManager eventManager;
     public FloatingTextManager floatingTextManager;
     public ExperienceManager experienceManager;
@@ -54,6 +56,8 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(floatingTextManager.gameObject);
             DontDestroyOnLoad(experienceManager.gameObject);
             DontDestroyOnLoad(levelUI.gameObject);
+            DontDestroyOnLoad(healthService);
+            DontDestroyOnLoad(weapon);
             DontDestroyOnLoad(eventManager.gameObject);
             SceneManager.sceneLoaded += LoadState;
         }
@@ -66,6 +70,8 @@ public class GameManager : MonoBehaviour
             Destroy(levelUI.gameObject);
             Destroy(experienceManager.gameObject);
             Destroy(eventManager.gameObject);
+            Destroy(healthService.gameObject);
+            Destroy(weapon);
             SceneManager.sceneLoaded += LoadState;
         }
 
@@ -74,6 +80,7 @@ public class GameManager : MonoBehaviour
     }
     
 
+
     //Floating Text
     public void ShowText(string msg, int fontSize, Color color, Vector3 position, Vector3 motion, float duration)
     {
@@ -81,21 +88,21 @@ public class GameManager : MonoBehaviour
     }
 
     //Upgrade weapon
-    public bool TryUpgradeWeapon()
-    {    
-        if(weaponPrices.Count <= weapon.weaponLevel) //is the weapon max level?
-        {
-            return false;
-        }
+    //public bool TryUpgradeWeapon()
+    //{    
+    //    if(weaponPrices.Count <= weapon.weaponLevel) //is the weapon max level?
+    //    {
+    //        return false;
+    //    }
 
-        if(player.gold >= weaponPrices[weapon.weaponLevel])
-        {
-            player.gold -= weaponPrices[weapon.weaponLevel];
-            weapon.UpgradeWeapon();
-            return true;
-        }
-        return false;
-    }
+    //    if(gold >= weaponPrices[weapon.weaponLevel])
+    //    {
+    //        gold -= weaponPrices[weapon.weaponLevel];
+    //        weapon.UpgradeWeapon();
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
 
     //************************************************

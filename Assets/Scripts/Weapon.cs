@@ -3,54 +3,40 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using UnityEngine;
 
-
-public enum WeaponType
-{
-	Melee,
-	Ranged,
-	Magic
-}
-public enum DamageType
-{
-	Slashing,
-	Bludgeoning,
-	Piercing,
-	Fire,
-	Ice,
-	Lightning,
-	Force
-}
 public class Weapon : Collidable
 {
 	//Damage struct
-	public int[] damage = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //amount of damage each weapon with upgrade does
-	public float[] knockbackDistance = { 2.0f, 2.2f, 2.4f, 2.6f, 2.8f, 3.0f, 3.2f, 3.4f, 3.6f, 3.8f }; //how far you push enemy back for each rank
+	//public int[] damage = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //amount of damage each weapon with upgrade does
+	//public float[] knockbackDistance = { 2.0f, 2.2f, 2.4f, 2.6f, 2.8f, 3.0f, 3.2f, 3.4f, 3.6f, 3.8f }; //how far you push enemy back for each rank
 
-
+	private Player player;
 	//Upgrade
-	public int weaponLevel = 0; //the current level of the weapon, later this will be used to determine what damage point and pushForce equal through logic
-	public SpriteRenderer spriteRenderer; //this is to change the look of our weapon when we upgrade
-
+	//public int weaponLevel = 0; //the current level of the weapon, later this will be used to determine what damage point and pushForce equal through logic
+	//public SpriteRenderer spriteRenderer; //this is to change the look of our weapon when we upgrade
+	public Sprite sprite;
+	public float weaponDamage;
+	public float knockBack;
 	//Swing
 	private Animator anim; //reference to the Animator
-	private float cooldown = 0.5f; //how fast can we swing again
-	private float lastSwing; //timer on when our last swing was
+	//public float cooldown = 1f; //how fast can we swing again
+	private float lastUse; //timer on when our last swing was
+	private bool attackAvailable;
+	public Dagger projectilePrefab;
 
 	public WeaponType weaponType = WeaponType.Melee;
 	public DamageType damageType = DamageType.Slashing;// (maybe add fire, ice, force etc)
 
-	public Transform firePoint;
-	public GameObject daggerPrefab;
 
 	private void Awake()
 	{
+
+		player = gameObject.GetComponentInParent<Player>();
 		//spriteRenderer = GetComponent<SpriteRenderer>();
-		firePoint.position = this.transform.position;
 	}
 	protected override void Start()
 	{
 		base.Start();
-		spriteRenderer = GetComponent<SpriteRenderer>(); // this will update our weapon look when we load 'this' in
+		//spriteRenderer = GetComponent<SpriteRenderer>(); // this will update our weapon look when we load 'this' in
 		anim = GetComponent<Animator>();
 	}
 
@@ -58,28 +44,30 @@ public class Weapon : Collidable
 	{
 		base.Update();
 
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			Attack();
+		if(Time.time - lastUse > GameManager.instance.player.cooldown)
+        {
+			attackAvailable = true;
 		}
-
+		if (Input.GetKeyDown(KeyCode.Space) && attackAvailable)
+		{
+				Attack();
+		}
 	}
-
+	
 	private void Attack()
 	{
-		switch (weaponType)
-		{
-			case WeaponType.Melee:
-				Swing();
-				break;
-			case WeaponType.Ranged:
-				Shoot();
-				break;
-			case WeaponType.Magic:
-				Cast();
-				break;
-				
-		}
+			switch (weaponType)
+			{
+				case WeaponType.Melee:
+					Swing();
+					break;
+				case WeaponType.Ranged:
+					Shoot();
+					break;
+				case WeaponType.Magic:
+					Cast();
+					break;
+			}
 	}
 
 	protected override void OnCollide(Collider2D coll)
@@ -88,19 +76,20 @@ public class Weapon : Collidable
 		{
 			Damage dmg = new Damage() //send Damage object to fighter we've hit
 			{
-				damageAmount = damage[weaponLevel],
+				damageAmount = (int)weaponDamage,
 				origin = transform.position,
-				pushForce = knockbackDistance[weaponLevel]
+				pushForce = knockBack,
 			};
-
 			coll.SendMessage("ReceiveDamage", dmg); // send the damage over to the enemy using ReceiveDamage()
 		}
 
 	}
 	private void Shoot()
     {
-		Instantiate(daggerPrefab,firePoint.position, firePoint.rotation);
-    }
+		Instantiate(player.projectilePrefab,player.firePoint.position, player.firePoint.rotation);
+		attackAvailable = false;
+		lastUse = Time.time;
+	}
 
 	private void Swing()
 	{
@@ -112,19 +101,19 @@ public class Weapon : Collidable
 		//cast magic
 	}
 
-	public void UpgradeWeapon()
-	{
-		weaponLevel++;
-		spriteRenderer.sprite = GameManager.instance.weaponSprite[weaponLevel];
+	//public void UpgradeWeapon()
+	//{
+	//	weaponLevel++;
+	//	spriteRenderer.sprite = GameManager.instance.weaponSprite[weaponLevel];
 
-		//Change stats
-	}
+	//	//Change stats
+	//}
 
-	public void SetWeaponLevel(int level)
-	{
-		weaponLevel = level;
-		this.spriteRenderer.sprite = GameManager.instance.weaponSprite[level];
-	}
+	//public void SetWeaponLevel(int level)
+	//{
+	//	weaponLevel = level;
+	//	this.spriteRenderer.sprite = GameManager.instance.weaponSprite[level];
+	//}
 
 	public enum WeaponType
 	{
@@ -132,5 +121,14 @@ public class Weapon : Collidable
 		Ranged,
 		Magic
 	}
-
+	public enum DamageType
+	{
+		Slashing,
+		Bludgeoning,
+		Piercing,
+		Fire,
+		Ice,
+		Lightning,
+		Force
+	}
 }

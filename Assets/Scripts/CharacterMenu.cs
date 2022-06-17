@@ -52,28 +52,28 @@ public class CharacterMenu : MonoBehaviour
     }
 
     //Weapon Upgrade
-    public void OnUpgradeClick()
-    {
-        if(GameManager.instance.TryUpgradeWeapon())
-        {
-            UpdateMenu();
-        }
-    }
+    //public void OnUpgradeClick()
+    //{
+    //    if(GameManager.instance.TryUpgradeWeapon())
+    //    {
+    //        UpdateMenu();
+    //    }
+    //}
 
     //Update the character Information
     public void UpdateMenu()
     {
         //Weapon
-        weaponSprite.sprite = GameManager.instance.weaponSprite[GameManager.instance.weapon.weaponLevel];
-        if(GameManager.instance.weapon.weaponLevel == GameManager.instance.weaponPrices.Count)
-        {
-            upgradedCostText.text = "MAX";
-        }
-        else
-        {
-            upgradedCostText.text = GameManager.instance.weaponPrices[GameManager.instance.weapon.weaponLevel].ToString();
-        }
-        upgradedCostText.text = GameManager.instance.weaponPrices[GameManager.instance.weapon.weaponLevel].ToString();
+        //weaponSprite.sprite = GameManager.instance.weaponSprite[GameManager.instance.weapon.weaponLevel];
+        //if(GameManager.instance.weapon.weaponLevel == GameManager.instance.weaponPrices.Count)
+        //{
+        //    upgradedCostText.text = "MAX";
+        //}
+        //else
+        //{
+        //    upgradedCostText.text = GameManager.instance.weaponPrices[GameManager.instance.weapon.weaponLevel].ToString();
+        //}
+        //upgradedCostText.text = GameManager.instance.weaponPrices[GameManager.instance.weapon.weaponLevel].ToString();
 
         //Meta
         levelText.text = Player.instance.GetLevel().ToString();
