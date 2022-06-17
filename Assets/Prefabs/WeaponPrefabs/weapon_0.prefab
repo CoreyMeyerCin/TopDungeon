@@ -145,6 +145,7 @@ MonoBehaviour:
   hasExtraDamage: 0
   knockBack: 2
   projectilePrefab: {fileID: 0}
+  boxCollider: {fileID: 0}
   weaponType: 0
   damageType: 0
 --- !u!95 &681516500406987087

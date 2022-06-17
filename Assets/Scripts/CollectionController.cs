@@ -12,7 +12,7 @@ public class CollectionController : Collidable
     public Sprite itemSprite;
     public float currHitPoint;
     public float maxHitPoint;
-    public float moveSpeed;
+    public float moveSpeed = 1f;
     public float attackSpeed;
     public float pushRecovery;
     private HealthService healthService;
@@ -20,9 +20,10 @@ public class CollectionController : Collidable
     public Dagger? projectile;
     public Transform trans;
     public float lifespan;//used for projectile range
-    public float critChance; 
+    public float critChance;
     public float critMultiplier;//0.01 = 1% increase. BOTH crit properties are held in the player class
     public float playerDamage;
+    public float lifesteal;
 
     protected override void Start()
     {
@@ -59,6 +60,7 @@ public class CollectionController : Collidable
             GameManager.instance.player.CritChanceChange(critChance);
             GameManager.instance.player.CritMultiplierChange(critMultiplier);
             GameManager.instance.player.PlayerDamageChange(playerDamage);
+            GameManager.instance.player.LifestealChange(lifesteal);
             Destroy(gameObject);
         }
     }
