@@ -9,7 +9,6 @@ public class Collidable : MonoBehaviour
     public ContactFilter2D filter;
     private BoxCollider2D boxCollider;
     private Collider2D[] hits = new Collider2D[10]; // track everything we are making contact with in this frame
-    //where is the 10 coming from? -JP
 
     protected virtual void Start()
     {

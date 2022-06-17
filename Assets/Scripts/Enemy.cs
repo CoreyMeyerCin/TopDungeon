@@ -96,11 +96,9 @@ public class Enemy : Mover
 
         //UpdateMotor(Vector3.zero);
     }
+
     protected override void Death()
     {
         Destroy(gameObject);
-
-        GameManager.instance.GrantXp(xpValue);// where xp is granted
-        GameManager.instance.ShowText("+" + xpValue + " xp", 30, Color.magenta, transform.position, Vector3.up * 40, 1.0f);
     }
 }

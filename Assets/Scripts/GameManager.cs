@@ -19,16 +19,30 @@ public class GameManager : MonoBehaviour
     private static readonly string SAVE_STRING_KEY_VALUE_DELIMETER = "~"; // separates key from value (gold),(gold_amount)
     private static readonly string SAVE_FILENAME = "save.txt";
 
+    private static readonly string PLAYER_LEVEL = "PLAYER_LEVEL";
     private static readonly string SKIN_SAVE_STRING_KEY = "SKIN_SAVE";
     private static readonly string GOLD_SAVE_STRING_KEY = "GOLD_SAVE";
     private static readonly string EXPERIENCE_SAVE_STRING_KEY = "EXP_SAVE";
     //private static readonly string WEAPON_LEVEL_SAVE_STRING_KEY = "WEP_LVL_SAVE";
 
+    //Resources for the game
+    public List<Sprite> playerSprites;
+    public List<Sprite> weaponSprite;
+    public List<int> weaponPrices = new List<int> { 100, 200, 300, 400, 500, 600, 700, 800, 900 };
 
+    //References
+    public Player player;
+    public Weapon weapon;
+    public HealthService healthService;
+
+    public EventManager eventManager;
+    public FloatingTextManager floatingTextManager;
+    public ExperienceManager experienceManager;
+    public LevelUI levelUI;
 
     private void Awake()
     {
-        this.InstantiateController();
+        InstantiateController();
     }
 
     private void InstantiateController()
@@ -37,10 +51,13 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this);
-            DontDestroyOnLoad(this.player.gameObject);
-            DontDestroyOnLoad(this.floatingTextManager.gameObject);
-            DontDestroyOnLoad(this.healthService);
-            DontDestroyOnLoad(this.weapon);
+            DontDestroyOnLoad(player.gameObject);
+            DontDestroyOnLoad(floatingTextManager.gameObject);
+            DontDestroyOnLoad(experienceManager.gameObject);
+            DontDestroyOnLoad(levelUI.gameObject);
+            DontDestroyOnLoad(healthService);
+            DontDestroyOnLoad(weapon);
+            DontDestroyOnLoad(eventManager.gameObject);
             SceneManager.sceneLoaded += LoadState;
         }
         else
@@ -49,8 +66,11 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             Destroy(player.gameObject);
             Destroy(floatingTextManager.gameObject);
+            Destroy(levelUI.gameObject);
+            Destroy(experienceManager.gameObject);
+            Destroy(eventManager.gameObject);
             Destroy(healthService.gameObject);
-            Destroy(this.weapon);
+            Destroy(weapon);
             SceneManager.sceneLoaded += LoadState;
         }
 
@@ -59,22 +79,6 @@ public class GameManager : MonoBehaviour
     }
     
 
-    //Resources for the game
-    public List<Sprite> playerSprites;
-    public List<Sprite> weaponSprite;
-    public List<int> weaponPrices = new List<int> { 100, 200, 300, 400, 500, 600, 700, 800, 900 };
-    public List<int> xpTable = new List<int> { 3, 7, 15, 25, 40, 58, 70, 95, 130, 170 };
-
-    //References
-    public Player player;
-    public Weapon weapon;
-    public HealthService healthService;
-
-    public FloatingTextManager floatingTextManager;
-
-    //Logic
-    //public int gold; // NOW EXISTS IN PLAYER
-    public int experience;
 
     //Floating Text
     public void ShowText(string msg, int fontSize, Color color, Vector3 position, Vector3 motion, float duration)
@@ -101,64 +105,15 @@ public class GameManager : MonoBehaviour
 
 
     //************************************************
-    //EXPERIENCE SYSTEM
-    //************************************************
-    public int GetCurrentLevel()
-    {
-        int r = 0;   //return value
-        int add = 0; 
-
-        while(experience >= add) //loop through our levels and return the level that it gets back
-        {    
-            add+=xpTable[r];
-            r++;
-        }
-        return r;
-
-        if(r == xpTable.Count) // if we are maxLevel
-        {     
-            return r;
-        }
-    }
-
-    public int GetXpToLevel(int level)
-    {
-        int r =0;
-        int xp=0;
-        while(r < level)
-        {
-            xp+=xpTable[r];
-            r++;
-        }
-        return xp;
-    }
-
-    public void GrantXp(int xp)
-    {
-        int currLevel = GetCurrentLevel();
-        experience += xp;
-
-        if(currLevel<GetCurrentLevel())
-        {
-            OnLevelUp();
-        }
-    }
-
-    public void OnLevelUp()
-    {
-        player.OnLevelUp();
-    }
-
-
-    //************************************************
     //PERSIST SAVE DATA AND LOAD SAVE DATA 
     //************************************************
     public void SaveState()
     {
         List<string> saveParams = new List<string>(); // this list gets passed in to AssembleSaveString() which creates the final string
-        saveParams.Add(CreateSaveStringKvp(SKIN_SAVE_STRING_KEY, "skin_placeholder"));
+        saveParams.Add(CreateSaveStringKvp(PLAYER_LEVEL, player.GetLevel().ToString()));
+        saveParams.Add(CreateSaveStringKvp(SKIN_SAVE_STRING_KEY, "skin_placeholder_value")); //TODO: add actual value source
         saveParams.Add(CreateSaveStringKvp(GOLD_SAVE_STRING_KEY, player.gold.ToString()));
-        saveParams.Add(CreateSaveStringKvp(EXPERIENCE_SAVE_STRING_KEY, experience.ToString()));
+        saveParams.Add(CreateSaveStringKvp(EXPERIENCE_SAVE_STRING_KEY, ExperienceManager.instance.GetExperience().ToString()));
         //saveParams.Add(CreateSaveStringKvp(WEAPON_LEVEL_SAVE_STRING_KEY, weapon.weaponLevel.ToString()));
 
         var saveStateString = AssembleSaveString(saveParams);
@@ -216,13 +171,15 @@ public class GameManager : MonoBehaviour
 			}
 			else
 			{
-                throw new Exception("Error: save file is empty!");
+                Debug.Log("Error: save file is empty!");
 			}
         }
         else
         {
-            throw new Exception("Error: save file not found!");
+            Debug.Log("Error: save file not found!");
         }
+
+        return string.Empty;
     }
 
     public void LoadState(Scene s, LoadSceneMode mode)
@@ -253,19 +210,14 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        Player.instance.SetLevel(int.Parse(saveDataDict[PLAYER_LEVEL]));
         player.gold = int.Parse(saveDataDict[GOLD_SAVE_STRING_KEY]);
-        experience = int.Parse(saveDataDict[EXPERIENCE_SAVE_STRING_KEY]);
+        ExperienceManager.instance.SetExperience(int.Parse(saveDataDict[EXPERIENCE_SAVE_STRING_KEY]));
         //weapon.SetWeaponLevel(int.Parse(saveDataDict[WEAPON_LEVEL_SAVE_STRING_KEY])); //we currently leave this blank because we have no weapon levels yet
-
-        if (GetCurrentLevel() != 1) //what is this block doing? either way the same method gets called
-        {
-            player.SetLevel(GetCurrentLevel());
-        }
-        player.SetLevel(GetCurrentLevel());
 
         // sets spawn point to our spawn point within the scene
         SceneManager.sceneLoaded -= LoadState;
-        Debug.Log($"SaveState was found - Gold: {player.gold}, Exp: {experience}");
+        Debug.Log($"SaveState was found - Level {Player.instance.GetLevel()} Gold: {player.gold}, Exp: {ExperienceManager.instance.GetExperience()}");
     }
 
 }
