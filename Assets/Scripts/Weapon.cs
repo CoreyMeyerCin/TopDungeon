@@ -14,7 +14,9 @@ public class Weapon : Collidable
 	//public int weaponLevel = 0; //the current level of the weapon, later this will be used to determine what damage point and pushForce equal through logic
 	//public SpriteRenderer spriteRenderer; //this is to change the look of our weapon when we upgrade
 	public Sprite sprite;
-	public float weaponDamage;
+	public float weaponBaseDamage;
+	public float weaponExtraDamage;
+	public bool hasExtraDamage;
 	public float knockBack;
 	//Swing
 	private Animator anim; //reference to the Animator
@@ -22,6 +24,8 @@ public class Weapon : Collidable
 	private float lastUse; //timer on when our last swing was
 	private bool attackAvailable;
 	public Dagger projectilePrefab;
+
+
 
 	public WeaponType weaponType = WeaponType.Melee;
 	public DamageType damageType = DamageType.Slashing;// (maybe add fire, ice, force etc)
@@ -53,6 +57,28 @@ public class Weapon : Collidable
 				Attack();
 		}
 	}
+	public double CalculateDamage(float weaponBaseDamage, float weaponExtraDamage ,float critChance, float critMultiplier)
+    {
+		double totalDamage=0.0;
+
+		if(Random.Range(0,100) <= critChance)
+        {
+			totalDamage += ((double)weaponBaseDamage*(double)critMultiplier);
+        }
+
+        else
+        {
+			totalDamage += weaponBaseDamage;
+        }
+
+        if (hasExtraDamage)
+        {
+			totalDamage += (double)weaponExtraDamage;
+        }
+
+		return totalDamage;
+
+    }
 	
 	private void Attack()
 	{
@@ -72,11 +98,11 @@ public class Weapon : Collidable
 
 	protected override void OnCollide(Collider2D coll)
 	{
-		if (coll.tag.Equals("Fighter") && !coll.name.Equals("Player"))
+		if (coll.tag.Equals("Enemy"))
 		{
 			Damage dmg = new Damage() //send Damage object to fighter we've hit
 			{
-				damageAmount = (int)weaponDamage,
+				damageAmount = (int)weaponBaseDamage,
 				origin = transform.position,
 				pushForce = knockBack,
 			};
