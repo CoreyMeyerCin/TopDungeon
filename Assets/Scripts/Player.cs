@@ -8,10 +8,15 @@ public class Player : Mover
     private SpriteRenderer spriteRenderer;
 
     public double playerDirection;
+    public int level = 1;
     public int gold;
 
     private void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -82,6 +87,19 @@ public class Player : Mover
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Player has collided with something");
+    }
+
+    //************************************************
+    //ACCESSOR METHODS
+    //************************************************
+    public int GetLevel()
+    {
+        return level;
+    }
+
+    public void SetLevel(int levelToSet)
+    {
+        level = levelToSet;
     }
 
 }

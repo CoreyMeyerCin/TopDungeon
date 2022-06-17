@@ -82,7 +82,7 @@ public class EnemyController : MonoBehaviour
     
     private bool IsPlayerInRange(float range)
     {
-        Debug.Log("Play is within range");
+        //Debug.Log("Play is within range");
         return Vector3.Distance(currentPosition, player.transform.position) <= range;//this checks to see if the player is within range by taking the players position and our position and comparing them using Vector3.Distance
     }
     private bool IsAwayFromHome(float homeStretch)
@@ -129,7 +129,7 @@ public class EnemyController : MonoBehaviour
             if (IsAwayFromHome(homeStretch))
             {
                 wanderGoal = homePosition;
-                Debug.Log("Enemy is outside of home range");
+                //Debug.Log("Enemy is outside of home range");
                 ReturnHome();
             }
             if (!IsAwayFromHome(homeStretch))

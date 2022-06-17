@@ -33,9 +33,10 @@ public class GameManager : MonoBehaviour
     //References
     public Player player;
     public Weapon weapon;
-    public ExperienceManager experienceManager;
 
+    public EventManager eventManager;
     public FloatingTextManager floatingTextManager;
+    public ExperienceManager experienceManager;
     public LevelUI levelUI;
 
     private void Awake()
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(floatingTextManager.gameObject);
             DontDestroyOnLoad(experienceManager.gameObject);
             DontDestroyOnLoad(levelUI.gameObject);
+            DontDestroyOnLoad(eventManager.gameObject);
             SceneManager.sceneLoaded += LoadState;
         }
         else
@@ -61,6 +63,9 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             Destroy(player.gameObject);
             Destroy(floatingTextManager.gameObject);
+            Destroy(levelUI.gameObject);
+            Destroy(experienceManager.gameObject);
+            Destroy(eventManager.gameObject);
             SceneManager.sceneLoaded += LoadState;
         }
 
@@ -99,10 +104,10 @@ public class GameManager : MonoBehaviour
     public void SaveState()
     {
         List<string> saveParams = new List<string>(); // this list gets passed in to AssembleSaveString() which creates the final string
-        saveParams.Add(CreateSaveStringKvp(PLAYER_LEVEL, experienceManager.GetLevel().ToString()));
+        saveParams.Add(CreateSaveStringKvp(PLAYER_LEVEL, player.GetLevel().ToString()));
         saveParams.Add(CreateSaveStringKvp(SKIN_SAVE_STRING_KEY, "skin_placeholder_value")); //TODO: add actual value source
         saveParams.Add(CreateSaveStringKvp(GOLD_SAVE_STRING_KEY, player.gold.ToString()));
-        saveParams.Add(CreateSaveStringKvp(EXPERIENCE_SAVE_STRING_KEY, experienceManager.GetExperience().ToString()));
+        saveParams.Add(CreateSaveStringKvp(EXPERIENCE_SAVE_STRING_KEY, ExperienceManager.instance.GetExperience().ToString()));
         //saveParams.Add(CreateSaveStringKvp(WEAPON_LEVEL_SAVE_STRING_KEY, weapon.weaponLevel.ToString()));
 
         var saveStateString = AssembleSaveString(saveParams);
@@ -160,13 +165,15 @@ public class GameManager : MonoBehaviour
 			}
 			else
 			{
-                throw new Exception("Error: save file is empty!");
+                Debug.Log("Error: save file is empty!");
 			}
         }
         else
         {
-            throw new Exception("Error: save file not found!");
+            Debug.Log("Error: save file not found!");
         }
+
+        return string.Empty;
     }
 
     public void LoadState(Scene s, LoadSceneMode mode)
@@ -197,14 +204,14 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        ExperienceManager.instance.SetLevel(int.Parse(saveDataDict[PLAYER_LEVEL]));
+        Player.instance.SetLevel(int.Parse(saveDataDict[PLAYER_LEVEL]));
         player.gold = int.Parse(saveDataDict[GOLD_SAVE_STRING_KEY]);
         ExperienceManager.instance.SetExperience(int.Parse(saveDataDict[EXPERIENCE_SAVE_STRING_KEY]));
         //weapon.SetWeaponLevel(int.Parse(saveDataDict[WEAPON_LEVEL_SAVE_STRING_KEY])); //we currently leave this blank because we have no weapon levels yet
 
         // sets spawn point to our spawn point within the scene
         SceneManager.sceneLoaded -= LoadState;
-        Debug.Log($"SaveState was found - Level {ExperienceManager.instance.GetLevel()} Gold: {player.gold}, Exp: {ExperienceManager.instance.GetExperience()}");
+        Debug.Log($"SaveState was found - Level {Player.instance.GetLevel()} Gold: {player.gold}, Exp: {ExperienceManager.instance.GetExperience()}");
     }
 
 }

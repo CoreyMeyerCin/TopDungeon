@@ -21,14 +21,31 @@ public class LevelUI : MonoBehaviour //TODO: this should probably get rolled int
 
 	private void Start() //do things that rely on other objects being populated already
 	{
-		levelText.text = ExperienceManager.instance.GetLevel().ToString();
 		SetExperienceBarSize();
+
+		//ExperienceManager.instance.onExperienceChanged += OnExperienceChanged;
+		//ExperienceManager.instance.onLevelChanged += OnLevelChanged;
+	}
+
+	private void SetLevelText()
+	{
+		levelText.text = Player.instance.GetLevel().ToString();
 	}
 
 	private void SetExperienceBarSize()
 	{
 		var expPercentage = ExperienceManager.instance.GetExpPercentage();
 		experienceBarImage.fillAmount = expPercentage;
+	}
+
+	private void OnExperienceChanged(int exp)
+	{
+		SetExperienceBarSize();
+	}
+
+	private void OnLevelChanged()
+	{
+		SetLevelText();
 	}
 
 }
