@@ -15,7 +15,7 @@ public class LevelUI : MonoBehaviour //TODO: this should probably get rolled int
 
 	private void Awake()
 	{
-		levelText = transform.Find("levelText").GetComponent<Text>();
+		//levelText = transform.Find("levelText").GetComponent<Text>();
 		experienceBarImage = transform.Find("experienceBar").Find("bar").GetComponent<Image>();
 	}
 

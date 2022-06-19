@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
     public Weapon weapon;
     public HealthService healthService;
 
-    public EventManager eventManager;
     public FloatingTextManager floatingTextManager;
     public ExperienceManager experienceManager;
     public LevelUI levelUI;
@@ -57,7 +56,6 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(levelUI.gameObject);
             DontDestroyOnLoad(healthService);
             DontDestroyOnLoad(weapon);
-            DontDestroyOnLoad(eventManager.gameObject);
             SceneManager.sceneLoaded += LoadState;
         }
         else
@@ -68,7 +66,6 @@ public class GameManager : MonoBehaviour
             Destroy(floatingTextManager.gameObject);
             Destroy(levelUI.gameObject);
             Destroy(experienceManager.gameObject);
-            Destroy(eventManager.gameObject);
             Destroy(healthService.gameObject);
             Destroy(weapon);
             SceneManager.sceneLoaded += LoadState;
@@ -164,7 +161,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Save file found, reading...");
             string[] lines = File.ReadAllLines(filepath);
 
-            Debug.Log($"{lines.Length} save strings found, loading last"); //only sending last line atm. This will become more sophisticated as the system grows.
+            Debug.Log($"{lines.Length} save strings found, loading last"); //only returning last line atm. This will become more sophisticated as the system grows.
             if (lines.Length > 0)
 			{
                 return lines.Last();
@@ -185,13 +182,6 @@ public class GameManager : MonoBehaviour
     public void LoadState(Scene s, LoadSceneMode mode)
 	{
         var saveString = ReadSaveData();
-        //commenting out as we should only be loading at the start as the data is already persisted in gamemanager once loaded
-        //if(!PlayerPrefs.HasKey("SaveState"))
-        //{ 
-        //    Debug.Log("Did not Find key SaveState,"); //If there has been no SaveState yet, like at the start of a run, we will not get an error.
-        //    return;
-        //}
- 
 
         // split the save string twice to create a dictionary, first on | for  each key-value pair, then on ~ to separate each key + value. Visual example:
         // "EXP~4|WEP_LVL~200|GOLD~I'm poor please help" becomes a Dictionary<string, string> =>
@@ -215,7 +205,6 @@ public class GameManager : MonoBehaviour
         ExperienceManager.instance.SetExperience(int.Parse(saveDataDict[EXPERIENCE_SAVE_STRING_KEY]));
         //weapon.SetWeaponLevel(int.Parse(saveDataDict[WEAPON_LEVEL_SAVE_STRING_KEY])); //we currently leave this blank because we have no weapon levels yet
 
-        // sets spawn point to our spawn point within the scene
         SceneManager.sceneLoaded -= LoadState;
         Debug.Log($"SaveState was found - Level {Player.instance.GetLevel()} Gold: {player.gold}, Exp: {ExperienceManager.instance.GetExperience()}");
     }

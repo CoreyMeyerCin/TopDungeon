@@ -24,7 +24,6 @@ public class Weapon : Collidable
 	private float lastUse; //timer on when our last swing was
 	private bool attackAvailable;
 	public Dagger projectilePrefab;
-	public BoxCollider2D boxCollider;
 
 
 
@@ -84,18 +83,18 @@ public class Weapon : Collidable
 	
 	private void Attack()
 	{
-			switch (weaponType)
-			{
-				case WeaponType.Melee:
-					Swing();
-					break;
-				case WeaponType.Ranged:
-					Shoot();
-					break;
-				case WeaponType.Magic:
-					Cast();
-					break;
-			}
+		switch (weaponType)
+		{
+			case WeaponType.Melee:
+				Swing();
+				break;
+			case WeaponType.Ranged:
+				Shoot();
+				break;
+			case WeaponType.Magic:
+				Cast();
+				break;
+		}
 	}
 
 	protected override void OnCollide(Collider2D coll)
@@ -149,6 +148,7 @@ public class Weapon : Collidable
 		Ranged,
 		Magic
 	}
+
 	public enum DamageType
 	{
 		Slashing,

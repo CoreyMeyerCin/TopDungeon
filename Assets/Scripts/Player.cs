@@ -33,7 +33,7 @@ public class Player : Mover
     public float critMultiplier = 1.05f;
     public float cooldown = 1f;
 
-    public float lifespan=1f;//this is used for *projectile range* in Dagger.cs
+    public float lifespan = 1f; //this is used for *projectile range* in Dagger.cs
 
     public float lifesteal;
 
@@ -50,6 +50,16 @@ public class Player : Mover
         projectilePrefab = GetComponentInChildren<Weapon>().projectilePrefab;
         weapon = GetComponentInChildren<Weapon>();
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).GetComponent<Projectile>();
+    }
+
+    private void OnEnable()
+    {
+        Actions.OnLevelUp += OnLevelUp;
+    }
+
+    private void OnDisable()
+    {
+        Actions.OnLevelUp -= OnLevelUp;
     }
 
     //instance = this;
@@ -149,6 +159,7 @@ public class Player : Mover
 
     public void OnLevelUp()
     {
+        level++;
         MaxHitPointsChange(5f);
         PlayerDamageChange(4f);
     }
@@ -166,24 +177,7 @@ public class Player : Mover
     //Movement
     public void GetPlayerDirection()
     {
-
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
-        {
-            playerDirection = 0.5;
-        }
-        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
-        {
-            playerDirection = 1.5; ;
-        }
-        else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
-        {
-            playerDirection = 2.5; ;
-        }
-        else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
-        {
-            playerDirection = 3.5;
-        }
-        else if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             playerDirection = 0;
         }
@@ -199,9 +193,23 @@ public class Player : Mover
         {
             playerDirection = 3;
         }
+        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+        {
+            playerDirection = 0.5;
+        }
+        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+        {
+            playerDirection = 1.5;
+        }
+        else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
+        {
+            playerDirection = 2.5;
+        }
+        else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+        {
+            playerDirection = 3.5;
+        }
 
-       
-        
     }
 
     //************************************************

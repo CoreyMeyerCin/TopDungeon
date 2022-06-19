@@ -10,14 +10,8 @@ public class ExperienceManager : MonoBehaviour
 {
     public static ExperienceManager instance;
 
-    //public delegate void ExperienceChangedEvent(int exp);
-    //public static event ExperienceChangedEvent experienceChangedEvent;
-    //public delegate void LevelChangedEvent();
-    //public static event LevelChangedEvent levelChangedEvent;
-
     private int experience;
     private int experienceToNextLevel = 100;
-    //private List<int> expTable = new List<int> { 3, 7, 15, 25, 40, 58, 70, 95, 130, 170 };
 
 	private void Awake()
 	{
@@ -25,20 +19,16 @@ public class ExperienceManager : MonoBehaviour
 		{
             instance = this;
 		}
-		//experienceChangedEvent += OnExperienceChanged;
-        //levelChangedEvent += OnLevelChanged;
 	}
 
 	private void OnEnable()
 	{
-        EventManager.StartListening(EventManager.EventType.experienceChangedEvent, OnExperienceChanged);
-        EventManager.StartListening(EventManager.EventType.levelChangedEvent, OnLevelChanged);
+        Actions.OnExperienceChanged += OnExperienceChanged;
 	}
 
-	public void AddExp(int exp)
-    {
-        //experienceChangedEvent?.Invoke(exp);
-        EventManager.TriggerEvent(EventManager.EventType.experienceChangedEvent, new Dictionary<string, object> { { "exp", exp } } );
+	private void OnDisable()
+	{
+        Actions.OnExperienceChanged -= OnExperienceChanged;
     }
 
     private void CalculateNewExperienceToNextLevel()
@@ -49,7 +39,7 @@ public class ExperienceManager : MonoBehaviour
 
     public int CalculateScaledExperienceValue(int baseExp) //adjust experience values based on level, etc.
 	{
-        //TODO: add exp scaling logic
+        //TODO: add exp scaling logic for enemies
         var scaledExp = baseExp;
         return scaledExp;
 	}
@@ -57,26 +47,15 @@ public class ExperienceManager : MonoBehaviour
     //************************************************
     //EVENT HANDLERS
     //************************************************
-    private void OnExperienceChanged(Dictionary<string, object> eventParams)
+    private void OnExperienceChanged(int exp)
     {
-        Debug.Log("Handling ExperienceChangedEvent...");
-
-        var exp = (int)eventParams["exp"];
         experience += exp;
         while (experience >= experienceToNextLevel)
         {
             CalculateNewExperienceToNextLevel();
             experience -= experienceToNextLevel;
-            EventManager.TriggerEvent(EventManager.EventType.levelChangedEvent, null);
-            //levelChangedEvent?.Invoke();
+            Actions.OnLevelUp.Invoke();
         }
-    }
-
-    private void OnLevelChanged(Dictionary<string, object> eventParams)
-    {
-        Debug.Log("Handling LevelChangedEvent...");
-        Player.instance.level++;
-        //TODO: trigger player level-up animation
     }
 
     //************************************************
