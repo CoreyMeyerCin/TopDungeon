@@ -46,7 +46,7 @@ public class Dagger : MonoBehaviour
             }
             //Debug.Log(hits[i].name);//this will check all 10 collision slots of our array
 
-            OnCollide(hits[i]);
+            OnTriggerEnter2D(hits[i]);
 
             //The array is not cleaned up, so we di it ourself
             hits[i] = null;
@@ -66,7 +66,7 @@ public class Dagger : MonoBehaviour
 
     private void SetProjectileDirection(double playerDirection)
     {
-        Debug.Log("Connected");
+        //Debug.Log("Connected");
 
         if (playerDirection == 0)
         {
@@ -111,7 +111,7 @@ public class Dagger : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, -45);
         }
     }
-    private void OnCollide(Collider2D coll)
+    private void OnTriggerEnter2D(Collider2D coll)
     {
         for (int i = 0; i < hits.Length; i++)
         {
