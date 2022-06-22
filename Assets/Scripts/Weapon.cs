@@ -74,8 +74,10 @@ public class Weapon : Collidable
         {
 			totalDamage += (double)weaponExtraDamage;
         }
-
-		player.CurrentHitPointChange((float)totalDamage*player.lifesteal);
+		//if (player.lifesteal > 0)
+		//{
+		//	player.CurrentHitPointChange((float)totalDamage * player.lifesteal);
+		//}
 
 		return (int)totalDamage;
 

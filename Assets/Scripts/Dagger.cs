@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dagger : MonoBehaviour
+public class Dagger : Collidable
 {
 
     //public int[] damage = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //amount of damage each weapon with upgrade does
@@ -24,9 +24,11 @@ public class Dagger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
         //rb.velocity = transform.right * speed;
         player = GameManager.instance.player;
         boxCollider = GetComponent<BoxCollider2D>();
+        boxCollider.isTrigger = false;
         spawnTime = Time.time;
         rb = GetComponent<Rigidbody2D>();
         weapon = GameManager.instance.player.weapon;
@@ -36,6 +38,7 @@ public class Dagger : MonoBehaviour
 
     private void Update()
     {
+        boxCollider=GetComponent<BoxCollider2D>();
         //Collision work
         boxCollider.OverlapCollider(filter, hits); //take BoxCollider and look for other collision and put its into the hits[]
         for (int i = 0; i < hits.Length; i++)
@@ -46,7 +49,7 @@ public class Dagger : MonoBehaviour
             }
             //Debug.Log(hits[i].name);//this will check all 10 collision slots of our array
 
-            OnTriggerEnter2D(hits[i]);
+            OnCollide(hits[i]);
 
             //The array is not cleaned up, so we di it ourself
             hits[i] = null;
@@ -111,12 +114,12 @@ public class Dagger : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, -45);
         }
     }
-    private void OnTriggerEnter2D(Collider2D coll)
+    protected override void OnCollide(Collider2D coll)
     {
-        for (int i = 0; i < hits.Length; i++)
-        {
+        UnityEngine.Debug.Log($"Collided with{coll}");
             if (coll.tag.Equals("Enemy"))
             {
+            UnityEngine.Debug.Log($"{coll}");
                 Damage dmg = new Damage()
                 {
                     damageAmount = (int)weapon.CalculateDamage(weapon.weaponBaseDamage,weapon.weaponExtraDamage,player.critChance,player.critMultiplier, player.playerDamage),
@@ -125,17 +128,9 @@ public class Dagger : MonoBehaviour
                 };
                 coll.SendMessage("ReceiveDamage", dmg);
 
-                // send the damage over to the enemy using ReceiveDamage()
-                Debug.Log("Sending the damage: " + dmg);
                 Destroy(this.gameObject);
             }
-            if (coll.tag == "NPC")
-            {
-                Debug.Log(coll + "was hit");
-                Destroy(this.gameObject);
-            }
-            //Debug.Log(hitInfo.name);
-        }
+        
     }
   
 }
