@@ -112,6 +112,7 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
+        transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
     }
     public void ChangeCurrentWeapon(Weapon weap)
     {
@@ -121,6 +122,7 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
+        transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
     }
     public void CurrentHitPointChange(float currHitPoint)
     {
