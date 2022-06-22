@@ -166,7 +166,7 @@ public class Player : Mover
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        UnityEngine.Debug.Log("This has collided");
+        UnityEngine.Debug.Log($"This has collided with {collision}");
         if (collision.tag.Equals("Collectable"))
         {
 

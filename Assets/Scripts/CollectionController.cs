@@ -34,11 +34,10 @@ public class CollectionController : Collidable
     }
 
    
-    protected override void OnCollide(Collider2D coll)
+    private void OnTriggerEnter2D(Collider2D coll)
     {
 
-        if (coll.name.Equals("Player"))
-        {
+        if (coll.tag.Equals("Player"))          {
 
             Player.collectedAmount++;
             UnityEngine.Debug.Log("Collsion here!");
