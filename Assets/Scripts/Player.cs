@@ -166,13 +166,12 @@ public class Player : Mover
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        UnityEngine.Debug.Log($"This has collided with {collision}");
-        if (collision.tag.Equals("Collectable"))
-        {
-
-        }
+        //UnityEngine.Debug.Log($"Player has collided");
+        //if (collision.tag.Equals("Portal"))
+        //{
+        //    UnityEngine.Debug.Log($"{collision}");
+        //}
     }
-
 
     //Movement
     public void GetPlayerDirection()
