@@ -12,6 +12,7 @@ TagManager:
   - Weapon
   - Wall
   - Collectable
+  - Portal
   layers:
   - Default
   - TransparentFX
