@@ -147,8 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  rb: {fileID: 0}
-  boxCollider: {fileID: 0}
+  rb: {fileID: 2120853311608965494}
+  boxCollider: {fileID: 1431470220672546036}
   filter:
     useTriggers: 0
     useLayerMask: 0

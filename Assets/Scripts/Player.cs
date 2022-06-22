@@ -68,6 +68,7 @@ public class Player : Mover
 
     private void Update()
     {
+
         GetPlayerDirection();
         firePoint = this.transform;
         
@@ -113,6 +114,7 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
+        transform.GetChild(0).GetComponent<Animator>().enabled = false;
     }
     public void ChangeCurrentWeapon(Weapon weap)
     {
@@ -123,6 +125,7 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
+        transform.GetChild(0).GetComponent<Animator>().enabled = true;
     }
     public void CurrentHitPointChange(float currHitPoint)
     {
@@ -178,23 +181,7 @@ public class Player : Mover
     //Movement
     public void GetPlayerDirection()
     {
-        if (Input.GetKey(KeyCode.D))
-        {
-            playerDirection = 0;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            playerDirection = 1;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            playerDirection = 2;
-        }
-        else if (Input.GetKey(KeyCode.W))
-        {
-            playerDirection = 3;
-        }
-        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+         if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
         {
             playerDirection = 0.5;
         }
@@ -210,6 +197,24 @@ public class Player : Mover
         {
             playerDirection = 3.5;
         }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            playerDirection = 0;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            playerDirection = 1;
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            playerDirection = 2;
+        }
+        else if (Input.GetKey(KeyCode.W))
+        {
+            playerDirection = 3;
+        }
+        
+        
 
     }
 
