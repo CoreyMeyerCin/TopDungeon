@@ -54,30 +54,34 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         currentPosition = transform.position;
-        if (IsAwayFromHome(range))
+        if (IsAwayFromHome(range)&& currState != EnemyState.Follow)
         {
             currState = EnemyState.Idle;
         }
-        
-        switch(currState)
+        else switch(currState)
         {
             case (EnemyState.Idle):
+                   // UnityEngine.Debug.Log("Idle");
                 Idle();   // Right now enemies just kind of aimlessly wander. If we want them to stand still we can make this
                 break;
 
             case (EnemyState.Wander):
+                    //UnityEngine.Debug.Log("Wander");
                     Wander();
                 break;
 
             case (EnemyState.Follow):
-                Follow();
+                    //UnityEngine.Debug.Log("Follow");
+                    Follow();
                 break;
 
             //case (EnemyState.Die)://we already have this in the Enemy.cs but might want to transfer it to here
             //    break;
             case (EnemyState.Attack)://currently this doesnt do anything, once we have ranged enemies it will though
-                Attack();
+                    //UnityEngine.Debug.Log("Attack");
+                    Attack();
                 break;
         }
     }
@@ -117,15 +121,16 @@ public class EnemyController : MonoBehaviour
 
     void Wander()
     {
-        if (!chooseDir)
-        {
-            StartCoroutine(ChooseDirection());
-        }
-        transform.position += -transform.right * speed * Time.deltaTime;
         if (IsPlayerInRange(range))
         {
             currState = EnemyState.Follow;
         }
+        else if (!chooseDir)
+        {
+            StartCoroutine(ChooseDirection());
+        }
+        transform.position += -transform.right * speed * Time.deltaTime;
+        
     }
   
 
