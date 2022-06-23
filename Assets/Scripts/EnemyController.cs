@@ -33,6 +33,9 @@ public class EnemyController : MonoBehaviour
     private Vector3 randomDir; //sets initial moving direction
     public GameObject bulletPrefab; // put the instance of the bullet here, this allows us to use magic and projectiles the same way. We just have to build the prefabs to do what we want.
     //Damage dmg;
+    public BoxCollider2D boxCollider;
+    public Collider2D[] hits = new Collider2D[10];
+    public ContactFilter2D filter;
     public float wanderCooldown = 1f;
     public float wanderStart;
     public float wanderRange;
@@ -48,38 +51,60 @@ public class EnemyController : MonoBehaviour
         homePosition = transform.position;
         wanderGoal = homePosition;
     }
-        void Start()
+    void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");//this is why we use GameObject... Using the Tag is strong here
         Debug.Log($"Found Player: {player.name}");
         currentPosition = transform.position;
+        boxCollider = GetComponent<BoxCollider2D>();
+        boxCollider.isTrigger = false;
     }
 
-    private void FixedUpdate()
+
+    private void Update()
+    {
+        boxCollider = GetComponent<BoxCollider2D>();
+        //Collision work
+        boxCollider.OverlapCollider(filter, hits); //take BoxCollider and look for other collision and put its into the hits[]
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i] == null)
+            {
+                continue;
+            }
+            //Debug.Log(hits[i].name);//this will check all 10 collision slots of our array
+
+            OnCollide(hits[i]);
+
+            //The array is not cleaned up, so we di it ourself
+            hits[i] = null;
+        }
+    }
+        private void FixedUpdate()
     {
         UnityEngine.Debug.Log($"Current EnemyState: {currState}");
 
         currentPosition = transform.position;
         if (IsPlayerInRange(range))
         {
-            UnityEngine.Debug.Log(" Hit A");
+            //UnityEngine.Debug.Log(" Hit A");
             currState = EnemyState.Follow;
             Follow();
         }
         else if (IsAwayFromHome(range))
         {
-            UnityEngine.Debug.Log(" Hit B");
+            //UnityEngine.Debug.Log(" Hit B");
             currState = EnemyState.Idle;
             Idle();
         }
         else if(!IsAwayFromHome(range) && currentPosition == homePosition)
         {
-            UnityEngine.Debug.Log(" Hit C");
+            //UnityEngine.Debug.Log(" Hit C");
             currState = EnemyState.Wander;
             Wander();
         }else if (!IsAwayFromHome(range))
         {
-            UnityEngine.Debug.Log(" Hit D");
+            //UnityEngine.Debug.Log(" Hit D");
             Wander();
         }
 
@@ -125,7 +150,7 @@ public class EnemyController : MonoBehaviour
                                  Random.Range(homePosition.y - range, homePosition.y + range), //y value
                                                 0);
         //wanderGoal = Random.insideUnitCircle * range;
-        UnityEngine.Debug.Log($"Current Position: {currentPosition}\nwanderGoal:{wanderGoal}");
+        //UnityEngine.Debug.Log($"Current Position: {currentPosition}\nwanderGoal:{wanderGoal}");
         yield return new WaitForSeconds(Random.Range(1f, 4f));
        
 
@@ -169,7 +194,7 @@ public class EnemyController : MonoBehaviour
 
         transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, speed * Time.deltaTime);
         CheckIfWanderComplete(currentPosition, wanderGoal);
-        UnityEngine.Debug.Log("Hit 1");
+        //UnityEngine.Debug.Log("Hit 1");
         if (!chooseDir)
         {
             UnityEngine.Debug.Log("Hit 2");
@@ -178,7 +203,7 @@ public class EnemyController : MonoBehaviour
         }
         else if (chooseDir)
         {
-            UnityEngine.Debug.Log("Hit 3");
+            //UnityEngine.Debug.Log("Hit 3");
             //transform.position += -transform.right * speed * Time.deltaTime;
             return;
         }
@@ -216,10 +241,21 @@ public class EnemyController : MonoBehaviour
 
     //public void Death()
     //{
-        //we have this in the Enemy.cs
+    //we have this in the Enemy.cs
     //}
 
+    private void OnCollide(Collider2D coll)
+    {
+        UnityEngine.Debug.Log($"Enemy has collided with {coll.tag}");
+        if (coll.tag.Equals("Wall"))
+        {
+            UnityEngine.Debug.Log("OnCollide Wall true");
+            StartCoroutine(ChooseDirection());
+        }
+    }
+
 }
+
 
 
 ///////////////////////////////////////////////////////////
