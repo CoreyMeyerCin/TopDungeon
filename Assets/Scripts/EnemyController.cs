@@ -35,15 +35,18 @@ public class EnemyController : MonoBehaviour
     //Damage dmg;
     public float wanderCooldown = 1f;
     public float wanderStart;
+    public float wanderRange;
     public Vector3 wanderGoal;
+    public Vector3 wanderOldGoal;
     public Vector3 currentPosition;
     public Vector3 homePosition;
+    private CharacterController controller;
     public float homeStretch;//used for seeing how far we are from home
 
     private void Awake()
     {
-
         homePosition = transform.position;
+        wanderGoal = homePosition;
     }
         void Start()
     {
@@ -54,36 +57,56 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        UnityEngine.Debug.Log($"Current EnemyState: {currState}");
 
         currentPosition = transform.position;
-        if (IsAwayFromHome(range)&& currState != EnemyState.Follow)
+        if (IsPlayerInRange(range))
         {
+            UnityEngine.Debug.Log(" Hit A");
+            currState = EnemyState.Follow;
+            Follow();
+        }
+        else if (IsAwayFromHome(range))
+        {
+            UnityEngine.Debug.Log(" Hit B");
             currState = EnemyState.Idle;
+            Idle();
         }
-        else switch(currState)
+        else if(!IsAwayFromHome(range) && currentPosition == homePosition)
         {
-            case (EnemyState.Idle):
-                   // UnityEngine.Debug.Log("Idle");
-                Idle();   // Right now enemies just kind of aimlessly wander. If we want them to stand still we can make this
-                break;
-
-            case (EnemyState.Wander):
-                    //UnityEngine.Debug.Log("Wander");
-                    Wander();
-                break;
-
-            case (EnemyState.Follow):
-                    //UnityEngine.Debug.Log("Follow");
-                    Follow();
-                break;
-
-            //case (EnemyState.Die)://we already have this in the Enemy.cs but might want to transfer it to here
-            //    break;
-            case (EnemyState.Attack)://currently this doesnt do anything, once we have ranged enemies it will though
-                    //UnityEngine.Debug.Log("Attack");
-                    Attack();
-                break;
+            UnityEngine.Debug.Log(" Hit C");
+            currState = EnemyState.Wander;
+            Wander();
+        }else if (!IsAwayFromHome(range))
+        {
+            UnityEngine.Debug.Log(" Hit D");
+            Wander();
         }
+
+        //switch(currState)
+        //{
+        //    case (EnemyState.Idle):
+        //           // UnityEngine.Debug.Log("Idle");
+        //        Idle();   // Right now enemies just kind of aimlessly wander. If we want them to stand still we can make this
+        //        break;
+
+        //    case (EnemyState.Wander):
+        //            //UnityEngine.Debug.Log("Wander");
+        //            Wander();
+        //        break;
+
+        //    case (EnemyState.Follow):
+        //            //UnityEngine.Debug.Log("Follow");
+        //            Follow();
+        //        break;
+
+        //    //case (EnemyState.Die)://we already have this in the Enemy.cs but might want to transfer it to here
+        //    //    break;
+        //    case (EnemyState.Attack)://currently this doesnt do anything, once we have ranged enemies it will though
+        //            //UnityEngine.Debug.Log("Attack");
+        //            Attack();
+        //        break;
+        //}
     }
     private bool IsPlayerInRange(float range)
     {
@@ -97,40 +120,68 @@ public class EnemyController : MonoBehaviour
     private IEnumerator ChooseDirection()// this loops over all the times within it put together
     {
         chooseDir = true;// we do this so we do not overlap the Choose Direction function with itself
-        yield return new WaitForSeconds(Random.Range(2f, 8f));// This will make the enemy wait 2-8 seconds before choosign a direction
-        randomDir = new Vector3(0,0,Random.Range(0,360));// this will set their walking direction to a random direction
-        Quaternion nextRotation = Quaternion.Euler(randomDir);
-        transform.rotation = Quaternion.Lerp(transform.rotation, nextRotation, Random.Range(0.5f, 2.5f));// This will set the location direction of the next motion == somewhere that is not the direction they are headed between 0.5 and 2.5 seconds
-        chooseDir = false;// we need to be able to pick a direction again.
+        //yield return new WaitForSeconds(Random.Range(1f, 4f));// This will make the enemy wait 2-8 seconds before choosign a direction
+        wanderGoal = new Vector3(Random.Range(homePosition.x -range, homePosition.x + range), //x value
+                                 Random.Range(homePosition.y - range, homePosition.y + range), //y value
+                                                0);
+        //wanderGoal = Random.insideUnitCircle * range;
+        UnityEngine.Debug.Log($"Current Position: {currentPosition}\nwanderGoal:{wanderGoal}");
+        yield return new WaitForSeconds(Random.Range(1f, 4f));
+       
+
+     
+
+        //Vector3 smoothLookAt = Vector3.Slerp(wanderOldGoal, wanderGoal, speed *Time.deltaTime);
+        //smoothLookAt.y = wanderGoal.y;
+
+        //wanderGoal = Random.insideUnitCircle * wanderRange;
+        //wanderOldGoal = currentPosition;
+        //currentPosition = new Vector3(wanderGoal.x, currentPosition.y, wanderGoal.y);
+        //transform.LookAt(smoothLookAt);
+        //controller.SimpleMove(transform.forward * speed);
+
+        //randomDir = new Vector3(0,0,Random.Range(0,360));// this will set their walking direction to a random direction
+        //Quaternion nextRotation = Quaternion.Euler(randomDir);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, nextRotation, Random.Range(0.5f, 2.5f));// This will set the location direction of the next motion == somewhere that is not the direction they are headed between 0.5 and 2.5 seconds
+        
+       
     }
-    void Idle()
+    private void CheckIfWanderComplete(Vector3 currPosition, Vector3 wanGoal)
     {
-        if (IsPlayerInRange(range))
+        if(currPosition == wanGoal)
         {
-            currState=EnemyState.Follow;
-        }
-        if (currentPosition == homePosition)
-        {
-            currState = EnemyState.Wander;
+            chooseDir = false;
         }
         else
         {
-            transform.position = Vector2.MoveTowards(currentPosition, homePosition, speed * Time.deltaTime);
+            chooseDir = true;
         }
+    }
+    void Idle()
+    {
+        transform.position = Vector2.MoveTowards(currentPosition, homePosition, speed * Time.deltaTime);
+        wanderGoal = homePosition;
     }
 
     void Wander()
     {
-        if (IsPlayerInRange(range))
+
+
+        transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, speed * Time.deltaTime);
+        CheckIfWanderComplete(currentPosition, wanderGoal);
+        UnityEngine.Debug.Log("Hit 1");
+        if (!chooseDir)
         {
-            currState = EnemyState.Follow;
-        }
-        else if (!chooseDir)
-        {
+            UnityEngine.Debug.Log("Hit 2");
             StartCoroutine(ChooseDirection());
+            return;
         }
-        transform.position += -transform.right * speed * Time.deltaTime;
-        
+        else if (chooseDir)
+        {
+            UnityEngine.Debug.Log("Hit 3");
+            //transform.position += -transform.right * speed * Time.deltaTime;
+            return;
+        }
     }
   
 
