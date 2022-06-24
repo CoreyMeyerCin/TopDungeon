@@ -52,7 +52,8 @@ public class Fighter : MonoBehaviour
         if (gameObject.tag.Equals("Enemy"))
         {
             //GameManager.instance.experienceManager.OnExperienceChanged((int)gameObject.GetComponent<EnemyController>().exp);
-            GameManager.instance.experienceManager.OnExperienceChanged((int)gameObject.GetComponent<EnemyController>().exp);
+            gameObject.GetComponent<EnemyController>().Death();
+            
         }
         Destroy(gameObject);
     }
