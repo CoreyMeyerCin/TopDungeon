@@ -21,6 +21,10 @@ public class EnemyController : MonoBehaviour
     GameObject player; // this will point at the player.instance... we should use GameObject for now on instead of public Player player because GameObject has more tools for us to use.
     public EnemyState currState = EnemyState.Idle; //this is the current state that the enemy is in, starts off with Idle until acted upon.
     public EnemyType enemyType; //Melee or ranged for now may add burrow and flying
+   
+    public float damage;
+    public float knockback;
+    public float exp;
     public float range;// this will be used to for the enemys sight range
     public float speed =1; // how fast the enemy can move in pixels/ps
     public float attackRange;// this is how far the enemy is able to attack the player, or switch EnemyState to attack
@@ -45,6 +49,8 @@ public class EnemyController : MonoBehaviour
     public Vector3 homePosition;
     private CharacterController controller;
     public float homeStretch;//used for seeing how far we are from home
+    public bool collidingWithPlayer;
+    public Fighter figher;
 
     private void Awake()
     {
@@ -107,6 +113,8 @@ public class EnemyController : MonoBehaviour
             //UnityEngine.Debug.Log(" Hit D");
             Wander();
         }
+
+     
 
         //switch(currState)
         //{
@@ -251,6 +259,16 @@ public class EnemyController : MonoBehaviour
         {
             UnityEngine.Debug.Log("OnCollide Wall true");
             StartCoroutine(ChooseDirection());
+        }
+        if (coll.tag.Equals("Player"))
+        {
+            Damage dmg = new Damage()
+            {
+                damageAmount = (int)damage,
+                origin = transform.position,
+                pushForce = (int)knockback
+            };
+            coll.SendMessage("ReceiveDamage", dmg);
         }
     }
 

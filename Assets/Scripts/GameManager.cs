@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public FloatingTextManager floatingTextManager;
     public ExperienceManager experienceManager;
     public LevelUI levelUI;
+    public PersistantUI persistantUI;
 
     private void Awake()
     {
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(levelUI.gameObject);
             DontDestroyOnLoad(healthService);
             DontDestroyOnLoad(weapon);
+            DontDestroyOnLoad(persistantUI.gameObject);
             SceneManager.sceneLoaded += LoadState;
         }
         else
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
             Destroy(experienceManager.gameObject);
             Destroy(healthService.gameObject);
             Destroy(weapon);
+            Destroy(persistantUI.gameObject);
             SceneManager.sceneLoaded += LoadState;
         }
 
