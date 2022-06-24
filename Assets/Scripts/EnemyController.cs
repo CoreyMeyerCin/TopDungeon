@@ -21,7 +21,9 @@ public class EnemyController : MonoBehaviour
     GameObject player; // this will point at the player.instance... we should use GameObject for now on instead of public Player player because GameObject has more tools for us to use.
     public EnemyState currState = EnemyState.Idle; //this is the current state that the enemy is in, starts off with Idle until acted upon.
     public EnemyType enemyType; //Melee or ranged for now may add burrow and flying
-   
+
+    public float level;
+    public float gold;
     public float damage;
     public float knockback;
     public float exp;
@@ -270,6 +272,40 @@ public class EnemyController : MonoBehaviour
             };
             coll.SendMessage("ReceiveDamage", dmg);
         }
+    }
+    public void Death()
+    {
+        GameManager.instance.experienceManager.OnExperienceChanged((int)exp);
+        RollForLootDrop(level, gold, exp);
+
+    }
+    private void RollForLootDrop(float enemyLevel, float enemyGold, float enemyExp)
+    {
+        int randomNumber = Random.RandomRange(1,100);
+        if (randomNumber > 90)
+        {
+
+            switch (enemyLevel)
+            {
+
+            }
+        }
+
+        GameManager.instance.player.gold += OnDeathCalculateGoldEarned();
+        GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
+    }
+
+    public int OnDeathCalculateGoldEarned()
+    {
+        float totalGold = Mathf.Round(gold * level);
+        return (int)totalGold;
+    }
+
+    public int OnDeathCalculateExperienceEarned()
+    {
+        float totalExperience = Mathf.Round((exp * level)/(1+level));
+
+        return (int)totalExperience;
     }
 
 }
