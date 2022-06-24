@@ -28,19 +28,32 @@ public class Fighter : MonoBehaviour
             lastImmune = Time.time;
             hitpoints -= dmg.damageAmount;
             pushDirection = (transform.position - dmg.origin).normalized * dmg.pushForce; // this will make the hit object move AWAY from the dmg.origin(player that hit them.)
-
+            
             GameManager.instance.ShowText(dmg.damageAmount.ToString(), 25, Color.red, transform.position, Vector3.zero, 0.5f);
-
-            if(hitpoints <= 0)
+            
+            if (hitpoints <= 0)
             {
                 hitpoints = 0;
                 Death();
             }
         }
+        StartCoroutine(PushToZero(pushRecoverySpeed));
+    }
+   private IEnumerator PushToZero(float recoverySpeed)
+    {
+        yield return new WaitForSeconds(recoverySpeed);
+
+        pushDirection = (transform.position).normalized * 0;
     }
 
     protected virtual void Death()
     {
-
+        
+        if (gameObject.tag.Equals("Enemy"))
+        {
+            //GameManager.instance.experienceManager.OnExperienceChanged((int)gameObject.GetComponent<EnemyController>().exp);
+            GameManager.instance.experienceManager.OnExperienceChanged((int)gameObject.GetComponent<EnemyController>().exp);
+        }
+        Destroy(gameObject);
     }
 }

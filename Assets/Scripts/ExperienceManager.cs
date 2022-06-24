@@ -31,7 +31,7 @@ public class ExperienceManager : MonoBehaviour
         Actions.OnExperienceChanged -= OnExperienceChanged;
     }
 
-    private void CalculateNewExperienceToNextLevel()
+    public void CalculateNewExperienceToNextLevel()
 	{
         var next = (int)Math.Round(experienceToNextLevel * 1.17);
         experienceToNextLevel = next;
@@ -47,7 +47,7 @@ public class ExperienceManager : MonoBehaviour
     //************************************************
     //EVENT HANDLERS
     //************************************************
-    private void OnExperienceChanged(int exp)
+    public void OnExperienceChanged(int exp)
     {
         experience += exp;
         while (experience >= experienceToNextLevel)

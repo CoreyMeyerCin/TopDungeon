@@ -32,10 +32,10 @@ public class PersistantUI : MonoBehaviour
 
         hitPoints = GameManager.instance.player.hitpoints;
         maxHitPoints = GameManager.instance.player.maxHitpoints;
-        currentExp = GameManager.instance.experienceManager.GetExperience();
-        maxExp = GameManager.instance.experienceManager.GetExperienceToNextLevel();
+        //currentExp = (float)GameManager.instance.experienceManager.GetExperience();
+        //maxExp = (float)GameManager.instance.experienceManager.GetExperienceToNextLevel();
         healthText.text = $"HP:{hitPoints}/{maxHitPoints}";
-        expText.text = $"EXP:{currentExp}/{maxExp}";
+        expText.text = $"EXP:{GameManager.instance.experienceManager.GetExperience()}/{GameManager.instance.experienceManager.GetExperienceToNextLevel()}";
         goldText.text = $"Gold:{GameManager.instance.player.gold}";
 
         if (Input.GetKeyDown(KeyCode.Tab) && !showGui)
