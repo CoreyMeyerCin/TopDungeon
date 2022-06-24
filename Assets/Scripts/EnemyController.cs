@@ -27,6 +27,10 @@ public class EnemyController : MonoBehaviour
     public float damage;
     public float knockback;
     public float exp;
+    public GameObject[] dropListCommon;
+    public CollectionController[] dropListUncommon;
+    public CollectionController[] dropListRare;
+    public CollectionController[] dropListLegendray;
     public float range;// this will be used to for the enemys sight range
     public float speed =1; // how fast the enemy can move in pixels/ps
     public float attackRange;// this is how far the enemy is able to attack the player, or switch EnemyState to attack
@@ -281,16 +285,73 @@ public class EnemyController : MonoBehaviour
     }
     private void RollForLootDrop(float enemyLevel, float enemyGold, float enemyExp)
     {
-        int randomNumber = Random.RandomRange(1,100);
-        if (randomNumber > 90)
+        int randomNumber = Random.Range(1,1000);
+        Debug.LogWarning($"Random Number: {randomNumber}");
+        if (randomNumber >= 900)
         {
-
-            switch (enemyLevel)
+            int itemRarity = Random.Range(1,200);
+            int rollRarity = itemRarity + ((int)level * 2);
+            Debug.LogWarning($"Random Number: {randomNumber}\nRollRarity{rollRarity}");
+            
+            switch (rollRarity)
             {
+                case >3 and <= 110://drop common //the lowest possible to roll is a 3
+                {
+                        Debug.LogWarning("Common Item Drop");
+                  for(int i=0; i<dropListCommon.Length; i++)
+                  {
+                      if (i == dropListCommon.Length - 1)
+                      {
+                      int selectItem = Random.Range(0, i);
+                      Instantiate(this.dropListCommon[selectItem], this.transform.position, Quaternion.Euler(new Vector3(0,0,-90)));
+                      }
+                  }
+                   //dropList();
 
+                  return;
+                }
+                case  >= 111 and < 172://dorp uncommon
+                    {
+                        Debug.LogWarning("Uncommon Item Drop");
+                        for (int i = 0; i < dropListUncommon.Length; i++)
+                        {
+                            if (i == dropListUncommon.Length - 1)
+                            {
+                                int selectItem = Random.Range(0, i);
+                                Instantiate(this.dropListUncommon[selectItem], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
+                            }
+                        }
+                        return;
+                }
+                case >= 172 and 193://drop rare
+                    {
+                        Debug.LogWarning("Rare Item Drop");
+                        for (int i = 0; i < dropListCommon.Length; i++)
+                        {
+                            if (i == dropListRare.Length - 1)
+                            {
+                                int selectItem = Random.Range(0, i);
+                                Instantiate(this.dropListRare[selectItem], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
+                            }
+                        }
+                        return;
+                }
+                case >= 193 and < 202://drop legendary
+                    {
+                        Debug.LogWarning("Legendary Item Drop");
+                        for (int i = 0; i < dropListUncommon.Length; i++)
+                        {
+                            if (i == dropListCommon.Length - 1)
+                            {
+                                int selectItem = Random.Range(0, i);
+                                Instantiate(this.dropListRare[selectItem], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
+                            }
+                        }
+                        return;
+                    }
             }
         }
-
+            
         GameManager.instance.player.gold += OnDeathCalculateGoldEarned();
         GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
     }
