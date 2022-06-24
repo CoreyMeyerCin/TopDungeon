@@ -287,6 +287,8 @@ public class EnemyController : MonoBehaviour
     {
         int randomNumber = Random.Range(1,1000);
         Debug.LogWarning($"Random Number: {randomNumber}");
+
+        Instantiate(this.dropListCommon[0], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
         if (randomNumber >= 900)
         {
             int itemRarity = Random.Range(1,200);
