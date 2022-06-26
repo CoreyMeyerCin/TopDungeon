@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item : Collectable
 {
     public static readonly int DROP_CHANCE_CEILING = 1000; //several of these fields need to be moved into a Controller class instead
-    public static readonly int ITEM_DROP_THRESHOLD = 900;
+    public static readonly int ITEM_DROP_THRESHOLD = 0; //roll must be between this value and drop_chance_ceiling for an item to drop
 
     //adjust rarity rates, compared to drop_chance_ceiling
     private static readonly int UNCOMMON_THRESHOLD = 600; 

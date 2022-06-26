@@ -8,12 +8,10 @@ public class EnemyController : MonoBehaviour
     GameObject player; // this will point at the player.instance... we should use GameObject for now on instead of public Player player because GameObject has more tools for us to use.
     public EnemyState currState = EnemyState.Idle; //this is the current state that the enemy is in, starts off with Idle until acted upon.
     public EnemyType enemyType; //Melee or ranged for now may add burrow and flying
-
-    public int level; //many of these fields need to be migrated to Enemy.cs
-    public int gold;
+    
+    //many of these fields need to be migrated to Enemy.cs
     public int damage;
     public int knockback;
-    public int exp;
     public float range; // used for the enemys sight range
     public float speed = 1; // how fast the enemy can move in pixels/ps
     public float attackRange;// how far the enemy is able to attack the player, or switch EnemyState to attack
@@ -41,17 +39,20 @@ public class EnemyController : MonoBehaviour
     public bool collidingWithPlayer;
     public Enemy enemy;
 
-    public CollectionController[] dropListCommon; //TODO: move into item controller and look into proper drop-tables
-    public CollectionController[] dropListUncommon;
-    public CollectionController[] dropListRare;
-    public CollectionController[] dropListUnique;
-    public CollectionController[] dropListLegendray;
+    //TODO: move into item controller and look into proper drop-tables
+    public GameObject[] dropListCommon;
+    public GameObject[] dropListUncommon;
+    public GameObject[] dropListRare;
+    public GameObject[] dropListUnique;
+    public GameObject[] dropListLegendary;
 
     private void Awake()
     {
         homePosition = transform.position;
         wanderGoal = homePosition;
+        enemy = gameObject.GetComponent<Enemy>();
     }
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player"); //this is why we use GameObject... Using the Tag is strong here
@@ -257,8 +258,11 @@ public class EnemyController : MonoBehaviour
 
     public void Death()
     {
-        GameManager.instance.experienceManager.OnExperienceChanged(exp);
+        GameManager.instance.experienceManager.OnExperienceChanged(enemy.xpValue);
+        GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
+        Player.instance.gold += OnDeathCalculateGoldEarned();
         RollForLootDrop();
+        Destroy(gameObject);
     }
 
     private void RollForLootDrop() //all of this really needs to go into an item manager instead + other code that doesn't involve enemy directly
@@ -266,7 +270,7 @@ public class EnemyController : MonoBehaviour
         if (ShouldDropItem())
         {
             Item item = new Item();
-            item.RollRarity(level);
+            item.RollRarity(enemy.level);
 
             switch (item.rarity)
             {
@@ -301,15 +305,13 @@ public class EnemyController : MonoBehaviour
                 case Item.Rarity.Legendary:
                     {
                         Debug.LogWarning("Legendary item drop");
-                        int itemIndex = Random.Range(0, dropListLegendray.Length - 1);
-                        Instantiate(dropListLegendray[itemIndex], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
+                        int itemIndex = Random.Range(0, dropListLegendary.Length - 1);
+                        Instantiate(dropListLegendary[itemIndex], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
                         return;
                     }
             }
         }
 
-        Player.instance.gold += OnDeathCalculateGoldEarned();
-        GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
     }
 
 
@@ -321,13 +323,13 @@ public class EnemyController : MonoBehaviour
 
     public int OnDeathCalculateGoldEarned()
     {
-        var totalGold = gold * level;
+        var totalGold = enemy.goldValue * enemy.level;
         return totalGold;
     }
 
     public int OnDeathCalculateExperienceEarned()
     {
-        var totalExperience = Mathf.RoundToInt((exp * level) / (1 + level));
+        var totalExperience = Mathf.RoundToInt((enemy.xpValue * enemy.level) / (1 + enemy.level));
         return totalExperience;
     }
 

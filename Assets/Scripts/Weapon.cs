@@ -48,7 +48,7 @@ public class Weapon : Collidable
 	{
 		base.Update();
 
-		if(Time.time - lastUse > GameManager.instance.player.cooldown)
+		if(Time.time - lastUse > Player.instance.cooldown)
         {
 			attackAvailable = true;
 		}
@@ -57,29 +57,26 @@ public class Weapon : Collidable
 			Attack();
 		}
 	}
-	public int CalculateDamage(float weaponBaseDamage, float weaponExtraDamage ,float critChance, float critMultiplier, float playerDamage)
+
+	public int CalculateDamage()
     {
-		double hybridDamage= weaponBaseDamage+ playerDamage;
+		var damage = weaponBaseDamage + Player.instance.playerDamage;
 
-
-		double totalDamage= hybridDamage;
-	
-
-		if(Random.Range(0,100) <= critChance)
+		if(Random.Range(0,100) <= Player.instance.critChance)
         {
-			totalDamage *= (double)critMultiplier;
+			damage *= Player.instance.critMultiplier;
         }
 
         if (hasExtraDamage)
         {
-			totalDamage += (double)weaponExtraDamage;
+			damage += weaponExtraDamage;
         }
 		//if (player.lifesteal > 0)
 		//{
 		//	player.CurrentHitPointChange((float)totalDamage * player.lifesteal);
 		//}
 
-		return (int)totalDamage;
+		return (int)damage;
 
     }
 	
@@ -105,7 +102,7 @@ public class Weapon : Collidable
 		{
 			Damage dmg = new Damage()
 			{
-				damageAmount = (int)CalculateDamage(weaponBaseDamage, weaponExtraDamage, player.critChance, player.critMultiplier, player.playerDamage),
+				damageAmount = CalculateDamage(),
 				origin = transform.position,
 				pushForce = knockBack
 			};
