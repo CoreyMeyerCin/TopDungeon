@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Enemy : Mover
 {
-   //Experience
-   public int xpValue = 1;
+    public int level = 1;
+	public int xpValue = 1;
+    public int goldValue = 10;
 
-    //**********INHERITED FIELD*******************
-    //FIGHTER.cs
-    /*float hitpoints;
+	//**********INHERITED FIELD*******************
+	//FIGHTER.cs
+	/*float hitpoints;
      * float maxhitPoints;
      * pushRecoverySpeed;
      * 
@@ -18,8 +19,8 @@ public class Enemy : Mover
 
 
 
-   //Logic for moving
-   public float triggerLength = 1.0f;//how close until the enemy gets triggered to start chasing
+	//Logic for moving
+	public float triggerLength = 1.0f;//how close until the enemy gets triggered to start chasing
    public float chaseLength = 5;//how far the enemy will chase you from their resting position
    //private bool chasing;
    public bool collidingWithPlayer;
@@ -97,8 +98,4 @@ public class Enemy : Mover
         //UpdateMotor(Vector3.zero);
     }
 
-    protected override void Death()
-    {
-        Destroy(gameObject);
-    }
 }

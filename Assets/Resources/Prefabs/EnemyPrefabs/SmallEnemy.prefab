@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4689799196699703098}
   - component: {fileID: 4689799196699703099}
   - component: {fileID: 8382809693456808153}
+  - component: {fileID: -184715788559837292}
   m_Layer: 9
   m_Name: SmallEnemy
   m_TagString: Enemy
@@ -132,11 +133,6 @@ MonoBehaviour:
   damage: 2
   knockback: 1
   exp: 0
-  dropListCommon:
-  - {fileID: 3565724592359299413, guid: cdf7c493e5ea9a443a43af5ad3800e77, type: 3}
-  dropListUncommon: []
-  dropListRare: []
-  dropListLegendray: []
   range: 1
   speed: 0.6
   attackRange: 1
@@ -177,7 +173,54 @@ MonoBehaviour:
   homePosition: {x: 0, y: 0, z: 0}
   homeStretch: 0.2
   collidingWithPlayer: 0
-  figher: {fileID: 0}
+  enemy: {fileID: 0}
+  dropListCommon:
+  - {fileID: 1612636294316247153, guid: a0f608beaac795a4ba043ea871b3ced1, type: 3}
+  - {fileID: 3565724592359299413, guid: cdf7c493e5ea9a443a43af5ad3800e77, type: 3}
+  - {fileID: 8995183379464344371, guid: a5f10825f95ed0841af1787ee8877cc9, type: 3}
+  - {fileID: 2897208738703870439, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+  - {fileID: 6351785372424728597, guid: c59e61e401626d749a60877744560fb8, type: 3}
+  dropListUncommon:
+  - {fileID: 5046456085793850565, guid: c65938e14da36b54d8f198385d74bb6d, type: 3}
+  - {fileID: 6009106186158223118, guid: a2cfae27548750c4fafcec1e6f52cc05, type: 3}
+  - {fileID: 5935367075238854954, guid: d0f1ac03c8c290c448ef00e14a653be5, type: 3}
+  dropListRare: []
+  dropListUnique: []
+  dropListLegendary: []
+--- !u!114 &-184715788559837292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4689799196699703076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ee264c48af60b4bb6d892405189dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitpoints: 0
+  maxHitpoints: 0
+  pushRecoverySpeed: 0.2
+  speed: 0
+  xpValue: 1
+  triggerLength: 1
+  chaseLength: 5
+  collidingWithPlayer: 0
+  filter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
 --- !u!1 &4689799198372727733
 GameObject:
   m_ObjectHideFlags: 0
