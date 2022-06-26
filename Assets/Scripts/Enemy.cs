@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Enemy : Mover
 {
-   //Experience
    public int xpValue = 1;
 
     //**********INHERITED FIELD*******************
@@ -101,4 +100,5 @@ public class Enemy : Mover
     {
         Destroy(gameObject);
     }
+
 }

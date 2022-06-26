@@ -21,8 +21,8 @@ public class Fighter : MonoBehaviour
 
     //All fighters can ReceiveDAmage / Die
 
-    protected virtual void ReceiveDamage(Damage dmg){
-
+    protected virtual void ReceiveDamage(Damage dmg)
+    {
         if(Time.time - lastImmune > immuneTime) //check to see if we are still immune
         {
             lastImmune = Time.time;
@@ -39,7 +39,8 @@ public class Fighter : MonoBehaviour
         }
         StartCoroutine(PushToZero(pushRecoverySpeed));
     }
-   private IEnumerator PushToZero(float recoverySpeed)
+
+    private IEnumerator PushToZero(float recoverySpeed)
     {
         yield return new WaitForSeconds(recoverySpeed);
 
@@ -48,7 +49,6 @@ public class Fighter : MonoBehaviour
 
     protected virtual void Death()
     {
-        
         if (gameObject.tag.Equals("Enemy"))
         {
             //GameManager.instance.experienceManager.OnExperienceChanged((int)gameObject.GetComponent<EnemyController>().exp);

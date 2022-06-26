@@ -9,7 +9,7 @@ public class CharacterMenu : MonoBehaviour
     public Text levelText, hitpointText, goldText, upgradedCostText, xpText;
 
     //Logic Field
-    private int currentCharacterSelection =0;
+    private int currentCharacterSelection = 0;
     public Image characterSelectionSprite;
     public Image weaponSprite;
     public RectTransform xpBar;//this will make the bar work with a transform-scale
@@ -35,7 +35,7 @@ public class CharacterMenu : MonoBehaviour
             //if we went too far in our array
             if(currentCharacterSelection <0)
             {
-                currentCharacterSelection = GameManager.instance.playerSprites.Count-1;
+                currentCharacterSelection = GameManager.instance.playerSprites.Count - 1;
             }
 
             OnSelectionChanged();

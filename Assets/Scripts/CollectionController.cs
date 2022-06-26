@@ -36,11 +36,10 @@ public class CollectionController : Collidable
    
     private void OnTriggerEnter2D(Collider2D coll)
     {
-
-        if (coll.tag.Equals("Player"))          {
-
+        if (coll.tag.Equals("Player"))          
+        {
             Player.collectedAmount++;
-            UnityEngine.Debug.Log("Collsion here!");
+            Debug.Log("Collsion here!");
             GameManager.instance.player.CurrentHitPointChange(currHitPoint);//in Player
             GameManager.instance.player.MaxHitPointsChange(maxHitPoint);
             GameManager.instance.player.MoveSpeedChange(moveSpeed);// in Mover

@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 3837131226704075889}
   - component: {fileID: 3837131226704075888}
   - component: {fileID: 3837131226704075891}
+  - component: {fileID: 5366250002335723752}
   m_Layer: 9
   m_Name: SmallEnemy
   m_TagString: Fighter
@@ -214,7 +215,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 213901411
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -586811001, guid: bb5eb99d61655564588e794444964628, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -268,6 +269,7 @@ MonoBehaviour:
   hitpoints: 10
   maxHitpoints: 0
   pushRecoverySpeed: 0.2
+  speed: 0
   xpValue: 10
   triggerLength: 0.3
   chaseLength: 1
@@ -286,3 +288,70 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+--- !u!114 &5366250002335723752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837131226704075887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e8de18c298a7845a67ba7db7dd51bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currState: 0
+  enemyType: 0
+  level: 0
+  gold: 0
+  damage: 0
+  knockback: 0
+  exp: 0
+  range: 0
+  speed: 1
+  attackRange: 0
+  projectileSpeed: 0
+  bulletPrefab: {fileID: 0}
+  boxCollider: {fileID: 0}
+  hits:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  filter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  wanderCooldown: 1
+  wanderStart: 0
+  wanderRange: 0
+  wanderGoal: {x: 0, y: 0, z: 0}
+  wanderOldGoal: {x: 0, y: 0, z: 0}
+  currentPosition: {x: 0, y: 0, z: 0}
+  homePosition: {x: 0, y: 0, z: 0}
+  homeStretch: 0
+  collidingWithPlayer: 0
+  enemy: {fileID: 0}
+  dropListCommon:
+  - {fileID: 0}
+  - {fileID: 0}
+  dropListUncommon: []
+  dropListRare: []
+  dropListUnique: []
+  dropListLegendray: []

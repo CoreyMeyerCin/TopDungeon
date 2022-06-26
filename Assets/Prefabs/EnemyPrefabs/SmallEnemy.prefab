@@ -132,11 +132,6 @@ MonoBehaviour:
   damage: 2
   knockback: 1
   exp: 0
-  dropListCommon:
-  - {fileID: 3565724592359299413, guid: cdf7c493e5ea9a443a43af5ad3800e77, type: 3}
-  dropListUncommon: []
-  dropListRare: []
-  dropListLegendray: []
   range: 1
   speed: 0.6
   attackRange: 1
@@ -177,7 +172,14 @@ MonoBehaviour:
   homePosition: {x: 0, y: 0, z: 0}
   homeStretch: 0.2
   collidingWithPlayer: 0
-  figher: {fileID: 0}
+  enemy: {fileID: 0}
+  dropListCommon:
+  - {fileID: 0}
+  - {fileID: 3565724592359299413, guid: cdf7c493e5ea9a443a43af5ad3800e77, type: 3}
+  dropListUncommon: []
+  dropListRare: []
+  dropListUnique: []
+  dropListLegendray: []
 --- !u!1 &4689799198372727733
 GameObject:
   m_ObjectHideFlags: 0

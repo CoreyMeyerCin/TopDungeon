@@ -54,7 +54,7 @@ public class Weapon : Collidable
 		}
 		if (Input.GetKeyDown(KeyCode.Space) && attackAvailable)
 		{
-				Attack();
+			Attack();
 		}
 	}
 	public int CalculateDamage(float weaponBaseDamage, float weaponExtraDamage ,float critChance, float critMultiplier, float playerDamage)
@@ -113,6 +113,7 @@ public class Weapon : Collidable
 		}
 
 	}
+
 	private void Shoot()
     {
 		Instantiate(player.projectilePrefab,player.firePoint.position, player.firePoint.rotation);
