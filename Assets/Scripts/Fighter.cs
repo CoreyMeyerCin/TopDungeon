@@ -46,7 +46,7 @@ public class Fighter : MonoBehaviour
         pushDirection = (transform.position).normalized * 0;
     }
 
-    protected virtual void Death()
+    public virtual void Death()
     {
         
         if (gameObject.tag.Equals("Enemy"))

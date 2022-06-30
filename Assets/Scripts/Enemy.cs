@@ -97,7 +97,7 @@ public class Enemy : Mover
         //UpdateMotor(Vector3.zero);
     }
 
-    protected override void Death()
+    public override void Death()
     {
         Destroy(gameObject);
     }

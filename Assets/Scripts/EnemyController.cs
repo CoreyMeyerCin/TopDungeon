@@ -18,7 +18,7 @@ public enum EnemyType
 }
 public class EnemyController : MonoBehaviour
 {
-    GameObject player; // this will point at the player.instance... we should use GameObject for now on instead of public Player player because GameObject has more tools for us to use.
+    public GameObject player; // this will point at the player.instance... we should use GameObject for now on instead of public Player player because GameObject has more tools for us to use.
     public EnemyState currState = EnemyState.Idle; //this is the current state that the enemy is in, starts off with Idle until acted upon.
     public EnemyType enemyType; //Melee or ranged for now may add burrow and flying
 
@@ -35,12 +35,12 @@ public class EnemyController : MonoBehaviour
     public float speed =1; // how fast the enemy can move in pixels/ps
     public float attackRange;// this is how far the enemy is able to attack the player, or switch EnemyState to attack
     public float projectileSpeed;// how far the enemy's projectile flies
-    private float coolDown;//how often the enemy can use its attack action
-    private bool chooseDir = false;// this is how the enemy chooses which way to walk/attack
-    private bool dead = false; // checks to see if the enemy is dead
-    private bool coolDownAttack = false; // the Time.time check of if enemy can attack again
-    private bool notInRoom; //Checks to see if Player is in the same room as the enemy
-    private Vector3 randomDir; //sets initial moving direction
+    protected float coolDown;//how often the enemy can use its attack action
+    protected bool chooseDir = false;// this is how the enemy chooses which way to walk/attack
+    protected bool dead = false; // checks to see if the enemy is dead
+    protected bool coolDownAttack = false; // the Time.time check of if enemy can attack again
+    protected bool notInRoom; //Checks to see if Player is in the same room as the enemy
+    protected Vector3 randomDir; //sets initial moving direction
     public GameObject bulletPrefab; // put the instance of the bullet here, this allows us to use magic and projectiles the same way. We just have to build the prefabs to do what we want.
     //Damage dmg;
     public BoxCollider2D boxCollider;
@@ -53,12 +53,12 @@ public class EnemyController : MonoBehaviour
     public Vector3 wanderOldGoal;
     public Vector3 currentPosition;
     public Vector3 homePosition;
-    private CharacterController controller;
+    protected CharacterController controller;
     public float homeStretch;//used for seeing how far we are from home
     public bool collidingWithPlayer;
-    public Fighter figher;
+    public Fighter fighter;
 
-    private void Awake()
+    protected void Awake()
     {
         homePosition = transform.position;
         wanderGoal = homePosition;
@@ -66,14 +66,14 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");//this is why we use GameObject... Using the Tag is strong here
-        Debug.Log($"Found Player: {player.name}");
+        //Debug.Log($"Found Player: {player.name}");
         currentPosition = transform.position;
         boxCollider = GetComponent<BoxCollider2D>();
         boxCollider.isTrigger = false;
     }
 
 
-    private void Update()
+     void Update()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         //Collision work
@@ -92,9 +92,9 @@ public class EnemyController : MonoBehaviour
             hits[i] = null;
         }
     }
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
     {
-        UnityEngine.Debug.Log($"Current EnemyState: {currState}");
+        //UnityEngine.Debug.Log($"Current EnemyState: {currState}");
 
         currentPosition = transform.position;
         if (IsPlayerInRange(range))
@@ -147,16 +147,16 @@ public class EnemyController : MonoBehaviour
         //        break;
         //}
     }
-    private bool IsPlayerInRange(float range)
+    protected virtual bool IsPlayerInRange(float range)
     {
         return Vector3.Distance(currentPosition, player.transform.position) <= range;//this checks to see if the player is within range by taking the players position and our position and comparing them using Vector3.Distance
     }
-    private bool IsAwayFromHome(float homeStretch)
+    protected virtual bool IsAwayFromHome(float homeStretch)
     {
         return Vector3.Distance(currentPosition, homePosition) >= homeStretch;
     }
 
-    private IEnumerator ChooseDirection()// this loops over all the times within it put together
+    protected virtual IEnumerator ChooseDirection()// this loops over all the times within it put together
     {
         chooseDir = true;// we do this so we do not overlap the Choose Direction function with itself
         //yield return new WaitForSeconds(Random.Range(1f, 4f));// This will make the enemy wait 2-8 seconds before choosign a direction
@@ -185,7 +185,7 @@ public class EnemyController : MonoBehaviour
         
        
     }
-    private void CheckIfWanderComplete(Vector3 currPosition, Vector3 wanGoal)
+    protected virtual void CheckIfWanderComplete(Vector3 currPosition, Vector3 wanGoal)
     {
         if(currPosition == wanGoal)
         {
@@ -196,13 +196,13 @@ public class EnemyController : MonoBehaviour
             chooseDir = true;
         }
     }
-    void Idle()
+    protected virtual void Idle()
     {
         transform.position = Vector2.MoveTowards(currentPosition, homePosition, speed * Time.deltaTime);
         wanderGoal = homePosition;
     }
 
-    void Wander()
+    protected virtual void Wander()
     {
 
 
@@ -211,7 +211,7 @@ public class EnemyController : MonoBehaviour
         //UnityEngine.Debug.Log("Hit 1");
         if (!chooseDir)
         {
-            UnityEngine.Debug.Log("Hit 2");
+            //UnityEngine.Debug.Log("Hit 2");
             StartCoroutine(ChooseDirection());
             return;
         }
@@ -224,12 +224,12 @@ public class EnemyController : MonoBehaviour
     }
   
 
-    void Follow()
+    protected virtual void Follow()
     {
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);//this is nice 
     }
 
-    void Attack()
+    protected virtual void Attack()
     {
         if (!coolDownAttack)
         {
@@ -245,7 +245,7 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
-    private IEnumerator CoolDown()
+    protected virtual IEnumerator CoolDown()
     {
         coolDownAttack = true;
         yield return new WaitForSeconds(coolDown);
@@ -258,12 +258,12 @@ public class EnemyController : MonoBehaviour
     //we have this in the Enemy.cs
     //}
 
-    private void OnCollide(Collider2D coll)
+    protected virtual void OnCollide(Collider2D coll)
     {
-        UnityEngine.Debug.Log($"Enemy has collided with {coll.tag}");
+        //UnityEngine.Debug.Log($"Enemy has collided with {coll.tag}");
         if (coll.tag.Equals("Wall"))
         {
-            UnityEngine.Debug.Log("OnCollide Wall true");
+            //UnityEngine.Debug.Log("OnCollide Wall true");
             StartCoroutine(ChooseDirection());
         }
         if (coll.tag.Equals("Player"))
@@ -277,29 +277,29 @@ public class EnemyController : MonoBehaviour
             coll.SendMessage("ReceiveDamage", dmg);
         }
     }
-    public void Death()
+    public virtual void Death()
     {
-        GameManager.instance.experienceManager.OnExperienceChanged((int)exp);
+        //GameManager.instance.experienceManager.OnExperienceChanged((int)exp);
         RollForLootDrop(level, gold, exp);
 
     }
-    private void RollForLootDrop(float enemyLevel, float enemyGold, float enemyExp)
+    protected virtual void RollForLootDrop(float enemyLevel, float enemyGold, float enemyExp)
     {
         int randomNumber = Random.Range(1,1000);
-        Debug.LogWarning($"Random Number: {randomNumber}");
+       //Debug.LogWarning($"Random Number: {randomNumber}");
 
         Instantiate(this.dropListCommon[0], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
         if (randomNumber >= 900)
         {
             int itemRarity = Random.Range(1,200);
             int rollRarity = itemRarity + ((int)level * 2);
-            Debug.LogWarning($"Random Number: {randomNumber}\nRollRarity{rollRarity}");
+            //Debug.LogWarning($"Random Number: {randomNumber}\nRollRarity{rollRarity}");
             
             switch (rollRarity)
             {
                 case >3 and <= 110://drop common //the lowest possible to roll is a 3
                 {
-                        Debug.LogWarning("Common Item Drop");
+                  //      Debug.LogWarning("Common Item Drop");
                   for(int i=0; i<dropListCommon.Length; i++)
                   {
                       if (i == dropListCommon.Length - 1)
@@ -314,7 +314,7 @@ public class EnemyController : MonoBehaviour
                 }
                 case  >= 111 and < 172://dorp uncommon
                     {
-                        Debug.LogWarning("Uncommon Item Drop");
+                        //Debug.LogWarning("Uncommon Item Drop");
                         for (int i = 0; i < dropListUncommon.Length; i++)
                         {
                             if (i == dropListUncommon.Length - 1)
@@ -327,7 +327,7 @@ public class EnemyController : MonoBehaviour
                 }
                 case >= 172 and 193://drop rare
                     {
-                        Debug.LogWarning("Rare Item Drop");
+                        //Debug.LogWarning("Rare Item Drop");
                         for (int i = 0; i < dropListCommon.Length; i++)
                         {
                             if (i == dropListRare.Length - 1)
@@ -340,7 +340,7 @@ public class EnemyController : MonoBehaviour
                 }
                 case >= 193 and < 202://drop legendary
                     {
-                        Debug.LogWarning("Legendary Item Drop");
+                        //Debug.LogWarning("Legendary Item Drop");
                         for (int i = 0; i < dropListUncommon.Length; i++)
                         {
                             if (i == dropListCommon.Length - 1)
@@ -358,13 +358,13 @@ public class EnemyController : MonoBehaviour
         GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
     }
 
-    public int OnDeathCalculateGoldEarned()
+    protected virtual int OnDeathCalculateGoldEarned()
     {
         float totalGold = Mathf.Round(gold * level);
         return (int)totalGold;
     }
 
-    public int OnDeathCalculateExperienceEarned()
+    protected virtual int OnDeathCalculateExperienceEarned()
     {
         float totalExperience = Mathf.Round((exp * level)/(1+level));
 
