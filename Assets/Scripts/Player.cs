@@ -28,14 +28,15 @@ public class Player : Mover
     public float fireDelay;
     public float attackSpeed = 1f;
     public float playerDamage;
-
+    public float lifesteal;
     public float critChance = 5f;
     public float critMultiplier = 1.05f;
     public float cooldown = 1f;
 
+    public int dropChanceModifier = 0;
+
     public float lifespan = 1f; //this is used for *projectile range* in Dagger.cs
 
-    public float lifesteal;
 
     protected override void Start()
     {
@@ -84,27 +85,33 @@ public class Player : Mover
         UpdateMotor(new Vector3(x, y, 0));
         currentPosition = transform.position;
     }
+
     public void LifestealChange(float lifest)
     {
         lifesteal += lifest;
     }
+
     public void PlayerDamageChange(float playerDmg)
     {
         playerDamage += playerDmg;
     }
+
     public void ProjectileLifespanChange(float lifesp)
     {
         lifespan += lifesp;
     }
+
     public void CritMultiplierChange(float CritDmg)
     {
         critMultiplier += CritDmg;
     }
+
     public void CritChanceChange(float critCh)
     {
         critChance += critCh;
     }
-    public void ChangeCurrentProjectile(Dagger proj,Weapon weap)
+
+    public void ChangeCurrentProjectile(Dagger proj, Weapon weap)
     {
         weapon = weap;
         projectilePrefab = proj;
@@ -116,6 +123,7 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         transform.GetChild(0).GetComponent<Animator>().enabled = false;
     }
+
     public void ChangeCurrentWeapon(Weapon weap)
     {
         weapon = weap;
@@ -127,6 +135,7 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         transform.GetChild(0).GetComponent<Animator>().enabled = true;
     }
+
     public void CurrentHitPointChange(float currHitPoint)
     {
         if (currHitPoint + hitpoints > maxHitpoints)
@@ -138,15 +147,18 @@ public class Player : Mover
             hitpoints += currHitPoint;
         }
     }
+
     public void MaxHitPointsChange(float maxHitPoint)
     {
         maxHitpoints += maxHitPoint;
         hitpoints += maxHitPoint;
     }
+
     public void AttackSpeedChange(float attackSpeedMod)
     {
         attackSpeed *= attackSpeedMod;
     }
+
     public void PushRecoveryChange(float pushRecovery)
     {
         pushRecoverySpeed *= pushRecovery;
@@ -181,7 +193,7 @@ public class Player : Mover
     //Movement
     public void GetPlayerDirection()
     {
-         if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
         {
             playerDirection = 0.5;
         }

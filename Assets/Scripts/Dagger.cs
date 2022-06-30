@@ -15,7 +15,7 @@ public class Dagger : Collidable
     private Collider2D[] hits = new Collider2D[10];
     public ContactFilter2D filter;
     private bool hasCollided;
-    public Weapon weapon;
+    public Weapon weapon; //TODO: make this an object that inherits Weapon instead of something completely separate
     public Player player;
 
     //public float lifespan;//MOVED TO PLAYER
@@ -38,7 +38,7 @@ public class Dagger : Collidable
 
     private void Update()
     {
-        boxCollider=GetComponent<BoxCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
         //Collision work
         boxCollider.OverlapCollider(filter, hits); //take BoxCollider and look for other collision and put its into the hits[]
         for (int i = 0; i < hits.Length; i++)
@@ -116,21 +116,20 @@ public class Dagger : Collidable
     }
     protected override void OnCollide(Collider2D coll)
     {
-        UnityEngine.Debug.Log($"Collided with{coll}");
-            if (coll.tag.Equals("Enemy"))
+        Debug.Log($"Collided with{coll}");
+        if (coll.tag.Equals("Enemy"))
+        {
+            Debug.Log($"{coll}");
+            Damage dmg = new Damage()
             {
-            UnityEngine.Debug.Log($"{coll}");
-                Damage dmg = new Damage()
-                {
-                    damageAmount = (int)weapon.CalculateDamage(weapon.weaponBaseDamage,weapon.weaponExtraDamage,player.critChance,player.critMultiplier, player.playerDamage),
-                    origin = transform.position,
-                    pushForce = weapon.knockBack
-                };
-                coll.SendMessage("ReceiveDamage", dmg);
+                damageAmount = weapon.CalculateDamage(),
+                origin = transform.position,
+                pushForce = weapon.knockBack
+            };
+            coll.SendMessage("ReceiveDamage", dmg);
 
-                Destroy(this.gameObject);
-            }
-        
+            Destroy(gameObject);
+        }
     }
   
 }

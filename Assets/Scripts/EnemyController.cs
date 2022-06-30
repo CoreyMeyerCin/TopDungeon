@@ -1,36 +1,20 @@
 using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public enum EnemyState
-{
-    Idle,
-    Wander,
-    Follow,
-    Die,
-    Attack
-};
 
-public enum EnemyType
-{
-    Melee,
-    Ranged
-}
 public class EnemyController : MonoBehaviour
 {
     public GameObject player; // this will point at the player.instance... we should use GameObject for now on instead of public Player player because GameObject has more tools for us to use.
     public EnemyState currState = EnemyState.Idle; //this is the current state that the enemy is in, starts off with Idle until acted upon.
     public EnemyType enemyType; //Melee or ranged for now may add burrow and flying
 
+
     public float level;
     public float gold;
     public float damage;
     public float knockback;
     public float exp;
-    public GameObject[] dropListCommon;
-    public CollectionController[] dropListUncommon;
-    public CollectionController[] dropListRare;
-    public CollectionController[] dropListLegendray;
     public float range;// this will be used to for the enemys sight range
     public float speed =1; // how fast the enemy can move in pixels/ps
     public float attackRange;// this is how far the enemy is able to attack the player, or switch EnemyState to attack
@@ -41,6 +25,7 @@ public class EnemyController : MonoBehaviour
     protected bool coolDownAttack = false; // the Time.time check of if enemy can attack again
     protected bool notInRoom; //Checks to see if Player is in the same room as the enemy
     protected Vector3 randomDir; //sets initial moving direction
+
     public GameObject bulletPrefab; // put the instance of the bullet here, this allows us to use magic and projectiles the same way. We just have to build the prefabs to do what we want.
     //Damage dmg;
     public BoxCollider2D boxCollider;
@@ -55,39 +40,50 @@ public class EnemyController : MonoBehaviour
     public Vector3 homePosition;
     protected CharacterController controller;
     public float homeStretch;//used for seeing how far we are from home
-    public bool collidingWithPlayer;
+    public bool collidingWithPlayer
     public Fighter fighter;
+    public Enemy enemy;
+
+    //TODO: move into item controller and look into proper drop-tables
+    public GameObject[] dropListCommon;
+    public GameObject[] dropListUncommon;
+    public GameObject[] dropListRare;
+    public GameObject[] dropListUnique;
+    public GameObject[] dropListLegendary;
 
     protected void Awake()
     {
         homePosition = transform.position;
         wanderGoal = homePosition;
+        enemy = gameObject.GetComponent<Enemy>();
     }
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");//this is why we use GameObject... Using the Tag is strong here
         //Debug.Log($"Found Player: {player.name}");
+
         currentPosition = transform.position;
-        boxCollider = GetComponent<BoxCollider2D>();
+        boxCollider = gameObject.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = false;
     }
 
 
      void Update()
     {
-        boxCollider = GetComponent<BoxCollider2D>();
-        //Collision work
-        boxCollider.OverlapCollider(filter, hits); //take BoxCollider and look for other collision and put its into the hits[]
-        for (int i = 0; i < hits.Length; i++)
+		boxCollider.OverlapCollider(filter, hits); //take BoxCollider and look for other collision and put its into the hits[]
+        
+        if (hits.Where(x => x != null).Any()) 
         {
-            if (hits[i] == null)
-            {
-                continue;
+            var validHits = hits.Where(x => x != null).ToList(); //ToList is what actually triggers the work of creating the list, so we want to do it here instead of on the null check with .Any()
+            System.Array.Clear(hits, 0, hits.Length);
+            foreach (var hit in validHits)
+			{
+                OnCollide(hit);
             }
-            //Debug.Log(hits[i].name);//this will check all 10 collision slots of our array
-
-            OnCollide(hits[i]);
-
+		}
+        
+	}
             //The array is not cleaned up, so we di it ourself
             hits[i] = null;
         }
@@ -95,6 +91,7 @@ public class EnemyController : MonoBehaviour
         protected virtual void FixedUpdate()
     {
         //UnityEngine.Debug.Log($"Current EnemyState: {currState}");
+
 
         currentPosition = transform.position;
         if (IsPlayerInRange(range))
@@ -109,19 +106,17 @@ public class EnemyController : MonoBehaviour
             currState = EnemyState.Idle;
             Idle();
         }
-        else if(!IsAwayFromHome(range) && currentPosition == homePosition)
+        else if (!IsAwayFromHome(range) && currentPosition == homePosition)
         {
             //UnityEngine.Debug.Log(" Hit C");
             currState = EnemyState.Wander;
             Wander();
-        }else if (!IsAwayFromHome(range))
+        }
+        else if (!IsAwayFromHome(range))
         {
             //UnityEngine.Debug.Log(" Hit D");
             Wander();
         }
-
-     
-
         //switch(currState)
         //{
         //    case (EnemyState.Idle):
@@ -148,10 +143,12 @@ public class EnemyController : MonoBehaviour
         //}
     }
     protected virtual bool IsPlayerInRange(float range)
+
     {
-        return Vector3.Distance(currentPosition, player.transform.position) <= range;//this checks to see if the player is within range by taking the players position and our position and comparing them using Vector3.Distance
+        return Vector3.Distance(currentPosition, player.transform.position) <= range; //check if player is within range by taking the players position and our position and comparing them using Vector3.Distance
     }
     protected virtual bool IsAwayFromHome(float homeStretch)
+
     {
         return Vector3.Distance(currentPosition, homePosition) >= homeStretch;
     }
@@ -160,15 +157,12 @@ public class EnemyController : MonoBehaviour
     {
         chooseDir = true;// we do this so we do not overlap the Choose Direction function with itself
         //yield return new WaitForSeconds(Random.Range(1f, 4f));// This will make the enemy wait 2-8 seconds before choosign a direction
-        wanderGoal = new Vector3(Random.Range(homePosition.x -range, homePosition.x + range), //x value
-                                 Random.Range(homePosition.y - range, homePosition.y + range), //y value
-                                                0);
+        wanderGoal = new Vector3(Random.Range(homePosition.x - range, homePosition.x + range) //x value
+                                , Random.Range(homePosition.y - range, homePosition.y + range) //y value
+                                , 0);
         //wanderGoal = Random.insideUnitCircle * range;
         //UnityEngine.Debug.Log($"Current Position: {currentPosition}\nwanderGoal:{wanderGoal}");
         yield return new WaitForSeconds(Random.Range(1f, 4f));
-       
-
-     
 
         //Vector3 smoothLookAt = Vector3.Slerp(wanderOldGoal, wanderGoal, speed *Time.deltaTime);
         //smoothLookAt.y = wanderGoal.y;
@@ -182,12 +176,12 @@ public class EnemyController : MonoBehaviour
         //randomDir = new Vector3(0,0,Random.Range(0,360));// this will set their walking direction to a random direction
         //Quaternion nextRotation = Quaternion.Euler(randomDir);
         //transform.rotation = Quaternion.Lerp(transform.rotation, nextRotation, Random.Range(0.5f, 2.5f));// This will set the location direction of the next motion == somewhere that is not the direction they are headed between 0.5 and 2.5 seconds
-        
-       
+
+
     }
     protected virtual void CheckIfWanderComplete(Vector3 currPosition, Vector3 wanGoal)
     {
-        if(currPosition == wanGoal)
+        if (currPosition == wanGoal)
         {
             chooseDir = false;
         }
@@ -196,7 +190,9 @@ public class EnemyController : MonoBehaviour
             chooseDir = true;
         }
     }
+
     protected virtual void Idle()
+
     {
         transform.position = Vector2.MoveTowards(currentPosition, homePosition, speed * Time.deltaTime);
         wanderGoal = homePosition;
@@ -204,14 +200,13 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Wander()
     {
-
-
         transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, speed * Time.deltaTime);
         CheckIfWanderComplete(currentPosition, wanderGoal);
         //UnityEngine.Debug.Log("Hit 1");
         if (!chooseDir)
         {
             //UnityEngine.Debug.Log("Hit 2");
+
             StartCoroutine(ChooseDirection());
             return;
         }
@@ -222,16 +217,16 @@ public class EnemyController : MonoBehaviour
             return;
         }
     }
-  
+
 
     protected virtual void Follow()
     {
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);//this is nice 
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
     }
 
     protected virtual void Attack()
     {
-        if (!coolDownAttack)
+        if (!attackOnCooldown)
         {
             switch (enemyType)
             {
@@ -246,17 +241,12 @@ public class EnemyController : MonoBehaviour
         }
     }
     protected virtual IEnumerator CoolDown()
+
     {
-        coolDownAttack = true;
+        attackOnCooldown = true;
         yield return new WaitForSeconds(coolDown);
-        coolDownAttack = false;
+        attackOnCooldown = false;
     }
-
-
-    //public void Death()
-    //{
-    //we have this in the Enemy.cs
-    //}
 
     protected virtual void OnCollide(Collider2D coll)
     {
@@ -264,124 +254,132 @@ public class EnemyController : MonoBehaviour
         if (coll.tag.Equals("Wall"))
         {
             //UnityEngine.Debug.Log("OnCollide Wall true");
+
             StartCoroutine(ChooseDirection());
         }
         if (coll.tag.Equals("Player"))
         {
             Damage dmg = new Damage()
             {
-                damageAmount = (int)damage,
+                damageAmount = damage,
                 origin = transform.position,
-                pushForce = (int)knockback
+                pushForce = knockback
             };
             coll.SendMessage("ReceiveDamage", dmg);
         }
     }
-    public virtual void Death()
-    {
-        //GameManager.instance.experienceManager.OnExperienceChanged((int)exp);
-        RollForLootDrop(level, gold, exp);
 
-    }
     protected virtual void RollForLootDrop(float enemyLevel, float enemyGold, float enemyExp)
     {
         int randomNumber = Random.Range(1,1000);
        //Debug.LogWarning($"Random Number: {randomNumber}");
 
-        Instantiate(this.dropListCommon[0], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
-        if (randomNumber >= 900)
-        {
-            int itemRarity = Random.Range(1,200);
-            int rollRarity = itemRarity + ((int)level * 2);
-            //Debug.LogWarning($"Random Number: {randomNumber}\nRollRarity{rollRarity}");
-            
-            switch (rollRarity)
-            {
-                case >3 and <= 110://drop common //the lowest possible to roll is a 3
-                {
-                  //      Debug.LogWarning("Common Item Drop");
-                  for(int i=0; i<dropListCommon.Length; i++)
-                  {
-                      if (i == dropListCommon.Length - 1)
-                      {
-                      int selectItem = Random.Range(0, i);
-                      Instantiate(this.dropListCommon[selectItem], this.transform.position, Quaternion.Euler(new Vector3(0,0,-90)));
-                      }
-                  }
-                   //dropList();
+    public void Death()
+    {
+        GameManager.instance.experienceManager.OnExperienceChanged(enemy.xpValue);
+        GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
+        Player.instance.gold += OnDeathCalculateGoldEarned();
+        RollForLootDrop();
+        Destroy(gameObject);
+    }
 
-                  return;
-                }
-                case  >= 111 and < 172://dorp uncommon
+    private void RollForLootDrop() //all of this really needs to go into an item manager instead + other code that doesn't involve enemy directly
+    {
+        if (ShouldDropItem())
+        {
+            Item item = new Item();
+            item.RollRarity(enemy.level);
+
+            switch (item.rarity)
+            {
+                case Item.Rarity.Common:
                     {
-                        //Debug.LogWarning("Uncommon Item Drop");
-                        for (int i = 0; i < dropListUncommon.Length; i++)
-                        {
-                            if (i == dropListUncommon.Length - 1)
-                            {
-                                int selectItem = Random.Range(0, i);
-                                Instantiate(this.dropListUncommon[selectItem], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
-                            }
-                        }
+                        Debug.LogWarning("Common item drop");
+                        int itemIndex = Random.Range(0, dropListCommon.Length - 1);
+                        Instantiate(dropListCommon[itemIndex], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
                         return;
-                }
-                case >= 172 and 193://drop rare
+                    }
+                case Item.Rarity.Uncommon:
                     {
-                        //Debug.LogWarning("Rare Item Drop");
-                        for (int i = 0; i < dropListCommon.Length; i++)
-                        {
-                            if (i == dropListRare.Length - 1)
-                            {
-                                int selectItem = Random.Range(0, i);
-                                Instantiate(this.dropListRare[selectItem], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
-                            }
-                        }
+
+                        Debug.LogWarning("Uncommon item drop");
+                        int itemIndex = Random.Range(0, dropListUncommon.Length - 1);
+                        Instantiate(dropListUncommon[itemIndex], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
+
                         return;
-                }
-                case >= 193 and < 202://drop legendary
+                    }
+                case Item.Rarity.Rare:
                     {
-                        //Debug.LogWarning("Legendary Item Drop");
-                        for (int i = 0; i < dropListUncommon.Length; i++)
-                        {
-                            if (i == dropListCommon.Length - 1)
-                            {
-                                int selectItem = Random.Range(0, i);
-                                Instantiate(this.dropListRare[selectItem], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
-                            }
-                        }
+                        Debug.LogWarning("Rare item drop");
+                        int itemIndex = Random.Range(0, dropListRare.Length - 1);
+                        Instantiate(dropListRare[itemIndex], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
+                        return;
+                    }
+                case Item.Rarity.Unique:
+                    {
+
+                        Debug.LogWarning("Unique item drop");
+                        int itemIndex = Random.Range(0, dropListUnique.Length - 1);
+                        Instantiate(dropListUnique[itemIndex], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
+                        return;
+                    }
+                case Item.Rarity.Legendary:
+                    {
+                        Debug.LogWarning("Legendary item drop");
+                        int itemIndex = Random.Range(0, dropListLegendary.Length - 1);
+                        Instantiate(dropListLegendary[itemIndex], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
                         return;
                     }
             }
         }
-            
-        GameManager.instance.player.gold += OnDeathCalculateGoldEarned();
-        GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
+
+    }
+
+
+    private bool ShouldDropItem()
+    {
+        Debug.LogWarning($"Rolling for item drop chance...");
+        return Random.Range(1, Item.DROP_CHANCE_CEILING) >= Item.ITEM_DROP_THRESHOLD;
     }
 
     protected virtual int OnDeathCalculateGoldEarned()
     {
-        float totalGold = Mathf.Round(gold * level);
-        return (int)totalGold;
+        var totalGold = enemy.goldValue * enemy.level;
+        return totalGold;
     }
 
     protected virtual int OnDeathCalculateExperienceEarned()
     {
-        float totalExperience = Mathf.Round((exp * level)/(1+level));
-
-        return (int)totalExperience;
+        var totalExperience = Mathf.RoundToInt((enemy.xpValue * enemy.level) / (1 + enemy.level));
+        return totalExperience;
     }
 
+    public enum EnemyState //these should probably be inside of Enemy
+    {
+        Idle,
+        Wander,
+        Follow,
+        Die,
+        Attack
+    }
+
+    public enum EnemyType
+    {
+        Melee,
+        Ranged,
+        Caster
+    }
 }
 
 
 
 ///////////////////////////////////////////////////////////
 ///////////////////////ARCHIVED METHODS////////////////////
-    //private void ReturnHome()
-    //{
-    //    transform.position = Vector3.MoveTowards(transform.position, homePosition, speed * Time.deltaTime);
-    //}
-    //private void SetWander()
-    //{
-    //    wanderGoal = Vector3.MoveTowards(currentPosition, new Vector3(homePosition.x += Random.Range(-1, 1), homePosition.y += Random.Range(-1,1), 0), speed*Time.deltaTime);
-    //}
+//private void ReturnHome()
+//{
+//    transform.position = Vector3.MoveTowards(transform.position, homePosition, speed * Time.deltaTime);
+//}
+//private void SetWander()
+//{
+//    wanderGoal = Vector3.MoveTowards(currentPosition, new Vector3(homePosition.x += Random.Range(-1, 1), homePosition.y += Random.Range(-1,1), 0), speed*Time.deltaTime);
+//}
