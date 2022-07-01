@@ -4,7 +4,7 @@ using UnityEngine;
 
 [System.Serializable]// lets us look at in the inspector
 
-public class CollectionController : Collidable
+public class CollectionController : MonoBehaviour
 {
     GameObject player;
     public string name; //for ui
@@ -24,15 +24,20 @@ public class CollectionController : Collidable
     public float critMultiplier;//0.01 = 1% increase. BOTH crit properties are held in the player class
     public float playerDamage;
     public float lifesteal;
+    public BoxCollider2D coll;
 
-    protected override void Start()
+    public void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         GetComponent<SpriteRenderer>().sprite = itemSprite;
-        Destroy(GetComponent<BoxCollider2D>());
-        gameObject.AddComponent<BoxCollider2D>();
+        coll=gameObject.AddComponent<BoxCollider2D>();
+        coll.enabled = true;
+        coll.isTrigger = true;
+        
     }
-
+     void Update() {
+        coll.enabled = true;
+    }
    
     private void OnTriggerEnter2D(Collider2D coll)
     {
