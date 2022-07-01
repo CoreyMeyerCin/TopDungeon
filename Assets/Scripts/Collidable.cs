@@ -7,7 +7,7 @@ using UnityEngine;
 public class Collidable : MonoBehaviour
 {
     public ContactFilter2D filter;
-    private BoxCollider2D boxCollider;
+    protected BoxCollider2D boxCollider;
     private Collider2D[] hits = new Collider2D[10]; // track everything we are making contact with in this frame
 
     protected virtual void Start()
