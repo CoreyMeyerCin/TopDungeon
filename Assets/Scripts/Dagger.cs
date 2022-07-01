@@ -116,10 +116,10 @@ public class Dagger : Collidable
     }
     protected override void OnCollide(Collider2D coll)
     {
-        Debug.Log($"Collided with{coll}");
+        //Debug.Log($"Collided with{coll}");
         if (coll.tag.Equals("Enemy"))
         {
-            Debug.Log($"{coll}");
+            Debug.Log($"Projectile collided with {coll}");
             Damage dmg = new Damage()
             {
                 damageAmount = weapon.CalculateDamage(),
