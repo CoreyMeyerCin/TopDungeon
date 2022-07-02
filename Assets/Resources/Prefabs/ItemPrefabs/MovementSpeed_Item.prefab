@@ -131,7 +131,7 @@ MonoBehaviour:
   itemSprite: {fileID: 375578440, guid: 88b39d6be2296fb42b2e24e967dd0b77, type: 3}
   currHitPoint: 0
   maxHitPoint: 0
-  moveSpeed: 3
+  moveSpeed: 1.05
   attackSpeed: 0
   pushRecovery: 0
   weapon: {fileID: 0}

@@ -37,7 +37,10 @@ public class EnemyController : MonoBehaviour
     protected CharacterController controller;
     public float homeStretch;//used for seeing how far we are from home
     public bool collidingWithPlayer;
-    public Enemy enemy;
+    public int xpValue;
+    public int level;
+    public int goldValue;
+    public Fighter fighter;
 
     //TODO: move into item controller and look into proper drop-tables
     public GameObject[] dropListCommon;
@@ -50,7 +53,6 @@ public class EnemyController : MonoBehaviour
     {
         homePosition = transform.position;
         wanderGoal = homePosition;
-        enemy = gameObject.GetComponent<Enemy>();
     }
 
     protected virtual void Start()
@@ -260,7 +262,7 @@ public class EnemyController : MonoBehaviour
     public void Death()
     {
         Debug.LogWarning("Death Happened");
-        GameManager.instance.experienceManager.OnExperienceChanged(enemy.xpValue);
+        GameManager.instance.experienceManager.OnExperienceChanged(xpValue);
         GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
         Player.instance.gold += OnDeathCalculateGoldEarned();
         RollForLootDrop();
@@ -272,7 +274,7 @@ public class EnemyController : MonoBehaviour
         if (ShouldDropItem())
         {
             Item item = new Item();
-            item.RollRarity(enemy.level);
+            item.RollRarity(level);
 
             switch (item.rarity)
             {
@@ -325,13 +327,13 @@ public class EnemyController : MonoBehaviour
 
     public int OnDeathCalculateGoldEarned()
     {
-        var totalGold = enemy.goldValue * enemy.level;
+        var totalGold = goldValue * level;
         return totalGold;
     }
 
     public int OnDeathCalculateExperienceEarned()
     {
-        var totalExperience = Mathf.RoundToInt((enemy.xpValue * enemy.level) / (1 + enemy.level));
+        var totalExperience = Mathf.RoundToInt((xpValue * level) / (1 + level));
         return totalExperience;
     }
 
