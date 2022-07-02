@@ -100,6 +100,7 @@ public class Weapon : Collidable
 	{
 		if (coll.tag.Equals("Enemy"))
 		{
+			//Debug.LogWarning("Weapon hit enemy");
 			Damage dmg = new Damage()
 			{
 				damageAmount = CalculateDamage(),
