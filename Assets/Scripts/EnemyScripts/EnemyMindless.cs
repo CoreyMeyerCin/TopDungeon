@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MindlessEnemy : EnemyController
+public class EnemyMindless : EnemyController
 {
 
     protected override void FixedUpdate()
