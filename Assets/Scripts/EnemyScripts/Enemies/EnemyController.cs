@@ -57,6 +57,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Start()
     {
+        
         player = GameObject.FindGameObjectWithTag("Player"); //this is why we use GameObject... Using the Tag is strong here
         Debug.Log($"Found Player: {player.name}");
         currentPosition = transform.position;
@@ -88,25 +89,25 @@ public class EnemyController : MonoBehaviour
         currentPosition = transform.position;
         if (IsPlayerInRange(range))
         {
-            //UnityEngine.Debug.Log(" Hit A");
+            UnityEngine.Debug.Log(" Hit A");
             currState = EnemyState.Follow;
             Follow();
         }
         else if (IsAwayFromHome(range))
         {
-            //UnityEngine.Debug.Log(" Hit B");
+            UnityEngine.Debug.Log(" Hit B");
             currState = EnemyState.Idle;
             Idle();
         }
         else if (!IsAwayFromHome(range) && currentPosition == homePosition)
         {
-            //UnityEngine.Debug.Log(" Hit C");
+            UnityEngine.Debug.Log(" Hit C");
             currState = EnemyState.Wander;
             Wander();
         }
         else if (!IsAwayFromHome(range))
         {
-            //UnityEngine.Debug.Log(" Hit D");
+            UnityEngine.Debug.Log(" Hit D");
             Wander();
         }
         //switch(currState)
