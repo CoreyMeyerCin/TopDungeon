@@ -9,25 +9,28 @@ public class PersistantUI : MonoBehaviour
     private float maxHitPoints;
     public Text healthText;
 
-    public RectTransform xpBar;
+    //public RectTransform xpBar;
     public float currentExp;
     public float maxExp;
     public Text expText;
 
-    public Text goldText;
+    public Text levelText;
+
+    //public Text goldText;
 
     private Canvas canvas;
     private static bool showGui;
 
 
-    private void Start()
+    //private void Start()
+    //{
+    //    showGui = false;
+    //    canvas=this.GetComponent<Canvas>();
+    //}
+    //void OnGUI()
+    void Update()
     {
-        showGui = false;
-        canvas=this.GetComponent<Canvas>();
-    }
-    void OnGUI()
-    {
-        if (showGui) { canvas.enabled = true; } else { canvas.enabled = false; }
+        //if (showGui) { canvas.enabled = true; } else { canvas.enabled = false; }
         
 
         hitPoints = GameManager.instance.player.hitpoints;
@@ -36,16 +39,17 @@ public class PersistantUI : MonoBehaviour
         //maxExp = (float)GameManager.instance.experienceManager.GetExperienceToNextLevel();
         healthText.text = $"HP:{hitPoints}/{maxHitPoints}";
         expText.text = $"EXP:{GameManager.instance.experienceManager.GetExperience()}/{GameManager.instance.experienceManager.GetExperienceToNextLevel()}";
-        goldText.text = $"Gold:{GameManager.instance.player.gold}";
+        //goldText.text = $"Gold:{GameManager.instance.player.gold}";
+        levelText.text = $"Level: {GameManager.instance.player.level}";
 
-        if (Input.GetKeyDown(KeyCode.Tab) && !showGui)
-        {
-            showGui = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.Tab) && showGui)
-        {
-            showGui = false;
-        }
+        //if (Input.GetKeyDown(KeyCode.Tab) && !showGui)
+        //{
+        //    showGui = true;
+        //}
+        //else if (Input.GetKeyUp(KeyCode.Tab) && showGui)
+        //{
+        //    showGui = false;
+        //}
 
 
     }
