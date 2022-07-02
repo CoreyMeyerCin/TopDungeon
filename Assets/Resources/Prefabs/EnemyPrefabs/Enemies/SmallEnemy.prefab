@@ -308,7 +308,7 @@ MonoBehaviour:
   wanderGoal: {x: 0, y: 0, z: 0}
   wanderOldGoal: {x: 0, y: 0, z: 0}
   currentPosition: {x: 0, y: 0, z: 0}
-  homePosition: {x: -1.112, y: 0.061, z: 0}
+  homePosition: {x: 1.118, y: -0.975, z: 0}
   homeStretch: 0.2
   collidingWithPlayer: 0
   xpValue: 3

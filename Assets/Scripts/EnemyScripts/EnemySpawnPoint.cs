@@ -9,7 +9,7 @@ public class EnemySpawnPoint : MonoBehaviour
     private  int enemyCount;
     void Awake()
     {
-        spawnList = GameManager.instance.enemyList;
+        //spawnList = GameManager.instance.enemyList;
         //GameManager.instance.player.transform.position = GameObject.Find("SpawnPoint").transform.position;
         //spawnPoint = GameObject.FindGameObjectWithTag("EnemySpawner");
     }
