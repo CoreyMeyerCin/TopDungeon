@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     public LevelUI levelUI;
     public PersistantUI persistantUI;
     public GameObject playerStatsUI;
+    public EnemyList enemyList;
 
     private void Awake()
     {
@@ -60,6 +61,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(weapon);
             DontDestroyOnLoad(persistantUI.gameObject);
             DontDestroyOnLoad(playerStatsUI);
+            DontDestroyOnLoad(enemyList);
             SceneManager.sceneLoaded += LoadState;
         }
         else
@@ -74,6 +76,7 @@ public class GameManager : MonoBehaviour
             Destroy(weapon);
             Destroy(persistantUI.gameObject);
             Destroy(playerStatsUI);
+            Destroy(enemyList);
             SceneManager.sceneLoaded += LoadState;
         }
 
