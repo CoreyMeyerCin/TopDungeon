@@ -37,8 +37,9 @@ public class Player : Mover
 
     public float lifespan = 1f; //this is used for *projectile range* in Dagger.cs
 
-    public float dashTime = 0.3f;// this is how long it takes to complete the full dash
+    public float dashTime = 1f;// this is how long it takes to complete the full dash
     public float currentDashTime = 0f;
+    public float endDashTime=0f;
     private bool isDashing = false;
     private Vector3 dashStart, dashEnd;
 
@@ -91,7 +92,8 @@ public class Player : Mover
         currentPosition = transform.position;
         if (Input.GetKey(KeyCode.LeftAlt))
         {
-            if (isDashing == false)
+            //Debug.LogWarning($"UpdateCheck: Time:{Time.time}, endDashTime: {endDashTime}");
+            if (isDashing == false && Time.time >= endDashTime)
             {
                 //Dash starts
                 isDashing = true;
@@ -108,42 +110,38 @@ public class Player : Mover
         switch (playerDir)
         {
             case 0:
-                dashEnd = new Vector3(currentPosition.x + (speed/20), currentPosition.y,currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x + (speed/5), currentPosition.y,currentPosition.z);
                 return;
             case 0.5:
-                dashEnd = new Vector3(currentPosition.x + ((3*speed/4)/20), currentPosition.y-((3*speed/4)/20), currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x + ((3*speed/4)/5), currentPosition.y-((3*speed/4)/5), currentPosition.z);
                 return;
             case 1:
-                dashEnd = new Vector3(currentPosition.x, currentPosition.y - ((3 * speed / 4) / 20), currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x, currentPosition.y - ((3 * speed / 4) / 5), currentPosition.z);
                 return;
             case 1.5:
-                dashEnd = new Vector3(currentPosition.x - ((3 * speed / 4) / 20), currentPosition.y - ((3 * speed / 4) / 20), currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x - ((3 * speed / 4) / 5), currentPosition.y - ((3 * speed / 4) / 5), currentPosition.z);
                 return;
             case 2:
-                dashEnd = new Vector3(currentPosition.x - (speed/20), currentPosition.y, currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x - (speed/10), currentPosition.y, currentPosition.z);
                 return;
             case 2.5:
-                dashEnd = new Vector3(currentPosition.x - ((3*speed/4)/20), currentPosition.y + ((3 * speed / 4) / 20), currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x - ((3*speed/4)/5), currentPosition.y + ((3 * speed / 4) / 5), currentPosition.z);
                 return;
             case 3:
-                dashEnd = new Vector3(currentPosition.x, currentPosition.y + speed/20, currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x, currentPosition.y + speed/5, currentPosition.z);
                 return;
             case 3.5:
-                dashEnd = new Vector3(currentPosition.x + ((3 * speed / 4) / 20), currentPosition.y + ((3 * speed / 4) / 20), currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x + ((3 * speed / 4) / 5), currentPosition.y + ((3 * speed / 4) / 10), currentPosition.z);
                 return;
         }
     }
     public void Dash(Vector3 dashEnding)
     {
-
-        
         if (isDashing)
         {
-            Debug.LogWarning("Dashing is happening");
-
-            currentDashTime += Time.deltaTime;//we add the current time to 0f to start the dash sequence+
-
-
+            
+            endDashTime = Time.time + dashTime;//we add the current time to 0f to start the dash sequence+
+            //Debug.LogWarning($"Dashing is happening: Time:{Time.time}, endDashTime: {endDashTime}");
             float perc = Mathf.Clamp01(currentDashTime / dashTime);
 
             transform.position = Vector3.Lerp(dashStart, dashEnd, perc);
