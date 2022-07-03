@@ -13,6 +13,7 @@ TagManager:
   - Wall
   - Collectable
   - Portal
+  - EnemySpawner
   layers:
   - Default
   - TransparentFX

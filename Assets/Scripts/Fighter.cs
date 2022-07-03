@@ -13,6 +13,15 @@ public class Fighter : MonoBehaviour
 
     protected Vector3 pushDirection; //which direction do you fly
 
+    private void Update()
+    {
+        if (hitpoints <= 0)
+        {
+            Debug.LogWarning("Enemy Hitpoints below 0");
+            hitpoints = 0;
+            Death();
+        }
+    }
     protected virtual void ReceiveDamage(Damage dmg)
     {
         if(Time.time - lastImmune > immuneTime) //check to see if still immune
@@ -23,11 +32,7 @@ public class Fighter : MonoBehaviour
             
             GameManager.instance.ShowText(dmg.damageAmount.ToString(), 25, Color.red, transform.position, Vector3.zero, 0.5f);
             
-            if (hitpoints <= 0)
-            {
-                hitpoints = 0;
-                Death();
-            }
+           
         }
         StartCoroutine(PushToZero(pushRecoverySpeed));
     }
