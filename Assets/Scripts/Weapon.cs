@@ -23,7 +23,7 @@ public class Weapon : Collidable
 	//public float cooldown = 1f; //how fast can we swing again
 	private float lastUse; //timer on when our last swing was
 	private bool attackAvailable;
-	public Dagger projectilePrefab;
+	public Projectile projectilePrefab;
 
 
 

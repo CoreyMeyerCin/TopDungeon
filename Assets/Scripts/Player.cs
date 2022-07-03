@@ -19,13 +19,12 @@ public class Player : Mover
 
     public HealthService healthService;
     //public Projectile projectilePrefab;//holds the weapons prefab, might be able to do this in a better way to do this in the weapon
-    public Dagger projectilePrefab;
+    public Projectile projectilePrefab;
     public Weapon weapon;
     public Transform firePoint;
 
-    public float projectileSpeed;
     private float lastFire;
-    public float fireDelay;
+
     public float attackSpeed = 1f;
     public float playerDamage;
     public float lifesteal;
@@ -34,8 +33,6 @@ public class Player : Mover
     public float cooldown = 1f;
 
     public int dropChanceModifier = 0;
-
-    public float lifespan = 1f; //this is used for *projectile range* in Dagger.cs
 
     public float dashTime = 1f;// this is how long it takes to complete the full dash
     public float currentDashTime = 0f;
@@ -164,11 +161,6 @@ public class Player : Mover
         playerDamage += playerDmg;
     }
 
-    public void ProjectileLifespanChange(float lifesp)
-    {
-        lifespan += lifesp;
-    }
-
     public void CritMultiplierChange(float CritDmg)
     {
         critMultiplier += CritDmg;
@@ -179,7 +171,7 @@ public class Player : Mover
         critChance += critCh;
     }
 
-    public void ChangeCurrentProjectile(Dagger proj, Weapon weap)
+    public void ChangeCurrentProjectile(Projectile proj, Weapon weap)
     {
         weapon = weap;
         projectilePrefab = proj;
