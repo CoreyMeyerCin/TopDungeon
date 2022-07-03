@@ -47,8 +47,8 @@ public class Weapon : Collidable
 	protected override void Update()
 	{
 		base.Update();
-
-		if(Time.time - lastUse > Player.instance.cooldown)
+		//Time.time/1 > 1
+		if(Time.time - lastUse > Player.instance.cooldown/player.attackSpeed)
         {
 			attackAvailable = true;
 		}
