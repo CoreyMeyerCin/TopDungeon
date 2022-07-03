@@ -17,7 +17,7 @@ public class CollectionController : MonoBehaviour
     public float pushRecovery;
     private HealthService healthService;
     public Weapon? weapon;
-    public Dagger? projectile;
+    public Projectile? projectile;
     public Transform trans;
     public float lifespan;//used for projectile range
     public float critChance;
@@ -59,7 +59,7 @@ public class CollectionController : MonoBehaviour
             {
                 GameManager.instance.player.ChangeCurrentProjectile(projectile, weapon);
             }
-            GameManager.instance.player.ProjectileLifespanChange(lifespan);
+            GameManager.instance.player.projectilePrefab.ProjectileLifespanChange(lifespan);
             GameManager.instance.player.CritChanceChange(critChance);
             GameManager.instance.player.CritMultiplierChange(critMultiplier);
             GameManager.instance.player.PlayerDamageChange(playerDamage);

@@ -179,3 +179,5 @@ MonoBehaviour:
     maxNormalAngle: 0
   weapon: {fileID: 0}
   player: {fileID: 0}
+  lifespan: 1
+  projectileSpeed: 1
