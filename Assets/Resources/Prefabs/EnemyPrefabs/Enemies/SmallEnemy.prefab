@@ -151,9 +151,9 @@ GameObject:
   - component: {fileID: 3439143281514648118}
   - component: {fileID: 3439143281514648117}
   - component: {fileID: 3439143281514648116}
-  - component: {fileID: 1943989415120018902}
   - component: {fileID: 1943989415120018903}
   - component: {fileID: 1943989415120018888}
+  - component: {fileID: -7699381409750479271}
   m_Layer: 9
   m_Name: SmallEnemy
   m_TagString: Enemy
@@ -255,72 +255,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.101004705, y: 0.14127707}
   m_EdgeRadius: 0
---- !u!114 &1943989415120018902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3439143281514648107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70e8de18c298a7845a67ba7db7dd51bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currState: 0
-  enemyType: 0
-  damage: 2
-  knockback: 1
-  range: 1
-  speed: 0.6
-  attackRange: 1
-  projectileSpeed: 0
-  bulletPrefab: {fileID: 0}
-  boxCollider: {fileID: 3439143281514648116}
-  hits:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  filter:
-    useTriggers: 0
-    useLayerMask: 0
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 0
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
-  wanderCooldown: 1
-  wanderStart: 0
-  wanderRange: 0
-  wanderGoal: {x: 0, y: 0, z: 0}
-  wanderOldGoal: {x: 0, y: 0, z: 0}
-  currentPosition: {x: 0, y: 0, z: 0}
-  homePosition: {x: 1.118, y: -0.975, z: 0}
-  homeStretch: 0.2
-  collidingWithPlayer: 0
-  xpValue: 3
-  level: 1
-  goldValue: 5
-  fighter: {fileID: 1943989415120018903}
-  dropListCommon:
-  - {fileID: 2369983572214450914, guid: 4c0c03ca18c541a4fbe22369ff5c58d5, type: 3}
-  dropListUncommon: []
-  dropListRare: []
-  dropListUnique: []
-  dropListLegendary: []
 --- !u!114 &1943989415120018903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,3 +291,69 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &-7699381409750479271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3439143281514648107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdade0881b4492a4496c1d0b8936ea50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currState: 0
+  enemyType: 0
+  damage: 4
+  knockback: 2
+  range: 1
+  speed: 1
+  attackRange: 0
+  projectileSpeed: 0
+  bulletPrefab: {fileID: 0}
+  boxCollider: {fileID: 0}
+  hits:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  filter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  wanderCooldown: 1
+  wanderStart: 0
+  wanderRange: 0
+  wanderGoal: {x: 0, y: 0, z: 0}
+  wanderOldGoal: {x: 0, y: 0, z: 0}
+  currentPosition: {x: 0, y: 0, z: 0}
+  homePosition: {x: 0, y: 0, z: 0}
+  homeStretch: 0
+  collidingWithPlayer: 0
+  xpValue: 6
+  level: 1
+  goldValue: 4
+  fighter: {fileID: 0}
+  dropListCommon:
+  - {fileID: 2369983572214450914, guid: 4c0c03ca18c541a4fbe22369ff5c58d5, type: 3}
+  dropListUncommon: []
+  dropListRare: []
+  dropListUnique: []
+  dropListLegendary: []
