@@ -312,7 +312,7 @@ MonoBehaviour:
   attackRange: 0
   projectileSpeed: 0
   bulletPrefab: {fileID: 0}
-  boxCollider: {fileID: 0}
+  boxCollider: {fileID: 3439143281514648116}
   hits:
   - {fileID: 0}
   - {fileID: 0}
@@ -350,10 +350,5 @@ MonoBehaviour:
   xpValue: 6
   level: 1
   goldValue: 4
-  fighter: {fileID: 0}
-  dropListCommon:
-  - {fileID: 2369983572214450914, guid: 4c0c03ca18c541a4fbe22369ff5c58d5, type: 3}
-  dropListUncommon: []
-  dropListRare: []
-  dropListUnique: []
-  dropListLegendary: []
+  fighter: {fileID: 1943989415120018903}
+  lootManager: {fileID: 0}

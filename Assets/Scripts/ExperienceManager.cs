@@ -49,6 +49,7 @@ public class ExperienceManager : MonoBehaviour
     //************************************************
     public void OnExperienceChanged(int exp)
     {
+        Debug.LogWarning("OnExperienceChanged hit");
         experience += exp;
         while (experience >= experienceToNextLevel)
         {

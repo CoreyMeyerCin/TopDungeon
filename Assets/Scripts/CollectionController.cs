@@ -50,20 +50,29 @@ public class CollectionController : MonoBehaviour
             GameManager.instance.player.MoveSpeedChange(moveSpeed);// in Mover
             GameManager.instance.player.AttackSpeedChange(attackSpeed);// in User. Uses multiplication so 0.93 would be a 7% increase
             GameManager.instance.player.PushRecoveryChange(pushRecovery);// in User. Uses multiplication so 0.93 would be a 7% increase
-
+            
             if (weapon != null)
             {
                 GameManager.instance.player.ChangeCurrentWeapon(weapon);
             }
+            
             if (projectile != null)
             {
                 GameManager.instance.player.ChangeCurrentProjectile(projectile, weapon);
             }
-            GameManager.instance.player.projectilePrefab.ProjectileLifespanChange(lifespan);
+            
+            
+            //Currently this line breaks the code, I have not spent time to fix it yet -CM
+            //GameManager.instance.player.projectilePrefab.ProjectileLifespanChange(lifespan);
+            
             GameManager.instance.player.CritChanceChange(critChance);
+            
             GameManager.instance.player.CritMultiplierChange(critMultiplier);
+            
             GameManager.instance.player.PlayerDamageChange(playerDamage);
+            
             GameManager.instance.player.LifestealChange(lifesteal);
+            
             Destroy(gameObject);
         }
     }
