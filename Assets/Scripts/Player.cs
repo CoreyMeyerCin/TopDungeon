@@ -216,7 +216,7 @@ public class Player : Mover
 
     public void AttackSpeedChange(float attackSpeedMod)
     {
-        attackSpeed *= attackSpeedMod;
+        attackSpeed += attackSpeedMod;
     }
 
     public void PushRecoveryChange(float pushRecovery)

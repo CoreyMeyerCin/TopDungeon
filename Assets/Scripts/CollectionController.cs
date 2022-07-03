@@ -48,7 +48,7 @@ public class CollectionController : MonoBehaviour
             GameManager.instance.player.CurrentHitPointChange(currHitPoint);//in Player
             GameManager.instance.player.MaxHitPointsChange(maxHitPoint);
             GameManager.instance.player.MoveSpeedChange(moveSpeed);// in Mover
-            GameManager.instance.player.AttackSpeedChange(attackSpeed);// in User. Uses multiplication so 0.93 would be a 7% increase
+            GameManager.instance.player.AttackSpeedChange(attackSpeed);// additive
             GameManager.instance.player.PushRecoveryChange(pushRecovery);// in User. Uses multiplication so 0.93 would be a 7% increase
             
             if (weapon != null)
