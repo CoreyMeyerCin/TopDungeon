@@ -23,7 +23,7 @@ public class Weapon : Collidable
 	//public float cooldown = 1f; //how fast can we swing again
 	private float lastUse; //timer on when our last swing was
 	private bool attackAvailable;
-	public Dagger projectilePrefab;
+	public Projectile projectilePrefab;
 
 
 
@@ -47,8 +47,8 @@ public class Weapon : Collidable
 	protected override void Update()
 	{
 		base.Update();
-
-		if(Time.time - lastUse > Player.instance.cooldown)
+		//Time.time/1 > 1
+		if(Time.time - lastUse > Player.instance.cooldown/player.attackSpeed)
         {
 			attackAvailable = true;
 		}

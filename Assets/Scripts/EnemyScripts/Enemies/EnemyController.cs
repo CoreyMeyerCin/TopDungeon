@@ -41,13 +41,10 @@ public class EnemyController : MonoBehaviour
     public int level;
     public int goldValue;
     public Fighter fighter;
+    public LootManager lootManager;
 
     //TODO: move into item controller and look into proper drop-tables
-    public GameObject[] dropListCommon;
-    public GameObject[] dropListUncommon;
-    public GameObject[] dropListRare;
-    public GameObject[] dropListUnique;
-    public GameObject[] dropListLegendary;
+ 
 
     protected virtual void Awake()
     {
@@ -57,7 +54,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Start()
     {
-        
+        lootManager = GameObject.FindObjectOfType<LootManager>();
         player = GameObject.FindGameObjectWithTag("Player"); //this is why we use GameObject... Using the Tag is strong here
         Debug.Log($"Found Player: {player.name}");
         currentPosition = transform.position;
@@ -262,76 +259,23 @@ public class EnemyController : MonoBehaviour
 
     public void Death()
     {
-        Debug.LogWarning("Death Happened");
-        GameManager.instance.experienceManager.OnExperienceChanged(xpValue);
+        Debug.LogWarning($"Death Happened for {this.gameObject}");
         GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
-        Player.instance.gold += OnDeathCalculateGoldEarned();
-        RollForLootDrop();
+        Player.instance.gold += lootManager.OnDeathCalculateGoldEarned(goldValue, level);
+        if (ShouldDropItem())
+        {
+            Debug.LogWarning("Going to roll for loot drop");
+            lootManager.RollForLootDrop(level, this.currentPosition);
+        }
+        Debug.LogWarning("Destroying myself");
         Destroy(this.gameObject);
     }
 
-    protected virtual void RollForLootDrop() //all of this really needs to go into an item manager instead + other code that doesn't involve enemy directly
-    {
-        if (ShouldDropItem())
-        {
-            Item item = new Item();
-            item.RollRarity(level);
-
-            switch (item.rarity)
-            {
-                case Item.Rarity.Common:
-                    {
-                        Debug.LogWarning("Common item drop");
-                        int itemIndex = Random.Range(0, dropListCommon.Length - 1);
-                        Instantiate(dropListCommon[itemIndex], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
-                        return;
-                    }
-                case Item.Rarity.Uncommon:
-                    {
-                        Debug.LogWarning("Uncommon item drop");
-                        int itemIndex = Random.Range(0, dropListUncommon.Length - 1);
-                        Instantiate(dropListUncommon[itemIndex], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
-                        return;
-                    }
-                case Item.Rarity.Rare:
-                    {
-                        Debug.LogWarning("Rare item drop");
-                        int itemIndex = Random.Range(0, dropListRare.Length - 1);
-                        Instantiate(dropListRare[itemIndex], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
-                        return;
-                    }
-                case Item.Rarity.Unique:
-                    {
-                        Debug.LogWarning("Unique item drop");
-                        int itemIndex = Random.Range(0, dropListUnique.Length - 1);
-                        Instantiate(dropListUnique[itemIndex], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
-                        return;
-                    }
-                case Item.Rarity.Legendary:
-                    {
-                        Debug.LogWarning("Legendary item drop");
-                        int itemIndex = Random.Range(0, dropListLegendary.Length - 1);
-                        Instantiate(dropListLegendary[itemIndex], this.transform.position, Quaternion.Euler(new Vector3(0, 0, -90)));
-                        return;
-                    }
-            }
-        }
-
-    }
-
-
     private bool ShouldDropItem()
     {
-        Debug.LogWarning($"Rolling for item drop chance...");
+        //Debug.LogWarning($"Rolling for item drop chance...");
         return Random.Range(1, Item.DROP_CHANCE_CEILING) >= Item.ITEM_DROP_THRESHOLD;
     }
-
-    public int OnDeathCalculateGoldEarned()
-    {
-        var totalGold = goldValue * level;
-        return totalGold;
-    }
-
     public int OnDeathCalculateExperienceEarned()
     {
         var totalExperience = Mathf.RoundToInt((xpValue * level) / (1 + level));
