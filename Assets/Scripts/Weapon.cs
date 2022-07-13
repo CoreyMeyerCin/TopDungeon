@@ -24,6 +24,7 @@ public class Weapon : Collidable
 	private float lastUse; //timer on when our last swing was
 	private bool attackAvailable;
 	public Projectile projectilePrefab;
+	public SwingPrefab swingPrefab;
 	public Vector3 holdPosition;
 	public Vector3 currentHoldPosition;
 
@@ -57,7 +58,7 @@ public class Weapon : Collidable
 									   player.currentPosition.y + this.holdPosition.y, 0);
 		transform.position = currentHoldPosition;
 		//Time.time/1 > 1
-		if (Time.time - lastUse > Player.instance.stats.cooldown/player.stats.attackSpeed)
+		if (Time.time - lastUse > player.stats.cooldown/player.stats.attackSpeed)
         {
 			attackAvailable = true;
 		}
@@ -131,6 +132,7 @@ public class Weapon : Collidable
 	
 	private void Swing()
 	{
+		Instantiate(player.transform.GetChild(0).GetComponent<Weapon>().swingPrefab, currentHoldPosition, player.firePoint.rotation);
 		//NEED TO MAKE SWINGING LOGIC NOW
 		//anim.SetTrigger("Swing"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
 	}

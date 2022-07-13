@@ -21,8 +21,6 @@ public class Projectile: Collidable
     public float lifespan = 1f;//MOVED TO PLAYER
     public float projectileSpeed;
 
-    public float fireDelay;
-
     private float spawnTime;
     
     // Start is called before the first frame update
