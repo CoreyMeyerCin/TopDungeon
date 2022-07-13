@@ -55,6 +55,7 @@ public class Weapon : Collidable
 		
 		currentHoldPosition = new Vector3(player.currentPosition.x + this.holdPosition.x,
 									   player.currentPosition.y + this.holdPosition.y, 0);
+		transform.position = currentHoldPosition;
 		//Time.time/1 > 1
 		if (Time.time - lastUse > Player.instance.cooldown/player.attackSpeed)
         {
@@ -128,10 +129,11 @@ public class Weapon : Collidable
 		attackAvailable = false;
 		lastUse = Time.time;
 	}
-
+	
 	private void Swing()
 	{
-		anim.SetTrigger("Swing"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
+		//NEED TO MAKE SWINGING LOGIC NOW
+		//anim.SetTrigger("Swing"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
 	}
 
 	private void Cast()

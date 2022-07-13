@@ -143,7 +143,8 @@ MonoBehaviour:
   weaponExtraDamage: 0
   hasExtraDamage: 0
   knockBack: 1
-  projectilePrefab: {fileID: 2120853311608965495, guid: 2502f902d8f0b8f45bfdcaf484dfc2f2, type: 3}
-  holdPosition: {x: 0.06, y: -0.13, z: 0}
+  projectilePrefab: {fileID: 4994691365316510336, guid: 2502f902d8f0b8f45bfdcaf484dfc2f2, type: 3}
+  holdPosition: {x: 0.063, y: -0.121, z: 0}
+  currentHoldPosition: {x: 0, y: 0, z: 0}
   weaponType: 1
   damageType: 0

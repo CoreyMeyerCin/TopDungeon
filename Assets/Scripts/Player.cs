@@ -191,6 +191,7 @@ public class Player : Mover
     public void ChangeCurrentWeapon(Weapon weap)
     {
         weapon = weap;
+        transform.GetChild(0).GetComponent<Weapon>().holdPosition = weapon.holdPosition;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
         transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
