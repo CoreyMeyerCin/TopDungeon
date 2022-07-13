@@ -57,7 +57,7 @@ public class Weapon : Collidable
 									   player.currentPosition.y + this.holdPosition.y, 0);
 		transform.position = currentHoldPosition;
 		//Time.time/1 > 1
-		if (Time.time - lastUse > Player.instance.cooldown/player.attackSpeed)
+		if (Time.time - lastUse > Player.instance.stats.cooldown/player.stats.attackSpeed)
         {
 			attackAvailable = true;
 		}
@@ -71,9 +71,9 @@ public class Weapon : Collidable
     {
 		var damage = weaponBaseDamage + Player.instance.playerDamage;
 
-		if(Random.Range(0,100) <= Player.instance.critChance)
+		if(Random.Range(0,100) <= Player.instance.stats.critChance)
         {
-			damage *= Player.instance.critMultiplier;
+			damage *= Player.instance.stats.critMultiplier;
         }
 
         if (hasExtraDamage)
@@ -124,8 +124,7 @@ public class Weapon : Collidable
 
 	private void Shoot()
     {
-		
-		Instantiate(player.projectilePrefab,currentHoldPosition, player.firePoint.rotation);
+		Instantiate(player.transform.GetChild(0).GetComponent<Weapon>().projectilePrefab,currentHoldPosition, player.firePoint.rotation);
 		attackAvailable = false;
 		lastUse = Time.time;
 	}

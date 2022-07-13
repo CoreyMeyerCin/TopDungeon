@@ -48,7 +48,7 @@ public class Item : Collectable
 
     public void RollRarity(int enemyLevel)
 	{
-        var dropChanceFloor = Player.instance.dropChanceModifier + (enemyLevel * 2);
+        var dropChanceFloor = Player.instance.stats.dropChanceModifier + (enemyLevel * 2);
         if (dropChanceFloor > DROP_CHANCE_CEILING)
 		{
             dropChanceFloor = DROP_CHANCE_CEILING;

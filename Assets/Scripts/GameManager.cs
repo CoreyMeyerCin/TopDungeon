@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerStatsUI;
     public EnemyList enemyList;
     public LootManager lootManager;
+    public PlayerStats playerStats;
 
     private void Awake()
     {
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(playerStatsUI);
             DontDestroyOnLoad(enemyList);
             DontDestroyOnLoad(lootManager);
+            DontDestroyOnLoad(playerStats);
             SceneManager.sceneLoaded += LoadState;
         }
         else
@@ -80,6 +82,7 @@ public class GameManager : MonoBehaviour
             Destroy(playerStatsUI);
             Destroy(enemyList);
             Destroy(lootManager);
+            Destroy(playerStats);
             SceneManager.sceneLoaded += LoadState;
         }
 
