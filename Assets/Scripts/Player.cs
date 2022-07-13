@@ -51,6 +51,7 @@ public class Player : Mover
         firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
         weapon = GetComponentInChildren<Weapon>();
         weapon.projectilePrefab = GetComponentInChildren<Weapon>().projectilePrefab;
+        stats = GameManager.instance.playerStats;
         
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).GetComponent<Projectile>();
     }
