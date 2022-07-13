@@ -19,22 +19,20 @@ public class Player : Mover
 
     public HealthService healthService;
     //public Projectile projectilePrefab;//holds the weapons prefab, might be able to do this in a better way to do this in the weapon
-    public Projectile projectilePrefab;
+    //public Projectile projectilePrefab;
     public Weapon weapon;
     public Transform firePoint;
 
     private float lastFire;
 
-    public float attackSpeed = 1f;
+    public PlayerStats stats;
+
+   
     public float playerDamage;
-    public float lifesteal;
-    public float critChance = 5f;
-    public float critMultiplier = 1.05f;
-    public float cooldown = 1f;
 
-    public int dropChanceModifier = 0;
 
-    public float dashTime = 1f;// this is how long it takes to complete the full dash
+    //dashTime was moved to PlayerStats
+    //public float dashTime = 1f;// this is how long it takes to complete the full dash
     public float currentDashTime = 0f;
     public float endDashTime=0f;
     private bool isDashing = false;
@@ -51,8 +49,9 @@ public class Player : Mover
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentPosition = transform.position;
         firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
-        projectilePrefab = GetComponentInChildren<Weapon>().projectilePrefab;
         weapon = GetComponentInChildren<Weapon>();
+        weapon.projectilePrefab = GetComponentInChildren<Weapon>().projectilePrefab;
+        
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).GetComponent<Projectile>();
     }
 
@@ -140,12 +139,12 @@ public class Player : Mover
         if (isDashing)
         {
             
-            endDashTime = Time.time + dashTime;//we add the current time to 0f to start the dash sequence+
+            endDashTime = Time.time + stats.dashTime;//we add the current time to 0f to start the dash sequence+
             //Debug.LogWarning($"Dashing is happening: Time:{Time.time}, endDashTime: {endDashTime}");
-            float perc = Mathf.Clamp01(currentDashTime / dashTime);
+            float perc = Mathf.Clamp01(currentDashTime / stats.dashTime);
 
             transform.position = Vector3.Lerp(dashStart, dashEnd, perc);
-            if(currentDashTime >= dashTime)
+            if(currentDashTime >= stats.dashTime)
             {
                 //dash finished
                 isDashing = false;
@@ -156,7 +155,7 @@ public class Player : Mover
     }
     public void LifestealChange(float lifest)
     {
-        lifesteal += lifest;
+        stats.lifesteal += lifest;
     }
 
     public void PlayerDamageChange(float playerDmg)
@@ -166,25 +165,25 @@ public class Player : Mover
 
     public void CritMultiplierChange(float CritDmg)
     {
-        critMultiplier += CritDmg;
+        stats.critMultiplier += CritDmg;
     }
 
     public void CritChanceChange(float critCh)
     {
-        critChance += critCh;
+        stats.critChance += critCh;
     }
 
     public void ChangeCurrentProjectile(Projectile proj, Weapon weap)
     {
         weapon = weap;
-        projectilePrefab = proj;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
+        transform.GetChild(0).GetComponent<Weapon>().projectilePrefab = proj;
         transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
-        transform.GetChild(0).GetComponent<Animator>().enabled = false;
+        //transform.GetChild(0).GetComponent<Animator>().enabled = false;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weap.holdPosition;
     }
 
@@ -198,7 +197,7 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
-        transform.GetChild(0).GetComponent<Animator>().enabled = true;
+        //transform.GetChild(0).GetComponent<Animator>().enabled = true;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weap.holdPosition;
     }
 
@@ -222,7 +221,7 @@ public class Player : Mover
 
     public void AttackSpeedChange(float attackSpeedMod)
     {
-        attackSpeed += attackSpeedMod;
+        stats.attackSpeed += attackSpeedMod;
     }
 
     public void PushRecoveryChange(float pushRecovery)
@@ -232,7 +231,7 @@ public class Player : Mover
     
     public void ChangeCooldown(float cooldownMod)
     {
-        cooldown -= cooldownMod;
+       stats.cooldown -= cooldownMod;
     }
 
     public void SwapSprite(int skinId)
