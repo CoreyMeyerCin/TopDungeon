@@ -104,6 +104,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2897208738703870436, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: coll
+      value: 
+      objectReference: {fileID: 7943345809238448840}
+    - target: {fileID: 2897208738703870436, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
       propertyPath: name
       value: Wooden Sword
       objectReference: {fileID: 0}
@@ -153,6 +157,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+--- !u!61 &7943345809238448840 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 2897208738703870437, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+  m_PrefabInstance: {fileID: 5046456087015117613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7943345809238448842 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2897208738703870439, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
