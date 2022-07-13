@@ -24,6 +24,8 @@ public class Weapon : Collidable
 	private float lastUse; //timer on when our last swing was
 	private bool attackAvailable;
 	public Projectile projectilePrefab;
+	public Vector3 holdPosition;
+	public Vector3 currentHoldPosition;
 
 
 
@@ -42,13 +44,20 @@ public class Weapon : Collidable
 		base.Start();
 		//spriteRenderer = GetComponent<SpriteRenderer>(); // this will update our weapon look when we load 'this' in
 		anim = GetComponent<Animator>();
+		transform.localPosition = holdPosition;
 	}
 
 	protected override void Update()
 	{
 		base.Update();
+		//this.transform.parent = GameManager.instance.player.transform;
+		//this.transform.localPosition = new Vector2(0.096f, -0.011f);
+		
+		currentHoldPosition = new Vector3(player.currentPosition.x + this.holdPosition.x,
+									   player.currentPosition.y + this.holdPosition.y, 0);
+		transform.position = currentHoldPosition;
 		//Time.time/1 > 1
-		if(Time.time - lastUse > Player.instance.cooldown/player.attackSpeed)
+		if (Time.time - lastUse > Player.instance.cooldown/player.attackSpeed)
         {
 			attackAvailable = true;
 		}
@@ -82,6 +91,7 @@ public class Weapon : Collidable
 	
 	private void Attack()
 	{
+       
 		switch (weaponType)
 		{
 			case WeaponType.Melee:
@@ -114,14 +124,16 @@ public class Weapon : Collidable
 
 	private void Shoot()
     {
-		Instantiate(player.projectilePrefab,player.firePoint.position, player.firePoint.rotation);
+		
+		Instantiate(player.projectilePrefab,currentHoldPosition, player.firePoint.rotation);
 		attackAvailable = false;
 		lastUse = Time.time;
 	}
-
+	
 	private void Swing()
 	{
-		anim.SetTrigger("Swing"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
+		//NEED TO MAKE SWINGING LOGIC NOW
+		//anim.SetTrigger("Swing"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
 	}
 
 	private void Cast()

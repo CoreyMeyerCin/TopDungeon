@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5422238519342369367}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.241, y: 0.107, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -102,17 +102,25 @@ MonoBehaviour:
   maxHitpoints: 0
   pushRecoverySpeed: 0.2
   speed: 0
+  currentPosition: {x: 0, y: 0, z: 0}
   playerDirection: 0
   collectedText: {fileID: 0}
+  level: 1
+  gold: 0
   healthService: {fileID: 0}
   projectilePrefab: {fileID: 0}
   weapon: {fileID: 0}
   firePoint: {fileID: 5422238519342369371}
-  gold: 0
-  projectileSpeed: 0
-  fireDelay: 0
   attackSpeed: 1
+  playerDamage: 0
+  lifesteal: 0
+  critChance: 5
+  critMultiplier: 1.05
   cooldown: 1
+  dropChanceModifier: 0
+  dashTime: 1
+  currentDashTime: 0
+  endDashTime: 0
 --- !u!61 &5422238519342369364
 BoxCollider2D:
   m_ObjectHideFlags: 0
