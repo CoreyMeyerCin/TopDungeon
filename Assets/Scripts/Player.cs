@@ -50,7 +50,7 @@ public class Player : Mover
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentPosition = transform.position;
-        firePoint = this.transform;
+        firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
         projectilePrefab = GetComponentInChildren<Weapon>().projectilePrefab;
         weapon = GetComponentInChildren<Weapon>();
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).GetComponent<Projectile>();
@@ -74,7 +74,8 @@ public class Player : Mover
     {
 
         GetPlayerDirection();
-        firePoint = this.transform;
+        //firePoint = this.transform;
+        //this.GetComponentInChildren<Weapon>().transform.localPosition += new Vector3(0.096f,-0.011f,0);
         
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).gameObject.GetComponent<Projectile>();
 
@@ -87,6 +88,8 @@ public class Player : Mover
         //Reset MoveDelta
         UpdateMotor(new Vector3(x, y, 0));
         currentPosition = transform.position;
+        
+        //firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
         if (Input.GetKey(KeyCode.LeftAlt))
         {
             //Debug.LogWarning($"UpdateCheck: Time:{Time.time}, endDashTime: {endDashTime}");
@@ -182,11 +185,13 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         transform.GetChild(0).GetComponent<Animator>().enabled = false;
+        transform.GetChild(0).GetComponent<Weapon>().holdPosition = weap.holdPosition;
     }
 
     public void ChangeCurrentWeapon(Weapon weap)
     {
         weapon = weap;
+        transform.GetChild(0).GetComponent<Weapon>().holdPosition = weapon.holdPosition;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
         transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
@@ -194,6 +199,7 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         transform.GetChild(0).GetComponent<Animator>().enabled = true;
+        transform.GetChild(0).GetComponent<Weapon>().holdPosition = weap.holdPosition;
     }
 
     public void CurrentHitPointChange(float currHitPoint)

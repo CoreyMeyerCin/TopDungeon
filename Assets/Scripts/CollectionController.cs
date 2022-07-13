@@ -25,6 +25,7 @@ public class CollectionController : MonoBehaviour
     public float playerDamage;
     public float lifesteal;
     public BoxCollider2D coll;
+    public Vector3 holdPosition;
 
     public void Start()
     {
