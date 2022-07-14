@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +12,6 @@ public class Player : Mover
     public Text collectedText;
     public static int collectedAmount = 0;
 
-    public int level = 1;
     public int gold;
 
     public HealthService healthService;
@@ -25,11 +22,6 @@ public class Player : Mover
     public Transform firePoint;
 
     private float lastFire;
-
-    public PlayerStats stats;
-
-    public float playerDamage;
-
 
     //dashTime was moved to PlayerStats
     //public float dashTime = 1f;// this is how long it takes to complete the full dash
@@ -50,9 +42,7 @@ public class Player : Mover
         currentPosition = transform.position;
         firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
         weapon = GetComponentInChildren<Weapon>();
-        weapon.projectilePrefab = GetComponentInChildren<Weapon>().projectilePrefab;
-        stats = GameManager.instance.playerStats;
-        
+        weapon.projectilePrefab = GetComponentInChildren<Weapon>().projectilePrefab;        
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).GetComponent<Projectile>();
     }
 
@@ -72,14 +62,11 @@ public class Player : Mover
 
     private void Update()
     {
-
         GetPlayerDirection();
         //firePoint = this.transform;
         //this.GetComponentInChildren<Weapon>().transform.localPosition += new Vector3(0.096f,-0.011f,0);
         
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).gameObject.GetComponent<Projectile>();
-
-
     }
     private void FixedUpdate()
     {
@@ -110,28 +97,28 @@ public class Player : Mover
         switch (playerDir)
         {
             case 0:
-                dashEnd = new Vector3(currentPosition.x + (speed/5), currentPosition.y,currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x + (stats.speed /5), currentPosition.y,currentPosition.z);
                 return;
             case 0.5:
-                dashEnd = new Vector3(currentPosition.x + ((3*speed/4)/5), currentPosition.y-((3*speed/4)/5), currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x + ((3 * stats.speed / 4) / 5), currentPosition.y - ((3 * stats.speed / 4) / 5), currentPosition.z);
                 return;
             case 1:
-                dashEnd = new Vector3(currentPosition.x, currentPosition.y - ((3 * speed / 4) / 5), currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x, currentPosition.y - ((3 * stats.speed / 4) / 5), currentPosition.z);
                 return;
             case 1.5:
-                dashEnd = new Vector3(currentPosition.x - ((3 * speed / 4) / 5), currentPosition.y - ((3 * speed / 4) / 5), currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x - ((3 * stats.speed / 4) / 5), currentPosition.y - ((3 * stats.speed / 4) / 5), currentPosition.z);
                 return;
             case 2:
-                dashEnd = new Vector3(currentPosition.x - (speed/10), currentPosition.y, currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x - (stats.speed / 10), currentPosition.y, currentPosition.z);
                 return;
             case 2.5:
-                dashEnd = new Vector3(currentPosition.x - ((3*speed/4)/5), currentPosition.y + ((3 * speed / 4) / 5), currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x - ((3 * stats.speed / 4) / 5), currentPosition.y + ((3 * stats.speed / 4) / 5), currentPosition.z);
                 return;
             case 3:
-                dashEnd = new Vector3(currentPosition.x, currentPosition.y + speed/5, currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x, currentPosition.y + stats.speed / 5, currentPosition.z);
                 return;
             case 3.5:
-                dashEnd = new Vector3(currentPosition.x + ((3 * speed / 4) / 5), currentPosition.y + ((3 * speed / 4) / 10), currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x + ((3 * stats.speed / 4) / 5), currentPosition.y + ((3 * stats.speed / 4) / 10), currentPosition.z);
                 return;
         }
     }
@@ -154,35 +141,16 @@ public class Player : Mover
         }
         
     }
-    public void LifestealChange(float lifest)
-    {
-        stats.lifesteal += lifest;
-    }
-
-    public void PlayerDamageChange(float playerDmg)
-    {
-        playerDamage += playerDmg;
-    }
-
-    public void CritMultiplierChange(float CritDmg)
-    {
-        stats.critMultiplier += CritDmg;
-    }
-
-    public void CritChanceChange(float critCh)
-    {
-        stats.critChance += critCh;
-    }
 
     public void ChangeCurrentProjectile(Projectile proj, Weapon weap)
     {
         weapon = weap;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
         transform.GetChild(0).GetComponent<Weapon>().projectilePrefab = proj;
-        transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
+        transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
-        transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
+        transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         //transform.GetChild(0).GetComponent<Animator>().enabled = false;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weap.holdPosition;
@@ -193,46 +161,13 @@ public class Player : Mover
         weapon = weap;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weapon.holdPosition;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
-        transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
+        transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
-        transform.GetChild(0).GetComponent<Weapon>().weaponBaseDamage = weap.weaponBaseDamage;
+        transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         //transform.GetChild(0).GetComponent<Animator>().enabled = true;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weap.holdPosition;
-    }
-
-    public void CurrentHitPointChange(float currHitPoint)
-    {
-        if (currHitPoint + hitpoints > maxHitpoints)
-        {
-            hitpoints = maxHitpoints;
-        }
-        else
-        {
-            hitpoints += currHitPoint;
-        }
-    }
-
-    public void MaxHitPointsChange(float maxHitPoint)
-    {
-        maxHitpoints += maxHitPoint;
-        hitpoints += maxHitPoint;
-    }
-
-    public void AttackSpeedChange(float attackSpeedMod)
-    {
-        stats.attackSpeed += attackSpeedMod;
-    }
-
-    public void PushRecoveryChange(float pushRecovery)
-    {
-        pushRecoverySpeed *= pushRecovery;
-    }
-    
-    public void ChangeCooldown(float cooldownMod)
-    {
-       stats.cooldown -= cooldownMod;
     }
 
     public void SwapSprite(int skinId)
@@ -242,9 +177,9 @@ public class Player : Mover
 
     public void OnLevelUp()
     {
-        level++;
-        MaxHitPointsChange(5f);
-        PlayerDamageChange(4f);
+        stats.level++;
+        stats.maxHitpoints = stats.IncreaseStatByFlatAmount(stats.maxHitpoints, 5f);
+        stats.baseDamage = stats.IncreaseStatByFlatAmount(stats.baseDamage, 4f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -300,12 +235,12 @@ public class Player : Mover
     //************************************************
     public int GetLevel()
     {
-        return level;
+        return stats.level;
     }
 
     public void SetLevel(int levelToSet)
     {
-        level = levelToSet;
+        stats.level = levelToSet;
     }
 
 }

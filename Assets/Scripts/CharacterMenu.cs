@@ -77,7 +77,7 @@ public class CharacterMenu : MonoBehaviour
 
         //Meta
         levelText.text = Player.instance.GetLevel().ToString();
-        hitpointText.text = GameManager.instance.player.hitpoints.ToString();
+        hitpointText.text = GameManager.instance.player.stats.hitpoints.ToString();
         goldText.text = Player.instance.gold.ToString();
 
         //XP Bar
