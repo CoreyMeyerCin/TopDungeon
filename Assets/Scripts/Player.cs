@@ -15,6 +15,7 @@ public class Player : Mover
     public int gold;
 
     public HealthService healthService;
+    public PlayerSpriteService spriteService;
     //public Projectile projectilePrefab;//holds the weapons prefab, might be able to do this in a better way to do this in the weapon
     //public Projectile projectilePrefab;
     public Weapon weapon;
