@@ -10,19 +10,12 @@ public abstract class Mover : Fighter//abstract means that it has to be inherite
 
     protected RaycastHit2D hit;
 
-    public float speed;
-
     protected virtual void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
     }
 
     //since we're using physics we are going to use FixedUpdate instead of Update for movement
-    
-    public void MoveSpeedChange(float addSpeed)
-    {
-        speed *= addSpeed;
-    }
 
     protected virtual void UpdateMotor(Vector3 input)
     {
@@ -41,24 +34,23 @@ public abstract class Mover : Fighter//abstract means that it has to be inherite
         moveDelta += pushDirection; //Add push vector, if any
 
         //Reduce push for every frame, based off of recovery speed
-        pushDirection = Vector3.Lerp(pushDirection, Vector3.zero, pushRecoverySpeed); // this allows the push to end after pushRecoverySpeed amount of time
+        pushDirection = Vector3.Lerp(pushDirection, Vector3.zero, stats.pushRecoverySpeed); // this allows the push to end after pushRecoverySpeed amount of time
 
         //check to see if our Player is able to walk throough certain layers
         //current position || this.BoxCollider || angle || where were trying to move || how far we are trying to move || which masks are we not allowed to move through
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0,moveDelta.y), Mathf.Abs(moveDelta.y * speed*Time.deltaTime), LayerMask.GetMask("Actor","Blocking"));
+        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0,moveDelta.y), Mathf.Abs(moveDelta.y * stats.speed *Time.deltaTime), LayerMask.GetMask("Actor","Blocking"));
         if(hit.collider == null)
         {
-            transform.Translate(0,(moveDelta.y * speed* Time.deltaTime),0); // this will adjust with framerate and move only on the y-axis if there is no collision detected
+            transform.Translate(0,(moveDelta.y * stats.speed * Time.deltaTime),0); // this will adjust with framerate and move only on the y-axis if there is no collision detected
         }
 
         //x-axis same thing as above
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x,0), Mathf.Abs(moveDelta.x * speed *Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
+        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x,0), Mathf.Abs(moveDelta.x * stats.speed *Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
         if (hit.collider == null)
         {
-            transform.Translate((moveDelta.x * speed* Time.deltaTime),0, 0); // this will adjust with framerate and move only on the x-axis if there is no collision detected
+            transform.Translate((moveDelta.x * stats.speed * Time.deltaTime),0, 0); // this will adjust with framerate and move only on the x-axis if there is no collision detected
         }
     }
 
     
-
 }
