@@ -4,33 +4,17 @@ using UnityEngine;
 
 public class Enemy : Mover
 {
-    public int level = 1;
-	public int xpValue = 1;
-    public int goldValue = 10;
-
-	//**********INHERITED FIELD*******************
-	//FIGHTER.cs
-	/*float hitpoints;
-     * float maxhitPoints;
-     * pushRecoverySpeed;
-     * 
-     * 
-     */
-
-
-
 	//Logic for moving
 	public float triggerLength = 1.0f;//how close until the enemy gets triggered to start chasing
-   public float chaseLength = 5;//how far the enemy will chase you from their resting position
-   //private bool chasing;
-   public bool collidingWithPlayer;
-   //private Transform playerTransform;//the players current position
-   //private Vector3 startingPosition;//their resting position
+    public float chaseLength = 5;//how far the enemy will chase you from their resting position
+    //private bool chasing;
+    public bool collidingWithPlayer;
+    //private Transform playerTransform;//the players current position
+    //private Vector3 startingPosition;//their resting position
 
-   //Hitbox
-   public ContactFilter2D filter;
-   private BoxCollider2D hitbox;
-   private Collider2D[] hits = new Collider2D[10];// we can only inherit from 1 thing at a time so we will make a collider starting here
+    public ContactFilter2D filter;
+    private BoxCollider2D hitbox;
+    private Collider2D[] hits = new Collider2D[10];// we can only inherit from 1 thing at a time so we will make a collider starting here
 
     protected override void Start()
     {

@@ -38,11 +38,10 @@ public class GameManager : MonoBehaviour
     public FloatingTextManager floatingTextManager;
     public ExperienceManager experienceManager;
     public LevelUI levelUI;
-    public PersistantUI persistantUI;
+    public PersistentUI persistentUI;
     public GameObject playerStatsUI;
     public EnemyList enemyList;
     public LootManager lootManager;
-    public PlayerStats playerStats;
 
     private void Awake()
     {
@@ -61,11 +60,10 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(levelUI.gameObject);
             DontDestroyOnLoad(healthService);
             DontDestroyOnLoad(weapon);
-            DontDestroyOnLoad(persistantUI.gameObject);
+            DontDestroyOnLoad(persistentUI.gameObject);
             DontDestroyOnLoad(playerStatsUI);
             DontDestroyOnLoad(enemyList);
             DontDestroyOnLoad(lootManager);
-            DontDestroyOnLoad(playerStats);
             SceneManager.sceneLoaded += LoadState;
         }
         else
@@ -78,11 +76,10 @@ public class GameManager : MonoBehaviour
             Destroy(experienceManager.gameObject);
             Destroy(healthService.gameObject);
             Destroy(weapon);
-            Destroy(persistantUI.gameObject);
+            Destroy(persistentUI.gameObject);
             Destroy(playerStatsUI);
             Destroy(enemyList);
             Destroy(lootManager);
-            Destroy(playerStats);
             SceneManager.sceneLoaded += LoadState;
         }
 

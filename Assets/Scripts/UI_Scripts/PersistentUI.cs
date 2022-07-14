@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PersistantUI : MonoBehaviour
+public class PersistentUI : MonoBehaviour
 {
     private float hitPoints;
     private float maxHitPoints;
@@ -33,14 +33,14 @@ public class PersistantUI : MonoBehaviour
         //if (showGui) { canvas.enabled = true; } else { canvas.enabled = false; }
         
 
-        hitPoints = GameManager.instance.player.hitpoints;
-        maxHitPoints = GameManager.instance.player.maxHitpoints;
+        hitPoints = GameManager.instance.player.stats.hitpoints;
+        maxHitPoints = GameManager.instance.player.stats.maxHitpoints;
         //currentExp = (float)GameManager.instance.experienceManager.GetExperience();
         //maxExp = (float)GameManager.instance.experienceManager.GetExperienceToNextLevel();
         healthText.text = $"HP:{hitPoints}/{maxHitPoints}";
         expText.text = $"EXP:{GameManager.instance.experienceManager.GetExperience()}/{GameManager.instance.experienceManager.GetExperienceToNextLevel()}";
         //goldText.text = $"Gold:{GameManager.instance.player.gold}";
-        levelText.text = $"Level: {GameManager.instance.player.level}";
+        levelText.text = $"Level: {GameManager.instance.player.stats.level}";
 
         //if (Input.GetKeyDown(KeyCode.Tab) && !showGui)
         //{
