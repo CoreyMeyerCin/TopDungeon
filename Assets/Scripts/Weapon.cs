@@ -30,6 +30,8 @@ public class Weapon : Collidable
 
 
 
+
+
 	public WeaponType weaponType = WeaponType.Melee;
 	public DamageType damageType = DamageType.Slashing;// (maybe add fire, ice, force etc)
 
@@ -57,13 +59,15 @@ public class Weapon : Collidable
 		currentHoldPosition = new Vector3(player.currentPosition.x + this.holdPosition.x,
 									   player.currentPosition.y + this.holdPosition.y, 0);
 		transform.position = currentHoldPosition;
-		//Time.time/1 > 1
-		if (Time.time - lastUse > player.stats.cooldown/player.stats.attackSpeed)
+
+       //Time.time/1 > 1
+        if (Time.time - lastUse > player.stats.cooldown/player.stats.attackSpeed)
         {
 			attackAvailable = true;
 		}
 		if (Input.GetKeyDown(KeyCode.Space) && attackAvailable)
 		{
+			Debug.LogWarning("Hit 1");
 			Attack();
 		}
 	}
@@ -99,6 +103,7 @@ public class Weapon : Collidable
 				Swing();
 				break;
 			case WeaponType.Ranged:
+				Debug.LogWarning("Hit 2");
 				Shoot();
 				break;
 			case WeaponType.Magic:
@@ -125,14 +130,16 @@ public class Weapon : Collidable
 
 	private void Shoot()
     {
-		Instantiate(player.transform.GetChild(0).GetComponent<Weapon>().projectilePrefab,currentHoldPosition, player.firePoint.rotation);
+		Debug.LogWarning("Hot Shoot");
+		//Debug.LogWarning({GameManager.instance.mousePosition.transform.rotation}");
+		Instantiate(player.transform.GetChild(0).GetComponent<Weapon>().projectilePrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
 		attackAvailable = false;
 		lastUse = Time.time;
 	}
 	
 	private void Swing()
 	{
-		Instantiate(player.transform.GetChild(0).GetComponent<Weapon>().swingPrefab, currentHoldPosition, player.firePoint.rotation);
+		Instantiate(player.transform.GetChild(0).GetComponent<Weapon>().swingPrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
 		//NEED TO MAKE SWINGING LOGIC NOW
 		//anim.SetTrigger("Swing"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
 	}

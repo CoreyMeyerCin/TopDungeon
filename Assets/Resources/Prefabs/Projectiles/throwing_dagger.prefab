@@ -179,6 +179,6 @@ MonoBehaviour:
     maxNormalAngle: 0
   weapon: {fileID: 3334614298463244672, guid: a1a252e1299c3fd4e86d3e5ce0739511, type: 3}
   player: {fileID: 0}
+  mousePosition: {fileID: 0}
   lifespan: 1
   projectileSpeed: 2
-  fireDelay: 0
