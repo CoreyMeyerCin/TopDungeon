@@ -14,9 +14,8 @@ public class Weapon : Collidable
 	//public int weaponLevel = 0; //the current level of the weapon, later this will be used to determine what damage point and pushForce equal through logic
 	//public SpriteRenderer spriteRenderer; //this is to change the look of our weapon when we upgrade
 	public Sprite sprite;
-	public float weaponBaseDamage;
-	public float weaponExtraDamage;
-	public bool hasExtraDamage;
+	public float baseDamage;
+	public float additionalDamage;
 	public float knockBack;
 	//Swing
 	private Animator anim; //reference to the Animator
@@ -27,9 +26,6 @@ public class Weapon : Collidable
 	public SwingPrefab swingPrefab;
 	public Vector3 holdPosition;
 	public Vector3 currentHoldPosition;
-
-
-
 
 
 	public WeaponType weaponType = WeaponType.Melee;
@@ -74,24 +70,16 @@ public class Weapon : Collidable
 
 	public int CalculateDamage()
     {
-		var damage = weaponBaseDamage + Player.instance.playerDamage;
+		var damage = baseDamage + Player.instance.stats.combinedDamage;
 
 		if(Random.Range(0,100) <= Player.instance.stats.critChance)
         {
 			damage *= Player.instance.stats.critMultiplier;
         }
 
-        if (hasExtraDamage)
-        {
-			damage += weaponExtraDamage;
-        }
-		//if (player.lifesteal > 0)
-		//{
-		//	player.CurrentHitPointChange((float)totalDamage * player.lifesteal);
-		//}
+		damage += additionalDamage;
 
 		return (int)damage;
-
     }
 	
 	private void Attack()
