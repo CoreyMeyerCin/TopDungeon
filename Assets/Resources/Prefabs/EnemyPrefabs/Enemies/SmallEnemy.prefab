@@ -307,8 +307,8 @@ MonoBehaviour:
   enemyType: 0
   damage: 4
   knockback: 2
-  range: 1
-  speed: 1
+  range: 1.5
+  speed: 0.3
   attackRange: 0
   projectileSpeed: 0
   bulletPrefab: {fileID: 0}
@@ -344,7 +344,7 @@ MonoBehaviour:
   wanderGoal: {x: 0, y: 0, z: 0}
   wanderOldGoal: {x: 0, y: 0, z: 0}
   currentPosition: {x: 0, y: 0, z: 0}
-  homePosition: {x: 0, y: 0, z: 0}
+  homePosition: {x: -0.037, y: 0.954, z: 0}
   homeStretch: 0
   collidingWithPlayer: 0
   xpValue: 6
@@ -352,3 +352,7 @@ MonoBehaviour:
   goldValue: 4
   fighter: {fileID: 1943989415120018903}
   lootManager: {fileID: 0}
+  followGoal: {x: 0, y: 0, z: 0}
+  followOffset: 0.4
+  unstickToWallOnBadFollow: 0
+  aggressionRange: 1

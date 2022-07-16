@@ -18,7 +18,7 @@ public class Projectile: Collidable
     public Weapon weapon; //TODO: make this an object that inherits Weapon instead of something completely separate
     public Player player;
     public MousePosition mousePosition;
-
+    
     public float lifespan = 1f;//MOVED TO PLAYER
     public float projectileSpeed;
 
