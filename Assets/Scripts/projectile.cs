@@ -17,16 +17,23 @@ public class Projectile: Collidable
     private bool hasCollided;
     public Weapon weapon; //TODO: make this an object that inherits Weapon instead of something completely separate
     public Player player;
-
+    public MousePosition mousePosition;
+    
     public float lifespan = 1f;//MOVED TO PLAYER
     public float projectileSpeed;
 
     private float spawnTime;
+    private Vector2 offset;
+    float angle;
     
     // Start is called before the first frame update
     void Start()
     {
+
+
         base.Start();
+
+       // transform.Rotate(Vector3.right);
         //rb.velocity = transform.right * speed;
         player = GameManager.instance.player;
         boxCollider = GetComponent<BoxCollider2D>();
@@ -35,12 +42,21 @@ public class Projectile: Collidable
         rb = GetComponent<Rigidbody2D>();
         weapon = GameManager.instance.player.weapon;
 
-        SetProjectileDirection(GameManager.instance.player.playerDirection);
+        //SetProjectileDirection(GameManager.instance.player.playerDirection);
     }
 
     private void Update()
     {
-        boxCollider = GetComponent<BoxCollider2D>();
+        rb.velocity = transform.up * speed;//move to the right * speed
+
+
+        //boxCollider = GetComponent<BoxCollider2D>();
+
+        ////the difference of our player position and out mouse's position
+        //offset = new Vector2(mousePosition.mouseWorldPosition.x - player.transform.position.x, mousePosition.mouseWorldPosition.y - player.transform.position.y);
+
+        //float angle = Mathf.Atan2(offset.x, offset.y) * Mathf.Rad2Deg;//this gets our rotation with math in degrees
+        //transform.rotation = Quaternion.Euler(0,0, angle);
         //Collision work
         boxCollider.OverlapCollider(filter, hits); //take BoxCollider and look for other collision and put its into the hits[]
         for (int i = 0; i < hits.Length; i++)
@@ -73,53 +89,58 @@ public class Projectile: Collidable
     }
 
 
-    private void SetProjectileDirection(double playerDirection)
-    {
-        //Debug.Log("Connected");
+    //private void SetProjectileDirection(double playerDirection)
+    //{
+    //    //Debug.Log("Connected");
 
-        if (playerDirection == 0)
-        {
-            //transform.position += transform.forward * speed * Time.deltaTime;
-            rb.velocity = new Vector3(1,0,0) * speed;
-            transform.rotation = Quaternion.Euler(0, 0, -90);
-            //transform.right *speed*Time.deltaTime;
-        }
-        else if (playerDirection == 0.5)
-        {
-            rb.velocity = new Vector3(1, -1, 0) * speed;
-            transform.rotation = Quaternion.Euler(0, 0, -135);
-        }
-        else if (playerDirection == 1)
-        {
-            rb.velocity = new Vector3(0, -1, 0) * speed;
-            transform.rotation = Quaternion.Euler(0, 0, -180);
-        }
-        else if (GameManager.instance.player.playerDirection == 1.5)
-        {
-            rb.velocity = new Vector3(-1, -1, 0) * speed;
-            transform.rotation = Quaternion.Euler(0, 0, -225);
-        }
-        else if (GameManager.instance.player.playerDirection == 2)
-        {
-            rb.velocity = new Vector3(-1, 0, 0) * speed;
-            transform.rotation = Quaternion.Euler(0, 0, -270);
-        }
-        else if (GameManager.instance.player.playerDirection == 2.5)
-        {
-            rb.velocity = new Vector3(-1, 1, 0) * speed;
-            transform.rotation = Quaternion.Euler(0, 0, -315);
-        }
-        else if (GameManager.instance.player.playerDirection == 3)
-        {
-            rb.velocity = new Vector3(0, 1, 0) * speed;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-        else if (GameManager.instance.player.playerDirection == 3.5)
-        {
-            rb.velocity = new Vector3(1, 1, 0) * speed;
-            transform.rotation = Quaternion.Euler(0, 0, -45);
-        }
-    }
+    //    if (playerDirection == 0)
+    //    {
+    //        Debug.Log(mousePosition.mouseWorldPosition.x);
+    //        //transform.position += transform.forward * speed * Time.deltaTime;
+    //        rb.velocity = new Vector3(offset.x,offset.y,0) * speed;
+    //        transform.rotation = Quaternion.Euler(0, 0, angle-90f);
+    //        //transform.right *speed*Time.deltaTime;
+
+
+           
+    //    }
+    //    else if (playerDirection == 0.5)
+    //    {
+            
+    //        rb.velocity = new Vector3(1, -1, 0) * speed;
+    //        transform.rotation = Quaternion.Euler(0, 0, -135);
+    //    }
+    //    else if (playerDirection == 1)
+    //    {
+    //        rb.velocity = new Vector3(0, -1, 0) * speed;
+    //        transform.rotation = Quaternion.Euler(0, 0, -180);
+    //    }
+    //    else if (GameManager.instance.player.playerDirection == 1.5)
+    //    {
+    //        rb.velocity = new Vector3(-1, -1, 0) * speed;
+    //        transform.rotation = Quaternion.Euler(0, 0, -225);
+    //    }
+    //    else if (GameManager.instance.player.playerDirection == 2)
+    //    {
+    //        rb.velocity = new Vector3(-1, 0, 0) * speed;
+    //        transform.rotation = Quaternion.Euler(0, 0, -270);
+    //    }
+    //    else if (GameManager.instance.player.playerDirection == 2.5)
+    //    {
+    //        rb.velocity = new Vector3(-1, 1, 0) * speed;
+    //        transform.rotation = Quaternion.Euler(0, 0, -315);
+    //    }
+    //    else if (GameManager.instance.player.playerDirection == 3)
+    //    {
+    //        rb.velocity = new Vector3(0, 1, 0) * speed;
+    //        transform.rotation = Quaternion.Euler(0, 0, 0);
+    //    }
+    //    else if (GameManager.instance.player.playerDirection == 3.5)
+    //    {
+    //        rb.velocity = new Vector3(1, 1, 0) * speed;
+    //        transform.rotation = Quaternion.Euler(0, 0, -45);
+    //    }
+    //}
     protected override void OnCollide(Collider2D coll)
     {
         //Debug.Log($"Collided with{coll}");

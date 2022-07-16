@@ -86,25 +86,25 @@ public class EnemyController : MonoBehaviour
         currentPosition = transform.position;
         if (IsPlayerInRange(range))
         {
-            UnityEngine.Debug.Log(" Hit A");
+            //UnityEngine.Debug.Log(" Hit A");
             currState = EnemyState.Follow;
             Follow();
         }
         else if (IsAwayFromHome(range))
         {
-            UnityEngine.Debug.Log(" Hit B");
+            //UnityEngine.Debug.Log(" Hit B");
             currState = EnemyState.Idle;
             Idle();
         }
         else if (!IsAwayFromHome(range) && currentPosition == homePosition)
         {
-            UnityEngine.Debug.Log(" Hit C");
+            //UnityEngine.Debug.Log(" Hit C");
             currState = EnemyState.Wander;
             Wander();
         }
         else if (!IsAwayFromHome(range))
         {
-            UnityEngine.Debug.Log(" Hit D");
+            //UnityEngine.Debug.Log(" Hit D");
             Wander();
         }
         //switch(currState)
@@ -183,6 +183,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Idle()
     {
+        
         transform.position = Vector2.MoveTowards(currentPosition, homePosition, speed * Time.deltaTime);
         wanderGoal = homePosition;
     }
@@ -241,8 +242,12 @@ public class EnemyController : MonoBehaviour
         //Debug.Log($"Enemy has collided with {coll.tag}");
         if (coll.tag.Equals("Wall"))
         {
-            //Debug.Log("OnCollide Wall true");
-            StartCoroutine(ChooseDirection());
+            //Debug.Log(" Skeeleton OnCollide Wall true");
+            if(currState == EnemyState.Wander)
+            {
+                StartCoroutine(ChooseDirection());
+            }
+           
         }
         if (coll.tag.Equals("Player"))
         {
