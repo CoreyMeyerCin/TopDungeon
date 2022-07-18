@@ -13,9 +13,9 @@ public class Stats : MonoBehaviour
     public float cooldown { get; set; } = 1f;
     public float critChance { get; set; } = 5f;
     public float critMultiplier { get; set; } = 1.05f;
-    public float combinedDamage
+    public int combinedDamage
 	{
-        get { return baseDamage + additionalDamage; }
+        get { return Mathf.RoundToInt(baseDamage + additionalDamage); }
     }
     public float dashTime { get; set; } = 1f;
     public int dropChanceModifier { get; set; } = 0;

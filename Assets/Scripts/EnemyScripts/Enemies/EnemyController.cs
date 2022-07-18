@@ -6,22 +6,20 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     GameObject player; // this will point at the player.instance... we should use GameObject for now on instead of public Player player because GameObject has more tools for us to use.
-    public EnemyState currState = EnemyState.Idle; //this is the current state that the enemy is in, starts off with Idle until acted upon.
-    public EnemyType enemyType; //Melee or ranged for now may add burrow and flying
+    public EnemyState state = EnemyState.Idle;
+    public EnemyType type;//Melee or ranged for now may add burrow and flying
 
     //many of these fields need to be migrated to Enemy.cs
-    public int damage;
     public int knockback;
-    public float range; // used for the enemys sight range
-    public float speed = 1; // how fast the enemy can move in pixels/ps
-    public float attackRange;// how far the enemy is able to attack the player, or switch EnemyState to attack
-    public float projectileSpeed; // how far the enemy's projectile flies
-    protected float coolDown; // how often the enemy can use its attack action
-    protected bool chooseDir = false; // this is how the enemy chooses which way to walk/attack
-    protected bool dead = false; // checks to see if the enemy is dead
-    protected bool attackOnCooldown = false; // the Time.time check of if enemy can attack again
-    protected bool notInRoom; // Checks to see if Player is in the same room as the enemy
-    protected Vector3 randomDir; // sets initial moving direction
+    public float sightRange;
+    public float attackRange;
+    public float projectileRange;
+    protected float attackCooldown;
+    protected Vector3 initialMoveDirection;
+    protected bool chooseNewDirection = false;
+    protected bool isDead = false; //TODO: is this necessary?
+    protected bool attackOnCooldown = false;
+    protected bool playerNotInRoom;
     public GameObject bulletPrefab; // put the instance of the bullet here, this allows us to use magic and projectiles the same way. We just have to build the prefabs to do what we want.
     //Damage dmg;
     public BoxCollider2D boxCollider;
@@ -34,16 +32,13 @@ public class EnemyController : MonoBehaviour
     public Vector3 wanderOldGoal;
     public Vector3 currentPosition;
     public Vector3 homePosition;
-    protected CharacterController controller;
-    public float homeStretch;//used for seeing how far we are from home
+    public float distanceFromHome;
     public bool collidingWithPlayer;
-    public int xpValue;
-    public int level;
-    public int goldValue;
-    public Fighter fighter;
+    protected CharacterController controller;
+    public Fighter fighter; //TODO: refactor this so it just directly accesses the Enemy.cs sibling script on the GameObject this script is on
     public LootManager lootManager;
 
-    //TODO: move into item controller and look into proper drop-tables
+    //TODO: move into item controller and loot into proper drop-tables
  
 
     protected virtual void Awake()
@@ -84,25 +79,25 @@ public class EnemyController : MonoBehaviour
         //Debug.Log($"Current EnemyState: {currState}");
 
         currentPosition = transform.position;
-        if (IsPlayerInRange(range))
+        if (IsPlayerInRange(sightRange))
         {
             //UnityEngine.Debug.Log(" Hit A");
-            currState = EnemyState.Follow;
+            state = EnemyState.Follow;
             Follow();
         }
-        else if (IsAwayFromHome(range))
+        else if (IsAwayFromHome(sightRange))
         {
             //UnityEngine.Debug.Log(" Hit B");
-            currState = EnemyState.Idle;
+            state = EnemyState.Idle;
             Idle();
         }
-        else if (!IsAwayFromHome(range) && currentPosition == homePosition)
+        else if (!IsAwayFromHome(sightRange) && currentPosition == homePosition)
         {
             //UnityEngine.Debug.Log(" Hit C");
-            currState = EnemyState.Wander;
+            state = EnemyState.Wander;
             Wander();
         }
-        else if (!IsAwayFromHome(range))
+        else if (!IsAwayFromHome(sightRange))
         {
             //UnityEngine.Debug.Log(" Hit D");
             Wander();
@@ -145,10 +140,10 @@ public class EnemyController : MonoBehaviour
 
     protected virtual IEnumerator ChooseDirection()// this loops over all the times within it put together
     {
-        chooseDir = true;// we do this so we do not overlap the Choose Direction function with itself
+        chooseNewDirection = true;// we do this so we do not overlap the Choose Direction function with itself
         //yield return new WaitForSeconds(Random.Range(1f, 4f));// This will make the enemy wait 2-8 seconds before choosign a direction
-        wanderGoal = new Vector3(Random.Range(homePosition.x - range, homePosition.x + range) //x value
-                                , Random.Range(homePosition.y - range, homePosition.y + range) //y value
+        wanderGoal = new Vector3(Random.Range(homePosition.x - sightRange, homePosition.x + sightRange) //x value
+                                , Random.Range(homePosition.y - sightRange, homePosition.y + sightRange) //y value
                                 , 0);
         //wanderGoal = Random.insideUnitCircle * range;
         //UnityEngine.Debug.Log($"Current Position: {currentPosition}\nwanderGoal:{wanderGoal}");
@@ -169,37 +164,37 @@ public class EnemyController : MonoBehaviour
 
 
     }
-    protected virtual void CheckIfWanderComplete(Vector3 currPosition, Vector3 wanGoal)
+    protected virtual void CheckIfWanderComplete(Vector3 currPosition, Vector3 wanderGoal)
     {
-        if (currPosition == wanGoal)
+        if (currPosition == wanderGoal)
         {
-            chooseDir = false;
+            chooseNewDirection = false;
         }
         else
         {
-            chooseDir = true;
+            chooseNewDirection = true;
         }
     }
 
     protected virtual void Idle()
     {
         
-        transform.position = Vector2.MoveTowards(currentPosition, homePosition, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(currentPosition, homePosition, fighter.stats.speed * Time.deltaTime);
         wanderGoal = homePosition;
     }
 
     protected virtual void Wander()
     {
-        transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, fighter.stats.speed * Time.deltaTime);
         CheckIfWanderComplete(currentPosition, wanderGoal);
         //UnityEngine.Debug.Log("Hit 1");
-        if (!chooseDir)
+        if (!chooseNewDirection)
         {
             Debug.Log("Hit 2");
             StartCoroutine(ChooseDirection());
             return;
         }
-        else if (chooseDir)
+        else if (chooseNewDirection)
         {
             //UnityEngine.Debug.Log("Hit 3");
             //transform.position += -transform.right * speed * Time.deltaTime;
@@ -210,14 +205,14 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Follow()
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, fighter.stats.speed * Time.deltaTime);
     }
 
     protected virtual void Attack()
     {
         if (!attackOnCooldown)
         {
-            switch (enemyType)
+            switch (type)
             {
                 case (EnemyType.Melee):
                     Follow();
@@ -233,7 +228,7 @@ public class EnemyController : MonoBehaviour
     protected virtual IEnumerator CoolDown()
     {
         attackOnCooldown = true;
-        yield return new WaitForSeconds(coolDown);
+        yield return new WaitForSeconds(attackCooldown);
         attackOnCooldown = false;
     }
 
@@ -243,7 +238,7 @@ public class EnemyController : MonoBehaviour
         if (coll.tag.Equals("Wall"))
         {
             //Debug.Log(" Skeeleton OnCollide Wall true");
-            if(currState == EnemyState.Wander)
+            if(state == EnemyState.Wander)
             {
                 StartCoroutine(ChooseDirection());
             }
@@ -254,7 +249,7 @@ public class EnemyController : MonoBehaviour
             //Debug.LogWarning($"{this.name} has collided with a {coll.tag}");
             Damage dmg = new Damage()
             {
-                damageAmount = damage,
+                damageAmount = fighter.stats.combinedDamage,
                 origin = transform.position,
                 pushForce = knockback
             };
@@ -262,15 +257,15 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void Death()
+    public void Death() //TODO: refactor this so it only triggers an OnEnemyKill event and the logic is handled through those events
     {
         Debug.LogWarning($"Death Happened for {this.gameObject}");
         GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
-        Player.instance.gold += lootManager.OnDeathCalculateGoldEarned(goldValue, level);
+        Player.instance.gold += lootManager.OnDeathCalculateGoldEarned(fighter.stats.goldValue, fighter.stats.level);
         if (ShouldDropItem())
         {
             Debug.LogWarning("Going to roll for loot drop");
-            lootManager.RollForLootDrop(level, this.currentPosition);
+            lootManager.RollForLootDrop(fighter.stats.level, this.currentPosition);
         }
         Debug.LogWarning("Destroying myself");
         Destroy(this.gameObject);
@@ -283,7 +278,7 @@ public class EnemyController : MonoBehaviour
     }
     public int OnDeathCalculateExperienceEarned()
     {
-        var totalExperience = Mathf.RoundToInt((xpValue * level) / (1 + level));
+        var totalExperience = Mathf.RoundToInt((fighter.stats.xpValue * fighter.stats.level) / (1 + fighter.stats.level));
         return totalExperience;
     }
 

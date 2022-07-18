@@ -16,25 +16,25 @@ public class EnemySkeleton : EnemyController
 
 
         currentPosition = transform.position;
-        if (IsPlayerInRange(range))
+        if (IsPlayerInRange(sightRange))
         {
             //UnityEngine.Debug.Log(" Hit A");
-            currState = EnemyState.Follow;
+            state = EnemyState.Follow;
             Follow();
         }
-        else if (IsAwayFromHome(range))
+        else if (IsAwayFromHome(sightRange))
         {
             //UnityEngine.Debug.Log(" Hit B");
-            currState = EnemyState.Idle;
+            state = EnemyState.Idle;
             Idle();
         }
-        else if (!IsAwayFromHome(range) && currentPosition == homePosition)
+        else if (!IsAwayFromHome(sightRange) && currentPosition == homePosition)
         {
             //UnityEngine.Debug.Log(" Hit C");
-            currState = EnemyState.Wander;
+            state = EnemyState.Wander;
             Wander();
         }
-        else if (!IsAwayFromHome(range))
+        else if (!IsAwayFromHome(sightRange))
         {
             //UnityEngine.Debug.Log(" Hit D");
             Wander();
@@ -44,15 +44,15 @@ public class EnemySkeleton : EnemyController
     }
     protected override void Wander()
     {
-        transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, fighter.stats.speed * Time.deltaTime);
         CheckIfWanderComplete(currentPosition, wanderGoal);
         //UnityEngine.Debug.Log("Hit 1");
-        if (!chooseDir)
+        if (!chooseNewDirection)
         {
             StartCoroutine(ChooseDirection());
             return;
         }
-        else if (chooseDir)
+        else if (chooseNewDirection)
         {
             //UnityEngine.Debug.Log("Hit 3");
             //transform.position += -transform.right * speed * Time.deltaTime;
@@ -61,21 +61,21 @@ public class EnemySkeleton : EnemyController
     }
     protected override void Follow()
     {
-        transform.position = Vector2.MoveTowards(transform.position, followGoal, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, followGoal, fighter.stats.speed * Time.deltaTime);
         CheckIfFollowComplete(currentPosition, followGoal);
         Debug.LogWarning("Hit StartFollow");
-        if (!chooseDir && !IsPlayerInRange(aggressionRange))
+        if (!chooseNewDirection && !IsPlayerInRange(aggressionRange))
         {
             StartCoroutine(FollowChooseDirectionWithOffset());//we are already in follow range but are not in aggression range
            
             return;
         }
-        else if(!chooseDir && IsPlayerInRange(aggressionRange))// we are in follow range AND in aggression range
+        else if(!chooseNewDirection && IsPlayerInRange(aggressionRange))// we are in follow range AND in aggression range
         {
             StartCoroutine(FollowChooseDirectionWithOffset());
             
         }
-        else if (chooseDir)
+        else if (chooseNewDirection)
         {
             return;
         }
@@ -85,7 +85,7 @@ public class EnemySkeleton : EnemyController
 
     protected virtual IEnumerator FollowChooseDirectionWithOffset()// this loops over all the times within it put together
     {
-        chooseDir = true;// we do this so we do not overlap the Choose Direction function with itself
+        chooseNewDirection = true;// we do this so we do not overlap the Choose Direction function with itself
       
         followGoal = new Vector3(Random.Range(GameManager.instance.player.transform.position.x - followOffset, GameManager.instance.player.transform.position.x + followOffset) //x value
                                 ,Random.Range(GameManager.instance.player.transform.position.y - followOffset, GameManager.instance.player.transform.position.y + followOffset) //y value
@@ -94,7 +94,7 @@ public class EnemySkeleton : EnemyController
     }
     protected virtual IEnumerator FollowChooseDirectionWithoutOffset()
     {
-        chooseDir = true;// we do this so we do not overlap the Choose Direction function with itself
+        chooseNewDirection = true;// we do this so we do not overlap the Choose Direction function with itself
 
         followGoal = new Vector3(GameManager.instance.player.transform.position.x//x value
                                 , GameManager.instance.player.transform.position.y//y value
@@ -105,16 +105,16 @@ public class EnemySkeleton : EnemyController
     {
         if (currPosition == folGoal)
         {
-            chooseDir = false;
+            chooseNewDirection = false;
         }
         else
         {
-            chooseDir = true;
+            chooseNewDirection = true;
         }
     }
     protected virtual IEnumerator ChooseDirectionIdle()
     {
-        chooseDir = true;// we do this so we do not overlap the Choose Direction function with itself
+        chooseNewDirection = true;// we do this so we do not overlap the Choose Direction function with itself
 
         yield return new WaitForSeconds(Random.Range(0.5f, 1f));
     }
@@ -124,22 +124,22 @@ public class EnemySkeleton : EnemyController
         if (coll.tag.Equals("Wall"))
         {
             Debug.Log(" Skeeleton OnCollide Wall true");
-            if (currState == EnemyState.Idle)
+            if (state == EnemyState.Idle)
             {
                 Debug.LogWarning("Hit1");
                 transform.position = Vector2.MoveTowards(currentPosition,
                             new Vector3(Random.Range(transform.position.x - 0.3f, transform.position.x + 0.3f),Random.Range(transform.position.y - 0.3f, transform.position.y + 0.3f) //y value
-                               , 0),speed * Time.deltaTime);
+                               , 0), fighter.stats.speed * Time.deltaTime);
 
                 StartCoroutine(ChooseDirectionIdle());
                 Debug.LogWarning("Hit2");
                 Idle();
             }
-            else if (currState == EnemyState.Wander)
+            else if (state == EnemyState.Wander)
             {
                 StartCoroutine(ChooseDirection());
             }
-            else if (currState == EnemyState.Follow)
+            else if (state == EnemyState.Follow)
             {
                 StartCoroutine(FollowChooseDirectionWithOffset());
             }
@@ -150,7 +150,7 @@ public class EnemySkeleton : EnemyController
             //Debug.LogWarning($"{this.name} has collided with a {coll.tag}");
             Damage dmg = new Damage()
             {
-                damageAmount = damage,
+                damageAmount = fighter.stats.combinedDamage,
                 origin = transform.position,
                 pushForce = knockback
             };
