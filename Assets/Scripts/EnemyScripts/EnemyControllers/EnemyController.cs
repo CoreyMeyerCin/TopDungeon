@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
 {
     GameObject player; // this will point at the player.instance... we should use GameObject for now on instead of public Player player because GameObject has more tools for us to use.
     public EnemyState state = EnemyState.Idle;
-    public EnemyType type;//Melee or ranged for now may add burrow and flying
+    public EnemyType type; //Melee or ranged for now may add burrow and flying
 
     //many of these fields need to be migrated to Enemy.cs
     public int knockback;
@@ -21,7 +21,6 @@ public class EnemyController : MonoBehaviour
     protected bool attackOnCooldown = false;
     protected bool playerNotInRoom;
     public GameObject bulletPrefab; // put the instance of the bullet here, this allows us to use magic and projectiles the same way. We just have to build the prefabs to do what we want.
-    //Damage dmg;
     public BoxCollider2D boxCollider;
     public Collider2D[] hits = new Collider2D[10];
     public ContactFilter2D filter;
@@ -50,7 +49,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Start()
     {
-        lootManager = GameObject.FindObjectOfType<LootManager>();
+        lootManager = FindObjectOfType<LootManager>();
         player = GameObject.FindGameObjectWithTag("Player"); //this is why we use GameObject... Using the Tag is strong here
         Debug.Log($"Found Player: {player.name}");
         currentPosition = transform.position;
@@ -222,7 +221,7 @@ public class EnemyController : MonoBehaviour
                     StartCoroutine(CoolDown());
                     break;
                 case (EnemyType.Ranged):
-                    GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity) as GameObject;
+                    Instantiate(bulletPrefab, transform.position, Quaternion.identity);
                     break;
             }
         }
@@ -237,8 +236,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void OnCollide(Collider2D coll)
     {
-        //Debug.Log($"Enemy has collided with {coll.tag}");
-        if (coll.tag.Equals("Wall"))
+        if (coll.CompareTag("Wall"))
         {
             //Debug.Log(" Skeeleton OnCollide Wall true");
             if(state == EnemyState.Wander)
@@ -247,7 +245,7 @@ public class EnemyController : MonoBehaviour
             }
            
         }
-        if (coll.tag.Equals("Player"))
+        if (coll.CompareTag("Player"))
         {
             //Debug.LogWarning($"{this.name} has collided with a {coll.tag}");
             Damage dmg = new Damage()
@@ -262,16 +260,16 @@ public class EnemyController : MonoBehaviour
 
     public void Death() //TODO: refactor this so it only triggers an OnEnemyKill event and the logic is handled through those events
     {
-        Debug.LogWarning($"Death Happened for {this.gameObject}");
+        Debug.LogWarning($"Death Happened for {gameObject}");
         GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
         Player.instance.gold += lootManager.OnDeathCalculateGoldEarned(enemy.stats.goldValue, enemy.stats.level);
         if (ShouldDropItem())
         {
-            Debug.LogWarning("Going to roll for loot drop");
+            Debug.LogWarning("Rolling for loot drop");
             lootManager.RollForLootDrop(enemy.stats.level, this.currentPosition);
         }
         Debug.LogWarning("Destroying myself");
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     private bool ShouldDropItem()

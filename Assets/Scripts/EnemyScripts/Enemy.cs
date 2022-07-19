@@ -11,7 +11,7 @@ public class Enemy : Mover
 
     public ContactFilter2D filter;
     private BoxCollider2D hitbox;
-    private Collider2D[] hits = new Collider2D[10]; // TODO: refactor this onto Fighter so all enemies + players inherit
+    private Collider2D[] hits = new Collider2D[10]; // TODO: refactor this onto Fighter so all enemies + players inherit?
 
     protected override void Start()
     {
