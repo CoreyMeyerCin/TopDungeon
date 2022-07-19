@@ -5,38 +5,27 @@ using UnityEngine;
 
 public class Weapon : Collidable
 {
-	//Damage struct
-	//public int[] damage = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //amount of damage each weapon with upgrade does
-	//public float[] knockbackDistance = { 2.0f, 2.2f, 2.4f, 2.6f, 2.8f, 3.0f, 3.2f, 3.4f, 3.6f, 3.8f }; //how far you push enemy back for each rank
-
-	private Player player;
-	//Upgrade
-	//public int weaponLevel = 0; //the current level of the weapon, later this will be used to determine what damage point and pushForce equal through logic
-	//public SpriteRenderer spriteRenderer; //this is to change the look of our weapon when we upgrade
 	public Sprite sprite;
 	public float baseDamage;
 	public float additionalDamage;
 	public float knockBack;
-	//Swing
-	private Animator anim; //reference to the Animator
-	//public float cooldown = 1f; //how fast can we swing again
-	private float lastUse; //timer on when our last swing was
+
+	private Animator anim;
+	private float lastSwingTime;
 	private bool attackAvailable;
 	public Projectile projectilePrefab;
 	public SwingPrefab swingPrefab;
 	public Vector3 holdPosition;
 	public Vector3 currentHoldPosition;
 
-	public WeaponType weaponType = WeaponType.Melee;
-	public DamageType damageType = DamageType.Slashing;// (maybe add fire, ice, force etc)
+	public WeaponType weaponType = WeaponType.Melee; //TODO: remove these default enum values
+	public DamageType damageType = DamageType.Slashing;
 
 
 	private void Awake()
 	{
-
-		player = gameObject.GetComponentInParent<Player>();
-		//spriteRenderer = GetComponent<SpriteRenderer>();
 	}
+
 	protected override void Start()
 	{
 		base.Start();
@@ -51,15 +40,14 @@ public class Weapon : Collidable
 		//this.transform.parent = GameManager.instance.player.transform;
 		//this.transform.localPosition = new Vector2(0.096f, -0.011f);
 		
-		currentHoldPosition = new Vector3(player.currentPosition.x + this.holdPosition.x,
-									   player.currentPosition.y + this.holdPosition.y, 0);
+		currentHoldPosition = new Vector3(Player.instance.currentPosition.x + holdPosition.x, Player.instance.currentPosition.y + holdPosition.y, 0);
 		transform.position = currentHoldPosition;
 
-       //Time.time/1 > 1
-        if (Time.time - lastUse > player.stats.cooldown/player.stats.attackSpeed)
+        if ((Time.time - lastSwingTime) > (Player.instance.stats.cooldown / Player.instance.stats.attackSpeed))
         {
 			attackAvailable = true;
 		}
+
 		if (Input.GetKeyDown(KeyCode.Space) && attackAvailable)
 		{
 			Debug.LogWarning("Hit 1");
@@ -83,14 +71,12 @@ public class Weapon : Collidable
 	
 	private void Attack()
 	{
-       
 		switch (weaponType)
 		{
 			case WeaponType.Melee:
 				Swing();
 				break;
 			case WeaponType.Ranged:
-				Debug.LogWarning("Hit 2");
 				Shoot();
 				break;
 			case WeaponType.Magic:
@@ -101,16 +87,15 @@ public class Weapon : Collidable
 
 	protected override void OnCollide(Collider2D coll)
 	{
-		if (coll.tag.Equals("Enemy"))
+		if (coll.CompareTag("Enemy"))
 		{
-			//Debug.LogWarning("Weapon hit enemy");
 			Damage dmg = new Damage()
 			{
 				damageAmount = CalculateDamage(),
 				origin = transform.position,
-				pushForce = knockBack
+				knockback = knockBack
 			};
-			coll.SendMessage("ReceiveDamage", dmg); // send the damage over to the enemy using ReceiveDamage()
+			coll.SendMessage("ReceiveDamage", dmg); // send the damage over to the enemy with ReceiveDamage()
 		}
 
 	}
@@ -119,14 +104,14 @@ public class Weapon : Collidable
     {
 		Debug.LogWarning("Hot Shoot");
 		//Debug.LogWarning({GameManager.instance.mousePosition.transform.rotation}");
-		Instantiate(player.transform.GetChild(0).GetComponent<Weapon>().projectilePrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
+		Instantiate(Player.instance.transform.GetChild(0).GetComponent<Weapon>().projectilePrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
 		attackAvailable = false;
-		lastUse = Time.time;
+		lastSwingTime = Time.time;
 	}
 	
 	private void Swing()
 	{
-		Instantiate(player.transform.GetChild(0).GetComponent<Weapon>().swingPrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
+		Instantiate(Player.instance.transform.GetChild(0).GetComponent<Weapon>().swingPrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
 		//NEED TO MAKE SWINGING LOGIC NOW
 		//anim.SetTrigger("Swing"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
 	}
@@ -135,20 +120,6 @@ public class Weapon : Collidable
 	{
 		//cast magic
 	}
-
-	//public void UpgradeWeapon()
-	//{
-	//	weaponLevel++;
-	//	spriteRenderer.sprite = GameManager.instance.weaponSprite[weaponLevel];
-
-	//	//Change stats
-	//}
-
-	//public void SetWeaponLevel(int level)
-	//{
-	//	weaponLevel = level;
-	//	this.spriteRenderer.sprite = GameManager.instance.weaponSprite[level];
-	//}
 
 	public enum WeaponType
 	{

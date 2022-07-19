@@ -127,17 +127,9 @@ MonoBehaviour:
   name: Boot
   description: Give the player +1 movespeed
   itemSprite: {fileID: 6440375, guid: 88b39d6be2296fb42b2e24e967dd0b77, type: 3}
-  currHitPoint: 0
-  maxHitPoint: 0
-  moveSpeed: 1
-  attackSpeed: 0
-  pushRecovery: 0
   weapon: {fileID: 3334614298463244672, guid: a1a252e1299c3fd4e86d3e5ce0739511, type: 3}
-  projectile: {fileID: 2120853311608965495, guid: 2502f902d8f0b8f45bfdcaf484dfc2f2, type: 3}
+  projectile: {fileID: 4994691365316510336, guid: 2502f902d8f0b8f45bfdcaf484dfc2f2, type: 3}
   trans: {fileID: 0}
-  lifespan: 0
-  critChance: 0
-  critMultiplier: 0
-  playerDamage: 0
-  lifesteal: 0
+  projectileLifespan: 0
   coll: {fileID: 0}
+  holdPosition: {x: 0, y: 0, z: 0}

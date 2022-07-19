@@ -4,21 +4,16 @@ using UnityEngine;
 
 public class EnemyHitbox : Collidable
 {
-    //Damage
-    public int damage = 1;
-    public float pushForce = 5;
-
     protected override void OnCollide(Collider2D coll)
     {
-        if(coll.tag.Equals("Player")) // do we need to check for fighter if we're already checking for name == player? player is a specific fighter
+        if(coll.CompareTag("Player"))
         {
-            //Create a new damage object before sending it to the player
-            //This is a whill make a Damage when we hit an appropriate target
+            var enemy = coll.GetComponent<Enemy>();
             Damage dmg = new Damage()
             {
-                damageAmount = damage,
+                damageAmount = enemy.stats.combinedDamage,
                 origin = transform.position,
-                pushForce = pushForce
+                knockback = enemy.stats.knockback
             };
 
             coll.SendMessage("ReceiveDamage", dmg); // this will send the damage over to the enemy using ReceiveDamage()

@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]// lets us look at in the inspector
+[System.Serializable] // lets us look at in the inspector
 
 public class CollectionController : MonoBehaviour
 {
     public string name; //for ui
-    public string description;// for ui
+    public string description; // for ui
     public Sprite itemSprite;
     private HealthService healthService;
     public Weapon? weapon;
     public Projectile? projectile;
     public Transform trans;
-    public float lifespan; //used for projectile range
+    public float projectileLifespan; //used for projectile range
     public BoxCollider2D coll;
     public Vector3 holdPosition;
 

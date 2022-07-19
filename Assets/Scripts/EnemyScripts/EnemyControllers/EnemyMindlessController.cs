@@ -2,25 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMindless : EnemyController
+public class EnemyMindlessController : EnemyController
 {
 
     protected override void FixedUpdate()
     {
         currentPosition = transform.position;
-        if (IsAwayFromHome(range))
+        if (IsAwayFromHome(sightRange))
         {
-            //UnityEngine.Debug.Log(" Hit B");
-            currState = EnemyState.Idle;
+            UnityEngine.Debug.Log(" Hit B specific");
+            state = EnemyState.Idle;
             Idle();
         }
-        else if (!IsAwayFromHome(range) && currentPosition == homePosition)
+        else if (!IsAwayFromHome(sightRange) && currentPosition == homePosition)
         {
             //UnityEngine.Debug.Log(" Hit C");
-            currState = EnemyState.Wander;
+            state = EnemyState.Wander;
             Wander();
         }
-        else if (!IsAwayFromHome(range))
+        else if (!IsAwayFromHome(sightRange))
         {
             //UnityEngine.Debug.Log(" Hit D");
             Wander();

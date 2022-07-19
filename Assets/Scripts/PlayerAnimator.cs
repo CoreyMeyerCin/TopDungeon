@@ -5,8 +5,8 @@ using Random = UnityEngine.Random;
 
 public class PlayerAnimator : MonoBehaviour
 {
-    [SerializedField] private float _attackSpeed = 0.2f;// this needs to be able to be changed with Player.Stats.attackSpeed
-    [SerializedField] private float _recoverySpeed = 0.2f;// this will also need to be changed from there
+    [SerializedField] private float _attackSpeed = 0.2f; // TODO: this needs to be able to be changed with Player.Stats.attackSpeed
+    [SerializedField] private float _recoverySpeed = 0.2f; // this will also need to be changed from there
     private IPlayerController _player;
     private Animator _animator;
     private SpriteRenderer _renderer;
@@ -43,12 +43,12 @@ public class PlayerAnimator : MonoBehaviour
 
     private int GetState()
     {
-        if(Time.time < _lockedTill)//lockedTill is here to make sure we finish our current animation before moving onto the next
+        if(Time.time < _lockedTill) //make sure current animation finishes before moving onto the next
         {
             return _currentState;
         }
         //Priorities
-        if(_attackingSword)return LockState(AttackingSword, _attackSpeed);// this needs to get faster with attack speed
+        if(_attackingSword)return LockState(AttackingSword, _attackSpeed); // this needs to get faster with attack speed
         if(_throwingDagger) return LockState(ThrowingDagger, _attackSpeed);
         if(_damaged) return LockState(Damaged, _recoverySpeed);
         if (_running) return Running;
@@ -56,7 +56,7 @@ public class PlayerAnimator : MonoBehaviour
         else return Idle;
 
 
-        int LockState(int s, float t)//s is how long the attack is from animation(I think, I stole some of this code and reqrote most of it to make sense IT WAS WRITTEN LIKE AN ASSHOLE AT FIRST)
+        int LockState(int s, float t) //how long the attack is from animation(I think, I stole some of this code and reqrote most of it to make sense IT WAS WRITTEN LIKE AN ASSHOLE AT FIRST)
         {
             _lockedTill = Time.time + t;
             return s;

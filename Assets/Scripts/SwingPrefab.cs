@@ -22,6 +22,6 @@ public class SwingPrefab : Collidable
         boxCollider.isTrigger = false;//Might need to be true since we are melee
         spawnTime = Time.time;
         rb = GetComponent<Rigidbody2D>();
-        
     }
+
 }

@@ -506,16 +506,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 242909344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6791b6a078640bd4489cd3ff2e14f72d, type: 3}
+  m_Script: {fileID: 11500000, guid: b2a62919ed17d0944be5c9d1d3c2b5a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSpeed: 1
-  lifesteal: 0
-  critChance: 5
-  critMultiplier: 1.05
-  cooldown: 1
-  dropChanceModifier: 0
-  dashTime: 1
 --- !u!4 &242909346
 Transform:
   m_ObjectHideFlags: 0
@@ -20438,6 +20431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit

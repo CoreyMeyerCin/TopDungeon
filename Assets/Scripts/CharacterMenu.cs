@@ -5,17 +5,15 @@ using UnityEngine.UI;
 
 public class CharacterMenu : MonoBehaviour
 {
-    //Text fields
     public Text levelText, hitpointText, goldText, upgradedCostText, xpText;
 
-    //Logic Field
     private int currentCharacterSelection = 0;
     public Image characterSelectionSprite;
     public Image weaponSprite;
-    public RectTransform xpBar;//this will make the bar work with a transform-scale
+    public RectTransform xpBar; //make the bar work with a transform-scale
 
     //Character Selection
-    public void OnArrowClick(bool right) //this refers to the arrows on our menu
+    public void OnArrowClick(bool right) //refers to the arrows on our menu
     {
         if(right)
         {
@@ -42,8 +40,6 @@ public class CharacterMenu : MonoBehaviour
         }
 
     }
-
-
 
     private void OnSelectionChanged()
     {

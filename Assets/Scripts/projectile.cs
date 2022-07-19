@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class Projectile: Collidable
 {
-
-    //public int[] damage = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //amount of damage each weapon with upgrade does
-    //public float[] knockbackDistance = { 2.0f, 2.2f, 2.4f, 2.6f, 2.8f, 3.0f, 3.2f, 3.4f, 3.6f, 3.8f }; //how far you push enemy back for each rank
-    //public int weaponLevel;
-
     public float speed = 2f;
     public Rigidbody2D rb;
     public BoxCollider2D boxCollider;
     private Collider2D[] hits = new Collider2D[10];
     public ContactFilter2D filter;
     private bool hasCollided;
-    public Weapon weapon; //TODO: make this an object that inherits Weapon instead of something completely separate
+    public Weapon weapon;
     public Player player;
     public MousePosition mousePosition;
     
@@ -29,8 +24,6 @@ public class Projectile: Collidable
     // Start is called before the first frame update
     void Start()
     {
-
-
         base.Start();
 
        // transform.Rotate(Vector3.right);
@@ -47,10 +40,7 @@ public class Projectile: Collidable
 
     private void Update()
     {
-        rb.velocity = transform.up * speed;//move to the right * speed
-
-
-        //boxCollider = GetComponent<BoxCollider2D>();
+        rb.velocity = transform.up * speed; //move to the right * speed
 
         ////the difference of our player position and out mouse's position
         //offset = new Vector2(mousePosition.mouseWorldPosition.x - player.transform.position.x, mousePosition.mouseWorldPosition.y - player.transform.position.y);
@@ -71,15 +61,16 @@ public class Projectile: Collidable
 
             //The array is not cleaned up, so we di it ourself
             hits[i] = null;
-
         }
-        TimeCheckOut();
 
+        TimeCheckOut();
     }
+
     public void ProjectileLifespanChange(float lifesp)
     {
         lifespan += lifesp;
     }
+
     private void TimeCheckOut()
     {
         if (Time.time - spawnTime > lifespan)
@@ -151,7 +142,7 @@ public class Projectile: Collidable
             {
                 damageAmount = weapon.CalculateDamage(),
                 origin = transform.position,
-                pushForce = weapon.knockBack
+                knockback = weapon.knockBack
             };
             coll.SendMessage("ReceiveDamage", dmg);
 
