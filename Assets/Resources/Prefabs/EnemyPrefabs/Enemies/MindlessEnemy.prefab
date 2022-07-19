@@ -138,8 +138,6 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  damage: 1
-  pushForce: 2
 --- !u!1 &2631390772760652949
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +267,7 @@ MonoBehaviour:
   state: 0
   type: 0
   knockback: 3
-  sightRange: 0
+  sightRange: 0.3
   attackRange: 0
   projectileRange: 0
   bulletPrefab: {fileID: 0}
@@ -308,7 +306,7 @@ MonoBehaviour:
   homePosition: {x: -0.037, y: 0.954, z: 0}
   distanceFromHome: 0
   collidingWithPlayer: 0
-  enemy: {fileID: 0}
+  enemy: {fileID: 4523194510869772129}
   lootManager: {fileID: 0}
 --- !u!114 &4523194510869772129
 MonoBehaviour:

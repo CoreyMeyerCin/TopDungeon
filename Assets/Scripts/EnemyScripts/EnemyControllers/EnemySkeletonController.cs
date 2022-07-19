@@ -18,25 +18,25 @@ public class EnemySkeletonController : EnemyController
         currentPosition = transform.position;
         if (IsPlayerInRange(sightRange))
         {
-            //UnityEngine.Debug.Log(" Hit A");
+            UnityEngine.Debug.Log(" Hit A");
             state = EnemyState.Follow;
             Follow();
         }
         else if (IsAwayFromHome(sightRange))
         {
-            //UnityEngine.Debug.Log(" Hit B");
+            UnityEngine.Debug.Log(" Hit B");
             state = EnemyState.Idle;
             Idle();
         }
         else if (!IsAwayFromHome(sightRange) && currentPosition == homePosition)
         {
-            //UnityEngine.Debug.Log(" Hit C");
+            UnityEngine.Debug.Log(" Hit C");
             state = EnemyState.Wander;
             Wander();
         }
         else if (!IsAwayFromHome(sightRange))
         {
-            //UnityEngine.Debug.Log(" Hit D");
+            UnityEngine.Debug.Log(" Hit D");
             Wander();
         }
      

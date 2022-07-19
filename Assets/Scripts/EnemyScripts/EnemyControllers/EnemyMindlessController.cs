@@ -10,7 +10,7 @@ public class EnemyMindlessController : EnemyController
         currentPosition = transform.position;
         if (IsAwayFromHome(sightRange))
         {
-            //UnityEngine.Debug.Log(" Hit B");
+            UnityEngine.Debug.Log(" Hit B specific");
             state = EnemyState.Idle;
             Idle();
         }

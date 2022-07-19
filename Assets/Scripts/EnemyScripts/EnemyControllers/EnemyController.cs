@@ -89,7 +89,7 @@ public class EnemyController : MonoBehaviour
         }
         else if (IsAwayFromHome(sightRange))
         {
-            //UnityEngine.Debug.Log(" Hit B");
+            UnityEngine.Debug.Log(" Hit B general");
             state = EnemyState.Idle;
             Idle();
         }
@@ -181,7 +181,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Idle()
     {
-        
+        Debug.Log("Hit idle");
         transform.position = Vector2.MoveTowards(currentPosition, homePosition, enemy.stats.speed * Time.deltaTime);
         wanderGoal = homePosition;
     }
