@@ -120,6 +120,8 @@ public class EnemySkeletonController : EnemyController
     }
     protected override void OnCollide(Collider2D coll)
     {
+
+        //TODO: Fix the collision with "Wall". I think we need to take out Idle, or fix it some, or add pathfinding. I am not 100% sure at the moment
         //Debug.Log($"Enemy has collided with {coll.tag}");
         if (coll.tag.Equals("Wall"))
         {

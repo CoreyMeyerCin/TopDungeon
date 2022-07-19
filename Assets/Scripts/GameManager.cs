@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerStatsUI;
     public EnemyList enemyList;
     public LootManager lootManager;
+    public Stats playerStats;
 
     public MousePosition mousePosition;
 
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(enemyList);
             DontDestroyOnLoad(lootManager);
             DontDestroyOnLoad(mousePosition);
+            DontDestroyOnLoad(playerStats);
 
             SceneManager.sceneLoaded += LoadState;
         }
@@ -82,8 +84,8 @@ public class GameManager : MonoBehaviour
             Destroy(playerStatsUI);
             Destroy(enemyList);
             Destroy(lootManager);
-
             Destroy(mousePosition);
+            Destroy(playerStats);
 
             SceneManager.sceneLoaded += LoadState;
         }

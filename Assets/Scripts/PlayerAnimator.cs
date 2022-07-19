@@ -10,6 +10,7 @@ public class PlayerAnimator : MonoBehaviour
     private IPlayerController _player;
     private Animator _animator;
     private SpriteRenderer _renderer;
+    private Player player;
 
     private float _lockedTill;
     private bool _idle;
@@ -21,15 +22,31 @@ public class PlayerAnimator : MonoBehaviour
 
     private void Awake()
     {
-        if(!TryGetComponent(out IPlayerController player))
-        {
-            Destroy(this);
-            return;
-        }
-        _player = player;
+        //if(!TryGetComponent(out IPlayerController player))
+        //{
+        //    Destroy(this);
+        //    return;
+        //}
+        //_player = player;
         _animator = GetComponent<Animator>();
         _renderer = GetComponent<SpriteRenderer>();
+        player = GameManager.instance.player;
 
+    }
+    public void GetAnimation()
+    {
+               if (Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S))
+               {
+            //Debug.Log($"Hitting animation A {GameManager.instance.playerStats.speed}");
+                    GameManager.instance.player.animator.SetFloat("Speed", Mathf.Abs(GameManager.instance.playerStats.speed));
+               }
+
+               else if ((Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.W))
+                   && !Input.GetKey(KeyCode.A) || !Input.GetKey(KeyCode.S) || !Input.GetKey(KeyCode.D) || !Input.GetKey(KeyCode.W))
+               {
+                   GameManager.instance.player.animator.SetFloat("Speed", 0);
+               }
+           
     }
 
     private void Start()
