@@ -50,7 +50,7 @@ public class Weapon : Collidable
 
 		if (Input.GetKeyDown(KeyCode.Space) && attackAvailable)
 		{
-			Debug.LogWarning("Hit 1");
+			//Debug.LogWarning("Hit 1");
 			Attack();
 		}
 	}
@@ -111,9 +111,10 @@ public class Weapon : Collidable
 	
 	private void Swing()
 	{
-		Instantiate(Player.instance.transform.GetChild(0).GetComponent<Weapon>().swingPrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
+		//Instantiate(Player.instance.transform.GetChild(0).GetComponent<Weapon>().swingPrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
 		//NEED TO MAKE SWINGING LOGIC NOW
-		//anim.SetTrigger("Swing"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
+
+		GameManager.instance.player.animator.SetTrigger("Swing"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
 	}
 
 	private void Cast()
