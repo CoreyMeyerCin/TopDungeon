@@ -20,6 +20,7 @@ public class Weapon : Collidable
 
 	public WeaponType weaponType = WeaponType.Melee; //TODO: remove these default enum values
 	public DamageType damageType = DamageType.Slashing;
+	public WeaponAnimType animType = WeaponAnimType.Sword;
 
 
 	private void Awake()
@@ -102,7 +103,14 @@ public class Weapon : Collidable
 
 	private void Shoot()
     {
-		GameManager.instance.player.animator.SetTrigger("Shoot");
+		if (animType == WeaponAnimType.Bow)
+		{
+			GameManager.instance.player.animator.SetTrigger("ShootBow");
+		}
+		else if (animType == WeaponAnimType.DaggerThrown)
+		{
+			GameManager.instance.player.animator.SetTrigger("ThrowDagger");
+		}
 		//Debug.LogWarning({GameManager.instance.mousePosition.transform.rotation}");
 		Instantiate(Player.instance.transform.GetChild(0).GetComponent<Weapon>().projectilePrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
 		attackAvailable = false;
@@ -114,13 +122,20 @@ public class Weapon : Collidable
 		//Instantiate(Player.instance.transform.GetChild(0).GetComponent<Weapon>().swingPrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
 		//NEED TO MAKE SWINGING LOGIC NOW
 
-		GameManager.instance.player.animator.SetTrigger("Swing"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
+		GameManager.instance.player.animator.SetTrigger("SwingSword"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
 	}
 
 	private void Cast()
 	{
 		//cast magic
 	}
+
+	public enum WeaponAnimType
+    {
+		Sword,
+		DaggerThrown,
+		Bow
+    }
 
 	public enum WeaponType
 	{
