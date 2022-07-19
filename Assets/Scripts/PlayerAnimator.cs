@@ -11,7 +11,7 @@ public class PlayerAnimator : MonoBehaviour
     private Animator _animator;
     private SpriteRenderer _renderer;
     private Player player;
-
+  
     private float _lockedTill;
     private bool _idle;
     private bool _walking;
@@ -35,10 +35,12 @@ public class PlayerAnimator : MonoBehaviour
     }
     public void GetAnimation()
     {
+        GameManager.instance.player.animator.SetInteger("SkinInt", GameManager.instance.player.skinId) ;
+
                if (Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S))
                {
-            //Debug.Log($"Hitting animation A {GameManager.instance.playerStats.speed}");
-                    GameManager.instance.player.animator.SetFloat("Speed", Mathf.Abs(GameManager.instance.playerStats.speed));
+                //Debug.Log($"Hitting animation A {GameManager.instance.playerStats.speed}");
+                   GameManager.instance.player.animator.SetFloat("Speed", Mathf.Abs(GameManager.instance.playerStats.speed));
                }
 
                else if ((Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.W))

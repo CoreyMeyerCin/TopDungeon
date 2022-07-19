@@ -8,6 +8,8 @@ public class Player : Mover
     private SpriteRenderer spriteRenderer;
     public Animator animator;
     public PlayerAnimator playerAnimator;
+    public int skinId =1;
+
 
     public double playerDirection;
     public Text collectedText;
@@ -97,6 +99,10 @@ public class Player : Mover
         }
     }
 
+    public void ChangeSkinId(int skinChange)
+    {
+        skinId = skinChange;
+    }
     public void SetDashLocationGoal(double playerDir)
     {
         switch (playerDir)
@@ -147,7 +153,10 @@ public class Player : Mover
 
     public void ChangeCurrentProjectile(Projectile proj, Weapon weap)
     {
-        weapon = weap;
+        if (weap == null || proj == null) return;
+
+        else
+            weapon = weap;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
         transform.GetChild(0).GetComponent<Weapon>().projectilePrefab = proj;
         transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
@@ -161,6 +170,9 @@ public class Player : Mover
 
     public void ChangeCurrentWeapon(Weapon weap)
     {
+        if(weap == null) return;
+
+        else
         weapon = weap;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weapon.holdPosition;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
