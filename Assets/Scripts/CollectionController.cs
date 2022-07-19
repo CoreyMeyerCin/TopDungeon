@@ -8,6 +8,8 @@ public class CollectionController : MonoBehaviour
 {
     public string name; //for ui
     public string description; // for ui
+    public int skinId;
+
     public Sprite itemSprite;
     private HealthService healthService;
     public Weapon? weapon;
@@ -35,6 +37,9 @@ public class CollectionController : MonoBehaviour
         if (coll.tag.Equals("Player"))          
         {
             Player.collectedAmount++;
+            GameManager.instance.player.ChangeCurrentWeapon(weapon);
+            GameManager.instance.player.ChangeSkinId(skinId);
+
             Debug.Log("Collected object!");
             
             if (weapon != null)

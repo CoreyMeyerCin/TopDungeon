@@ -128,21 +128,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Boot
   description: Give the player +1 movespeed
+  skinId: 0
   itemSprite: {fileID: 375578440, guid: 88b39d6be2296fb42b2e24e967dd0b77, type: 3}
-  currHitPoint: 0
-  maxHitPoint: 0
-  moveSpeed: 1
-  attackSpeed: 0.15
-  pushRecovery: 0
   weapon: {fileID: 0}
   projectile: {fileID: 0}
   trans: {fileID: 0}
-  lifespan: 0
-  critChance: 0
-  critMultiplier: 0
-  playerDamage: 0
-  lifesteal: 0
+  projectileLifespan: 0
   coll: {fileID: 5106320107688568201}
+  holdPosition: {x: 0, y: 0, z: 0}
 --- !u!50 &3175540806508924803
 Rigidbody2D:
   serializedVersion: 4
