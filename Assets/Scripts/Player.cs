@@ -6,6 +6,8 @@ public class Player : Mover
     public static Player instance;
     public Vector3 currentPosition;
     private SpriteRenderer spriteRenderer;
+    public Animator animator;
+    public PlayerAnimator playerAnimator;
 
     public double playerDirection;
     public Text collectedText;
@@ -25,6 +27,8 @@ public class Player : Mover
     //public float dashTime = 1f; //how long it takes to complete the full dash
     public float currentDashTime = 0f;
     public float endDashTime = 0f;
+
+    private bool isMoving = false;
     private bool isDashing = false;
     private Vector3 dashStart, dashEnd;
 
@@ -41,7 +45,8 @@ public class Player : Mover
         currentPosition = transform.position;
         firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
         weapon = GetComponentInChildren<Weapon>();
-        weapon.projectilePrefab = GetComponentInChildren<Weapon>().projectilePrefab;        
+        weapon.projectilePrefab = GetComponentInChildren<Weapon>().projectilePrefab;
+        stats = GameManager.instance.playerStats;
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).GetComponent<Projectile>();
     }
 
@@ -58,6 +63,7 @@ public class Player : Mover
     private void Update()
     {
         GetPlayerDirection();
+        playerAnimator.GetAnimation();
         //firePoint = this.transform;
         //this.GetComponentInChildren<Weapon>().transform.localPosition += new Vector3(0.096f,-0.011f,0);
         
@@ -71,7 +77,11 @@ public class Player : Mover
         //Reset MoveDelta
         UpdateMotor(new Vector3(x, y, 0));
         currentPosition = transform.position;
-        
+
+
+
+
+
         //firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
         if (Input.GetKey(KeyCode.LeftAlt))
         {
