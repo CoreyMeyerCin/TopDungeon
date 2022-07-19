@@ -13,8 +13,8 @@ public class Item : Collectable
     private static readonly int UNIQUE_THRESHOLD = 925;
     private static readonly int LEGENDARY_THRSHOLD = 990;
 
-    public string name; //for ui
-    public string description;// for ui
+    public string uiName;
+    public string uiDescription;
     public Sprite itemSprite;
     public Sprite[] spriteList;
     public Item[] itemList;

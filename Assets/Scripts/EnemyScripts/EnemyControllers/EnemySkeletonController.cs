@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySkeleton : EnemyController
+public class EnemySkeletonController : EnemyController
 {
     public Vector3 followGoal;
     public float followOffset;
@@ -44,7 +44,7 @@ public class EnemySkeleton : EnemyController
     }
     protected override void Wander()
     {
-        transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, fighter.stats.speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, enemy.stats.speed * Time.deltaTime);
         CheckIfWanderComplete(currentPosition, wanderGoal);
         //UnityEngine.Debug.Log("Hit 1");
         if (!chooseNewDirection)
@@ -61,7 +61,7 @@ public class EnemySkeleton : EnemyController
     }
     protected override void Follow()
     {
-        transform.position = Vector2.MoveTowards(transform.position, followGoal, fighter.stats.speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, followGoal, enemy.stats.speed * Time.deltaTime);
         CheckIfFollowComplete(currentPosition, followGoal);
         Debug.LogWarning("Hit StartFollow");
         if (!chooseNewDirection && !IsPlayerInRange(aggressionRange))
@@ -129,7 +129,7 @@ public class EnemySkeleton : EnemyController
                 Debug.LogWarning("Hit1");
                 transform.position = Vector2.MoveTowards(currentPosition,
                             new Vector3(Random.Range(transform.position.x - 0.3f, transform.position.x + 0.3f),Random.Range(transform.position.y - 0.3f, transform.position.y + 0.3f) //y value
-                               , 0), fighter.stats.speed * Time.deltaTime);
+                               , 0), enemy.stats.speed * Time.deltaTime);
 
                 StartCoroutine(ChooseDirectionIdle());
                 Debug.LogWarning("Hit2");
@@ -150,9 +150,9 @@ public class EnemySkeleton : EnemyController
             //Debug.LogWarning($"{this.name} has collided with a {coll.tag}");
             Damage dmg = new Damage()
             {
-                damageAmount = fighter.stats.combinedDamage,
+                damageAmount = enemy.stats.combinedDamage,
                 origin = transform.position,
-                pushForce = knockback
+                knockback = knockback
             };
             coll.SendMessage("ReceiveDamage", dmg);
         }

@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class Player : Mover
 {
-    //Mover > Fighter contains floats for maxHitpoints, hitPoints, pushRecoverySpeed, and immuneTime
     public static Player instance;
     public Vector3 currentPosition;
     private SpriteRenderer spriteRenderer;
@@ -16,17 +15,16 @@ public class Player : Mover
 
     public HealthService healthService;
     public PlayerSpriteService spriteService;
-    //public Projectile projectilePrefab;//holds the weapons prefab, might be able to do this in a better way to do this in the weapon
+    //public Projectile projectilePrefab; //holds the weapons prefab, might be able to do this in a better way to do this in the weapon
     //public Projectile projectilePrefab;
     public Weapon weapon;
     public Transform firePoint;
 
     private float lastFire;
 
-    //dashTime was moved to PlayerStats
-    //public float dashTime = 1f;// this is how long it takes to complete the full dash
+    //public float dashTime = 1f; //how long it takes to complete the full dash
     public float currentDashTime = 0f;
-    public float endDashTime=0f;
+    public float endDashTime = 0f;
     private bool isDashing = false;
     private Vector3 dashStart, dashEnd;
 
@@ -37,6 +35,7 @@ public class Player : Mover
         {
             instance = this;
         }
+
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentPosition = transform.position;
@@ -56,10 +55,6 @@ public class Player : Mover
         Actions.OnLevelUp -= OnLevelUp;
     }
 
-    //instance = this;
-    //DontDestroyOnLoad(gameObject);
-    //SceneManager.sceneLoaded += LoadState;
-
     private void Update()
     {
         GetPlayerDirection();
@@ -70,8 +65,9 @@ public class Player : Mover
     }
     private void FixedUpdate()
     {
-        float x = Input.GetAxisRaw("Horizontal"); // this will give us -1,1,or 0 depending if we are ising a,d, or no input.
-        float y = Input.GetAxisRaw("Vertical"); // same thing but with the y axis with w,s, or no input
+        float x = Input.GetAxisRaw("Horizontal"); // returns -1,1,or 0 depending if we are using a, d, or no input.
+        float y = Input.GetAxisRaw("Vertical"); // same thing with the y axis with w, s, or no input
+
         //Reset MoveDelta
         UpdateMotor(new Vector3(x, y, 0));
         currentPosition = transform.position;
@@ -82,7 +78,6 @@ public class Player : Mover
             //Debug.LogWarning($"UpdateCheck: Time:{Time.time}, endDashTime: {endDashTime}");
             if (isDashing == false && Time.time >= endDashTime)
             {
-                //Dash starts
                 isDashing = true;
                 currentDashTime = Time.time;
                 dashStart = currentPosition;
@@ -126,15 +121,13 @@ public class Player : Mover
     {
         if (isDashing)
         {
-            
-            endDashTime = Time.time + stats.dashTime;//we add the current time to 0f to start the dash sequence+
+            endDashTime = Time.time + stats.dashTime; //add current time to 0f to start the dash sequence
             //Debug.LogWarning($"Dashing is happening: Time:{Time.time}, endDashTime: {endDashTime}");
             float perc = Mathf.Clamp01(currentDashTime / stats.dashTime);
 
             transform.position = Vector3.Lerp(dashStart, dashEnd, perc);
             if(currentDashTime >= stats.dashTime)
             {
-                //dash finished
                 isDashing = false;
                 transform.position = dashEnd;
             }

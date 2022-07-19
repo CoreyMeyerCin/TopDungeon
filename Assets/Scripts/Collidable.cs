@@ -8,7 +8,7 @@ public class Collidable : MonoBehaviour
 {
     public ContactFilter2D filter;
     protected BoxCollider2D boxCollider;
-    private Collider2D[] hits = new Collider2D[10]; // track everything we are making contact with in this frame
+    private Collider2D[] hits = new Collider2D[10];
 
     protected virtual void Start()
     {
@@ -31,8 +31,8 @@ public class Collidable : MonoBehaviour
 
     }
 
-    protected virtual void OnCollide(Collider2D coll){
-
+    protected virtual void OnCollide(Collider2D coll)
+    {
         //Debug.Log("OnCollide want not implemented in" + this.name); //This check to see if our collision layer is being hit on an object
     }
 }

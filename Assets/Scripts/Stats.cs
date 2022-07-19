@@ -21,10 +21,11 @@ public class Stats : MonoBehaviour
     public int dropChanceModifier { get; set; } = 0;
     public int goldValue { get; set; } = 10;
     public float hitpoints { get; set; } = 1f;
+    public float knockback { get; set; } = 5f;
     public int level { get; set; } = 1;
     public float lifesteal { get; set; } = 0;
     public float maxHitpoints { get; set; } = 10f;
-    public float pushRecoverySpeed { get; set; }  = 0.2f; //how long it takes to recover after being knocked back
+    public float knockbackRecoverySpeed { get; set; }  = 0.2f; //how long it takes to recover after being knocked back
     public float speed { get; set; } = 1f;
     public int xpValue { get; set; } = 1;
 

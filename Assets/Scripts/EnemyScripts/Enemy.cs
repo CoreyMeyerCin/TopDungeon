@@ -52,9 +52,26 @@ public class Enemy : Mover
         //}
 
         boxCollider.OverlapCollider(filter, hits);
-        if (hits.Where(x => x.CompareTag("Player")).Any())
+        //if (hits.Any(x => x != null && x.CompareTag("Player"))) //return to this later, not working atm, other bugs in the way
+        //{
+        //    collidingWithPlayer = true;
+        //}
+        for (int i = 0; i < hits.Length; i++)
         {
-            collidingWithPlayer = true;
+            if (hits[i] == null)
+            {
+                continue;
+            }
+            //Debug.Log(hits[i].name);//this will check all 10 collision slots of our array
+
+            if (hits[i].CompareTag("Player"))
+			{
+                collidingWithPlayer = true;
+            }
+
+            //The array is not cleaned up, so we di it ourself
+            hits[i] = null;
+
         }
 
         //UpdateMotor(Vector3.zero);

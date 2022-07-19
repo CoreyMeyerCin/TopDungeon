@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class EnemyList : MonoBehaviour
 {
-    public EnemyController[] enemyList;//if we have nothing in here everything breaks
+    public EnemyController[] enemyList; //if we have nothing in here everything breaks
 }

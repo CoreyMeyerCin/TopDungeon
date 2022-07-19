@@ -34,8 +34,8 @@ public class EnemyController : MonoBehaviour
     public Vector3 homePosition;
     public float distanceFromHome;
     public bool collidingWithPlayer;
-    protected CharacterController controller;
-    public Fighter fighter; //TODO: refactor this so it just directly accesses the Enemy.cs sibling script on the GameObject this script is on
+    protected CharacterController characterController;
+    public Enemy enemy; //TODO: refactor this so it just directly accesses the Enemy.cs sibling script on the GameObject this script is on
     public LootManager lootManager;
 
     //TODO: move into item controller and loot into proper drop-tables
@@ -45,6 +45,7 @@ public class EnemyController : MonoBehaviour
     {
         homePosition = transform.position;
         wanderGoal = homePosition;
+        enemy = GetComponent<Enemy>();
     }
 
     protected virtual void Start()
@@ -55,13 +56,14 @@ public class EnemyController : MonoBehaviour
         currentPosition = transform.position;
         boxCollider = gameObject.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = false;
+
     }
 
 
     protected virtual void Update()
     {
         boxCollider.OverlapCollider(filter, hits); //take BoxCollider and look for other collision and put its into the hits[]
-
+        //TODO: this needs additional error checking, I'm seeing smallenemy in the hits list, is it hitting itself?
         if (hits.Where(x => x != null).Any())
         {
             var validHits = hits.Where(x => x != null).ToList(); //ToList is what actually triggers the work of creating the list, so we want to do it here instead of on the null check with .Any()
@@ -164,6 +166,7 @@ public class EnemyController : MonoBehaviour
 
 
     }
+
     protected virtual void CheckIfWanderComplete(Vector3 currPosition, Vector3 wanderGoal)
     {
         if (currPosition == wanderGoal)
@@ -179,13 +182,13 @@ public class EnemyController : MonoBehaviour
     protected virtual void Idle()
     {
         
-        transform.position = Vector2.MoveTowards(currentPosition, homePosition, fighter.stats.speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(currentPosition, homePosition, enemy.stats.speed * Time.deltaTime);
         wanderGoal = homePosition;
     }
 
     protected virtual void Wander()
     {
-        transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, fighter.stats.speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, enemy.stats.speed * Time.deltaTime);
         CheckIfWanderComplete(currentPosition, wanderGoal);
         //UnityEngine.Debug.Log("Hit 1");
         if (!chooseNewDirection)
@@ -205,7 +208,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Follow()
     {
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, fighter.stats.speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, enemy.stats.speed * Time.deltaTime);
     }
 
     protected virtual void Attack()
@@ -249,9 +252,9 @@ public class EnemyController : MonoBehaviour
             //Debug.LogWarning($"{this.name} has collided with a {coll.tag}");
             Damage dmg = new Damage()
             {
-                damageAmount = fighter.stats.combinedDamage,
+                damageAmount = enemy.stats.combinedDamage,
                 origin = transform.position,
-                pushForce = knockback
+                knockback = knockback
             };
             coll.SendMessage("ReceiveDamage", dmg);
         }
@@ -261,11 +264,11 @@ public class EnemyController : MonoBehaviour
     {
         Debug.LogWarning($"Death Happened for {this.gameObject}");
         GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
-        Player.instance.gold += lootManager.OnDeathCalculateGoldEarned(fighter.stats.goldValue, fighter.stats.level);
+        Player.instance.gold += lootManager.OnDeathCalculateGoldEarned(enemy.stats.goldValue, enemy.stats.level);
         if (ShouldDropItem())
         {
             Debug.LogWarning("Going to roll for loot drop");
-            lootManager.RollForLootDrop(fighter.stats.level, this.currentPosition);
+            lootManager.RollForLootDrop(enemy.stats.level, this.currentPosition);
         }
         Debug.LogWarning("Destroying myself");
         Destroy(this.gameObject);
@@ -278,7 +281,7 @@ public class EnemyController : MonoBehaviour
     }
     public int OnDeathCalculateExperienceEarned()
     {
-        var totalExperience = Mathf.RoundToInt((fighter.stats.xpValue * fighter.stats.level) / (1 + fighter.stats.level));
+        var totalExperience = Mathf.RoundToInt((enemy.stats.xpValue * enemy.stats.level) / (1 + enemy.stats.level));
         return totalExperience;
     }
 

@@ -10,7 +10,6 @@ public class FloatingTextManager : MonoBehaviour
 
     private List<FloatingText> floatingTexts = new List<FloatingText>();
 
-
     private void Start(){
         DontDestroyOnLoad(gameObject);
     }
@@ -19,7 +18,7 @@ public class FloatingTextManager : MonoBehaviour
     {
         foreach(FloatingText txt in floatingTexts)
         {
-            txt.UpdateFloatingTexts();//this updates every frame
+            txt.UpdateFloatingTexts(); //updates every frame
         }
     }
 
@@ -27,30 +26,32 @@ public class FloatingTextManager : MonoBehaviour
     {
         FloatingText floatingText = GetFloatingText();
 
-        floatingText.text.text = msg; //manually changing the message
+        floatingText.text.text = msg;
         floatingText.text.fontSize = fontSize;
         floatingText.text.color = color;
-        floatingText.go.transform.position = Camera.main.WorldToScreenPoint(position) ; // we have to do it like this because UI is in screenSpace not worldSpace,
+        floatingText.gameObj.transform.position = Camera.main.WorldToScreenPoint(position) ; // we have to do it like this because UI is in screenSpace not worldSpace,
                                                                                         // So it takes the position when it appears and converts that to ScreenSpace
         floatingText.motion = motion;
         floatingText.duration = duration;
 
         floatingText.Show();
     }
+
     private FloatingText GetFloatingText()
     {
-        FloatingText txt = floatingTexts.Find(t => !t.active); // looks for floatingTexts that is not active
+        FloatingText txt = floatingTexts.Find(t => !t.isActive); // looks for floatingTexts that is not active
 
         if (txt == null)
         {    
             txt = new FloatingText();
-            txt.go = Instantiate(textPrefab); // creating a new GameObject and assigning it to txt.go
-            txt.go.transform.SetParent(textContainer.transform);
-            txt.text = txt.go.GetComponentInParent<Text>(); // this sets txt.text as go.text
+            txt.gameObj = Instantiate(textPrefab); // creating a new GameObject and assigning it
+            txt.gameObj.transform.SetParent(textContainer.transform);
+            txt.text = txt.gameObj.GetComponentInParent<Text>();
 
             floatingTexts.Add(txt);
         }
 
         return txt;
     }
+
 }

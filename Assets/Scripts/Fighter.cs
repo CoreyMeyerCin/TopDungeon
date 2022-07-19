@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Fighter : MonoBehaviour
 {
-    protected float immuneTime = 1.0f; // i-frame duration
-    protected float lastImmune; //tracks when immunity started
+    protected float immuneDuration = 1.0f;
+    protected float immuneStartedTime;
 
-    protected Vector3 pushDirection; //which direction do you fly
+    protected Vector3 knockbackDirection;
 
     public Stats stats;
 
@@ -20,31 +20,28 @@ public class Fighter : MonoBehaviour
     {
         if (stats.hitpoints <= 0)
         {
-            Debug.LogWarning("Enemy Hitpoints below 0");
             stats.hitpoints = 0;
             Death();
         }
     }
     protected virtual void ReceiveDamage(Damage dmg)
     {
-        if(Time.time - lastImmune > immuneTime) //check to see if still immune
+        if(Time.time - immuneStartedTime > immuneDuration) //check to see if still immune
         {
-            lastImmune = Time.time;
+            immuneStartedTime = Time.time;
             stats.hitpoints -= dmg.damageAmount;
-            pushDirection = (transform.position - dmg.origin).normalized * dmg.pushForce; // this will make the hit object move AWAY from the dmg.origin(player that hit them.)
+            knockbackDirection = (transform.position - dmg.origin).normalized * dmg.knockback; // this will make the hit object move AWAY from the dmg.origin(player that hit them.)
             
             GameManager.instance.ShowText(dmg.damageAmount.ToString(), 25, Color.red, transform.position, Vector3.zero, 0.5f);
-            
-           
         }
-        StartCoroutine(PushToZero(stats.pushRecoverySpeed));
+        StartCoroutine(PushToZero(stats.knockbackRecoverySpeed));
     }
 
     private IEnumerator PushToZero(float recoverySpeed)
     {
         yield return new WaitForSeconds(recoverySpeed);
 
-        pushDirection = (transform.position).normalized * 0;
+        knockbackDirection = (transform.position).normalized * 0;
     }
 
     protected virtual void Death()

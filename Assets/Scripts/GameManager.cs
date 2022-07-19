@@ -25,16 +25,13 @@ public class GameManager : MonoBehaviour
     private static readonly string EXPERIENCE_SAVE_STRING_KEY = "EXP_SAVE";
     //private static readonly string WEAPON_LEVEL_SAVE_STRING_KEY = "WEP_LVL_SAVE";
 
-    //Resources for the game
     public List<Sprite> playerSprites;
     public List<Sprite> weaponSprite;
     public List<int> weaponPrices = new List<int> { 100, 200, 300, 400, 500, 600, 700, 800, 900 };
 
-    //References
     public Player player;
     public Weapon weapon;
     public HealthService healthService;
-
     public FloatingTextManager floatingTextManager;
     public ExperienceManager experienceManager;
     public LevelUI levelUI;
@@ -74,7 +71,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Destroying extra GameManager");
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             Destroy(player.gameObject);
             Destroy(floatingTextManager.gameObject);
             Destroy(levelUI.gameObject);
@@ -90,36 +87,13 @@ public class GameManager : MonoBehaviour
 
             SceneManager.sceneLoaded += LoadState;
         }
-
-        //instance = this;
-        //DontDestroyOnLoad(gameObject);
     }
     
-
-
     //Floating Text
     public void ShowText(string msg, int fontSize, Color color, Vector3 position, Vector3 motion, float duration)
     {
         floatingTextManager.Show(msg, fontSize, color, position, motion, duration); //add here so it can be called from static GameManager
     }
-
-    //Upgrade weapon
-    //public bool TryUpgradeWeapon()
-    //{    
-    //    if(weaponPrices.Count <= weapon.weaponLevel) //is the weapon max level?
-    //    {
-    //        return false;
-    //    }
-
-    //    if(gold >= weaponPrices[weapon.weaponLevel])
-    //    {
-    //        gold -= weaponPrices[weapon.weaponLevel];
-    //        weapon.UpgradeWeapon();
-    //        return true;
-    //    }
-    //    return false;
-    //}
-
 
     //************************************************
     //PERSIST SAVE DATA AND LOAD SAVE DATA 
@@ -129,7 +103,7 @@ public class GameManager : MonoBehaviour
         List<string> saveParams = new List<string>(); // this list gets passed in to AssembleSaveString() which creates the final string
         saveParams.Add(CreateSaveStringKvp(PLAYER_LEVEL, player.GetLevel().ToString()));
         saveParams.Add(CreateSaveStringKvp(SKIN_SAVE_STRING_KEY, "skin_placeholder_value")); //TODO: add actual value source
-        saveParams.Add(CreateSaveStringKvp(GOLD_SAVE_STRING_KEY, player.gold.ToString()));
+        saveParams.Add(CreateSaveStringKvp(GOLD_SAVE_STRING_KEY, Player.instance.gold.ToString()));
         saveParams.Add(CreateSaveStringKvp(EXPERIENCE_SAVE_STRING_KEY, ExperienceManager.instance.GetExperience().ToString()));
         //saveParams.Add(CreateSaveStringKvp(WEAPON_LEVEL_SAVE_STRING_KEY, weapon.weaponLevel.ToString()));
 
@@ -221,12 +195,12 @@ public class GameManager : MonoBehaviour
         }
 
         Player.instance.SetLevel(int.Parse(saveDataDict[PLAYER_LEVEL]));
-        player.gold = int.Parse(saveDataDict[GOLD_SAVE_STRING_KEY]);
+        Player.instance.gold = int.Parse(saveDataDict[GOLD_SAVE_STRING_KEY]);
         ExperienceManager.instance.SetExperience(int.Parse(saveDataDict[EXPERIENCE_SAVE_STRING_KEY]));
         //weapon.SetWeaponLevel(int.Parse(saveDataDict[WEAPON_LEVEL_SAVE_STRING_KEY])); //we currently leave this blank because we have no weapon levels yet
 
         SceneManager.sceneLoaded -= LoadState;
-        Debug.Log($"SaveState was found - Level {Player.instance.GetLevel()} Gold: {player.gold}, Exp: {ExperienceManager.instance.GetExperience()}");
+        Debug.Log($"SaveState was found - Level {Player.instance.GetLevel()} Gold: {Player.instance.gold}, Exp: {ExperienceManager.instance.GetExperience()}");
     }
 
 }

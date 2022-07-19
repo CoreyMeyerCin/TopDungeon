@@ -10,17 +10,12 @@ public class Portal : Collidable
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
-        //Debug.Log(coll + " touched a portal");
-        UnityEngine.Debug.Log($"Has made collision with {coll}");
-        if(coll.tag.Equals("Player"))
+        if(coll.CompareTag("Player"))
         {
-            //Teleport the player
-            UnityEngine.Debug.Log($"22Has made collision wtih {coll}");
+			Debug.Log($"Player collided with portal {coll}");
             GameManager.instance.SaveState();
-            string sceneName = sceneNames[UnityEngine.Random.Range(0, sceneNames.Length)]; // this is going to assign the scene name we go to as a random scene that exists in our sceneName collection 
+            string sceneName = sceneNames[UnityEngine.Random.Range(0, sceneNames.Length)]; //assign the scene name we go to as a random scene that exists in our sceneName collection 
             SceneManager.LoadScene(sceneName);
-            //Debug.Log("going to " + sceneName);
-
         }
     }
 

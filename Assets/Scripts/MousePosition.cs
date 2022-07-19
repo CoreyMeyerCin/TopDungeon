@@ -7,12 +7,11 @@ public class MousePosition : MonoBehaviour
     [SerializedField] public Camera mainCamera;
     public Vector3 mouseWorldPosition;
 
-    private Vector2 offset; // this is mouse position vs player position
+    private Vector2 offset; //mouse position vs player position
     private float angle; //used to make the projectile display correctly
     //public Transform insantiateRotation;
     private void Update()
-    {
-        
+    {   
         Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPosition.z = 0f;
         transform.position = mouseWorldPosition;

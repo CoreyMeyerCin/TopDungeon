@@ -151,8 +151,8 @@ GameObject:
   - component: {fileID: 2631390772760652936}
   - component: {fileID: 2631390772760652939}
   - component: {fileID: 2631390772760652938}
-  - component: {fileID: 2631390772760652946}
   - component: {fileID: 2631390772760652947}
+  - component: {fileID: 4523194510869772129}
   m_Layer: 9
   m_Name: MindlessEnemy
   m_TagString: Enemy
@@ -254,21 +254,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.101004705, y: 0.14127707}
   m_EdgeRadius: 0
---- !u!114 &2631390772760652946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2631390772760652949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 218ffe0e584c27d48aed9a758d26cdf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitpoints: 5
-  maxHitpoints: 5
-  pushRecoverySpeed: 0.2
 --- !u!114 &2631390772760652947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,14 +266,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18602d9ba044b114aadf74a424e9f225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currState: 0
-  enemyType: 0
-  damage: 2
+  state: 0
+  type: 0
   knockback: 3
-  range: 1
-  speed: 0.2
+  sightRange: 0
   attackRange: 0
-  projectileSpeed: 0
+  projectileRange: 0
   bulletPrefab: {fileID: 0}
   boxCollider: {fileID: 2631390772760652938}
   hits:
@@ -322,16 +305,38 @@ MonoBehaviour:
   wanderGoal: {x: 0, y: 0, z: 0}
   wanderOldGoal: {x: 0, y: 0, z: 0}
   currentPosition: {x: 0, y: 0, z: 0}
-  homePosition: {x: 0.6234052, y: 0.08304639, z: 0}
-  homeStretch: 0
+  homePosition: {x: -0.037, y: 0.954, z: 0}
+  distanceFromHome: 0
   collidingWithPlayer: 0
-  xpValue: 2
-  level: 1
-  goldValue: 3
-  fighter: {fileID: 2631390772760652946}
-  dropListCommon:
-  - {fileID: 2369983572214450914, guid: 4c0c03ca18c541a4fbe22369ff5c58d5, type: 3}
-  dropListUncommon: []
-  dropListRare: []
-  dropListUnique: []
-  dropListLegendary: []
+  enemy: {fileID: 0}
+  lootManager: {fileID: 0}
+--- !u!114 &4523194510869772129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631390772760652949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ee264c48af60b4bb6d892405189dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 0}
+  aggroZoneSize: 1
+  aggroChaseDistance: 5
+  collidingWithPlayer: 0
+  filter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
