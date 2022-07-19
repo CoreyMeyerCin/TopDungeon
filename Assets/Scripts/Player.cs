@@ -166,6 +166,7 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         //transform.GetChild(0).GetComponent<Animator>().enabled = false;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weap.holdPosition;
+        transform.GetChild(0).GetComponent<Weapon>().animType = weap.animType;
     }
 
     public void ChangeCurrentWeapon(Weapon weap)
@@ -183,6 +184,7 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         //transform.GetChild(0).GetComponent<Animator>().enabled = true;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weap.holdPosition;
+        transform.GetChild(0).GetComponent<Weapon>().animType = weap.animType;
     }
 
     public void SwapSprite(int skinId)
