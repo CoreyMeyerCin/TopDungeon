@@ -155,6 +155,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item_WoodenSword
       objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870439, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_TagString
+      value: ItemOnFloor
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
 --- !u!61 &7943345809238448840 stripped

@@ -15,6 +15,7 @@ TagManager:
   - Portal
   - EnemySpawner
   - LootManager
+  - ItemOnFloor
   layers:
   - Default
   - TransparentFX

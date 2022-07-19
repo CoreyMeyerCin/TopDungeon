@@ -102,7 +102,7 @@ public class Weapon : Collidable
 
 	private void Shoot()
     {
-		Debug.LogWarning("Hot Shoot");
+		GameManager.instance.player.animator.SetTrigger("Shoot");
 		//Debug.LogWarning({GameManager.instance.mousePosition.transform.rotation}");
 		Instantiate(Player.instance.transform.GetChild(0).GetComponent<Weapon>().projectilePrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
 		attackAvailable = false;

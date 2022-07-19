@@ -25,34 +25,51 @@ public class CollectionController : MonoBehaviour
         coll = gameObject.AddComponent<BoxCollider2D>();
         coll.enabled = true;
         coll.isTrigger = true;
+        if (skinId == 0)
+        {
+            skinId = GameManager.instance.player.skinId;
+        }
     }
 
-    void Update() 
+    void Update()
     {
         coll.enabled = true;
+
     }
-   
+
     private void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.tag.Equals("Player"))          
+        if (coll.tag.Equals("Player"))
         {
             Player.collectedAmount++;
             GameManager.instance.player.ChangeCurrentWeapon(weapon);
             GameManager.instance.player.ChangeSkinId(skinId);
+            ChangeAllSkinValuesOfItemsOnTheFloor();
 
             Debug.Log("Collected object!");
-            
+
             if (weapon != null)
             {
                 GameManager.instance.player.ChangeCurrentWeapon(weapon);
             }
-            
+
             if (projectile != null)
             {
                 GameManager.instance.player.ChangeCurrentProjectile(projectile, weapon);
             }
-            
+
             Destroy(gameObject);
         }
+    }
+
+    public void ChangeAllSkinValuesOfItemsOnTheFloor()
+    {
+        var items = GameObject.FindGameObjectsWithTag("ItemOnFloor");
+
+        foreach(GameObject item in items)
+        {
+                item.GetComponent<CollectionController>().skinId = GameManager.instance.player.skinId;
+        }
+
     }
 }
