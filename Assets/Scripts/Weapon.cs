@@ -20,8 +20,8 @@ public class Weapon : Collidable
 
 	public WeaponType weaponType = WeaponType.Melee; //TODO: remove these default enum values
 	public DamageType damageType = DamageType.Slashing;
-	public WeaponAnimType animType = WeaponAnimType.Sword;
-
+	public WeaponAnimTypeAttack animAttackType = WeaponAnimTypeAttack.SwingSword;
+	public WeaponAnimTypeHold animHoldType = WeaponAnimTypeHold.IsSword;
 
 	private void Awake()
 	{
@@ -72,6 +72,7 @@ public class Weapon : Collidable
 	
 	private void Attack()
 	{
+		PlayerAnimator.SetWeaponAnimationTree();
 		switch (weaponType)
 		{
 			case WeaponType.Melee:
@@ -103,26 +104,17 @@ public class Weapon : Collidable
 
 	private void Shoot()
     {
-		if (animType == WeaponAnimType.Bow)
-		{
-			GameManager.instance.player.animator.SetTrigger("ShootBow");
-		}
-		else if (animType == WeaponAnimType.DaggerThrown)
-		{
-			GameManager.instance.player.animator.SetTrigger("ThrowDagger");
-		}
-		//Debug.LogWarning({GameManager.instance.mousePosition.transform.rotation}");
 		Instantiate(Player.instance.transform.GetChild(0).GetComponent<Weapon>().projectilePrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
 		attackAvailable = false;
 		lastSwingTime = Time.time;
 	}
-	
+
 	private void Swing()
 	{
 		//Instantiate(Player.instance.transform.GetChild(0).GetComponent<Weapon>().swingPrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
 		//NEED TO MAKE SWINGING LOGIC NOW
-
-		GameManager.instance.player.animator.SetTrigger("SwingSword"); //this set 'Swing' in our Animator when we call this function, using the SpaceKey(Update() holds the call to this)
+		attackAvailable = true;
+		lastSwingTime = Time.time;
 	}
 
 	private void Cast()
@@ -130,11 +122,26 @@ public class Weapon : Collidable
 		//cast magic
 	}
 
-	public enum WeaponAnimType
+	public WeaponAnimTypeHold GetWeaponType()
+	{
+		return animHoldType;
+	}
+}
+
+public enum WeaponAnimTypeAttack
     {
-		Sword,
+		SwingSword,
 		DaggerThrown,
-		Bow
+		ShootBow
+    }
+	public enum WeaponAnimTypeHold
+    {
+		IsSword,
+		IsDagger,
+		IsBow,
+		IsStaff,
+		IsFist,
+		IsMagic
     }
 
 	public enum WeaponType
@@ -154,4 +161,5 @@ public class Weapon : Collidable
 		Lightning,
 		Force
 	}
-}
+
+
