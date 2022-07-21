@@ -128,12 +128,13 @@ public class Weapon : Collidable
 	}
 }
 
-public enum WeaponAnimTypeAttack
+	public enum WeaponAnimTypeAttack
     {
 		SwingSword,
 		DaggerThrown,
 		ShootBow
     }
+
 	public enum WeaponAnimTypeHold
     {
 		IsSword,
@@ -161,5 +162,3 @@ public enum WeaponAnimTypeAttack
 		Lightning,
 		Force
 	}
-
-}
