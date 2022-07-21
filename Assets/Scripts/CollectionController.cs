@@ -42,18 +42,16 @@ public class CollectionController : MonoBehaviour
         if (coll.tag.Equals("Player"))
         {
             Player.collectedAmount++;
-            GameManager.instance.player.ChangeCurrentWeapon(weapon);
             GameManager.instance.player.ChangeSkinId(skinId);
             ChangeAllSkinValuesOfItemsOnTheFloor();
 
             Debug.Log("Collected object!");
 
-            if (weapon != null)
+            if (weapon != null && projectile ==null)
             {
                 GameManager.instance.player.ChangeCurrentWeapon(weapon);
             }
-
-            if (projectile != null)
+            if (weapon != null && projectile != null)
             {
                 GameManager.instance.player.ChangeCurrentProjectile(projectile, weapon);
             }

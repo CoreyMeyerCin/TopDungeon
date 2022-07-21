@@ -72,7 +72,7 @@ public class Weapon : Collidable
 	
 	private void Attack()
 	{
-		PlayerAnimator.SetWeaponAnimationTree();
+		PlayerAnimator.SetAttackAnimation();
 		switch (weaponType)
 		{
 			case WeaponType.Melee:
