@@ -67,7 +67,7 @@ public class Weapon : Collidable
 
 		damage += additionalDamage;
 
-		return Mathf.RoundToInt(damage);
+		return (int)damage;
     }
 	
 	private void Attack()
@@ -128,13 +128,12 @@ public class Weapon : Collidable
 	}
 }
 
-	public enum WeaponAnimTypeAttack
+public enum WeaponAnimTypeAttack
     {
 		SwingSword,
 		DaggerThrown,
 		ShootBow
     }
-
 	public enum WeaponAnimTypeHold
     {
 		IsSword,
@@ -162,3 +161,5 @@ public class Weapon : Collidable
 		Lightning,
 		Force
 	}
+
+
