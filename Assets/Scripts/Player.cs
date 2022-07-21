@@ -49,6 +49,8 @@ public class Player : Mover
         weapon = GetComponentInChildren<Weapon>();
         weapon.projectilePrefab = GetComponentInChildren<Weapon>().projectilePrefab;
         stats = GameManager.instance.playerStats;
+
+        PlayerAnimator.SetWeaponAnimationTree();
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).GetComponent<Projectile>();
     }
 
@@ -153,9 +155,7 @@ public class Player : Mover
 
     public void ChangeCurrentProjectile(Projectile proj, Weapon weap)
     {
-        if (weap == null || proj == null) return;
-
-        else
+            Debug.Log("wtf happened to my projectiles");
             weapon = weap;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
         transform.GetChild(0).GetComponent<Weapon>().projectilePrefab = proj;
@@ -166,13 +166,16 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         //transform.GetChild(0).GetComponent<Animator>().enabled = false;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weap.holdPosition;
-        transform.GetChild(0).GetComponent<Weapon>().animType = weap.animType;
+        transform.GetChild(0).GetComponent<Weapon>().animAttackType = weap.animAttackType;
+        transform.GetChild(0).GetComponent<Weapon>().animHoldType = weap.animHoldType;
+        //transform.GetChild(0).GetComponent<BoxCollider2D>().offset = weap.boxCollider.offset;
+        //transform.GetChild(0).GetComponent<BoxCollider2D>().size = weap.boxCollider.size;
+        PlayerAnimator.SetWeaponAnimationTree();
     }
 
     public void ChangeCurrentWeapon(Weapon weap)
     {
         if(weap == null) return;
-
         else
         weapon = weap;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weapon.holdPosition;
@@ -184,7 +187,11 @@ public class Player : Mover
         transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
         //transform.GetChild(0).GetComponent<Animator>().enabled = true;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weap.holdPosition;
-        transform.GetChild(0).GetComponent<Weapon>().animType = weap.animType;
+        transform.GetChild(0).GetComponent<Weapon>().animAttackType = weap.animAttackType;
+        transform.GetChild(0).GetComponent<Weapon>().animHoldType = weap.animHoldType;
+        //transform.GetChild(0).GetComponent<BoxCollider2D>().offset = weap.boxCollider.offset;
+        //transform.GetChild(0).GetComponent<BoxCollider2D>().size = weap.boxCollider.size;
+        PlayerAnimator.SetWeaponAnimationTree();
     }
 
     public void SwapSprite(int skinId)
@@ -259,5 +266,5 @@ public class Player : Mover
     {
         stats.level = levelToSet;
     }
-
+  
 }

@@ -11,7 +11,6 @@ public class PlayerAnimator : MonoBehaviour
     private Animator _animator;
     private SpriteRenderer _renderer;
     private Player player;
-  
     private float _lockedTill;
     private bool _idle;
     private bool _walking;
@@ -19,6 +18,25 @@ public class PlayerAnimator : MonoBehaviour
     private bool _throwingDagger;
     private bool _damaged;
     private bool _running;
+
+    private void Start()
+    {
+        _player.isIdle = true;
+        player = GameManager.instance.player;
+        SetWeaponAnimationTree();
+        GetAnimation();
+    }
+    private void Update()
+    {
+        var state = GetState();
+    }
+    public Enum GetWeaponFromPlayer
+    {
+        get
+        {
+            return GameManager.instance.player.transform.GetChild(0).GetComponent<Weapon>().animHoldType;
+        }
+    }
 
     private void Awake()
     {
@@ -30,13 +48,12 @@ public class PlayerAnimator : MonoBehaviour
         //_player = player;
         _animator = GetComponent<Animator>();
         _renderer = GetComponent<SpriteRenderer>();
-        player = GameManager.instance.player;
-
     }
+
     public void GetAnimation()
     {
+        
         GameManager.instance.player.animator.SetInteger("SkinInt", GameManager.instance.player.skinId) ;
-
                if (Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S))
                {
                 //Debug.Log($"Hitting animation A {GameManager.instance.playerStats.speed}");
@@ -48,16 +65,91 @@ public class PlayerAnimator : MonoBehaviour
                {
                    GameManager.instance.player.animator.SetFloat("Speed", 0);
                }
-           
+    }
+    
+    public static void SetWeaponAnimationTree()
+    {
+        foreach (AnimatorControllerParameter parameter in GameManager.instance.player.animator.parameters)
+        {
+            GameManager.instance.player.animator.SetBool(parameter.name, false);
+        }
+        var currentWeapon = GameManager.instance.player.weapon.GetWeaponType();
+        switch (currentWeapon)
+        {
+            case WeaponAnimTypeHold.IsSword:
+                {
+                    GameManager.instance.player.animator.SetBool("IsSword", true);
+                    break;
+                }
+            case WeaponAnimTypeHold.IsDagger:
+                {
+                    GameManager.instance.player.animator.SetBool("IsDagger", true);
+                    break;
+                }
+            case WeaponAnimTypeHold.IsBow:
+                {
+                    GameManager.instance.player.animator.SetBool("IsBow", true);
+                    break;
+                }
+            case WeaponAnimTypeHold.IsStaff:
+                {
+                    GameManager.instance.player.animator.SetBool("IsStaff", true);
+                    break;
+                }
+            case WeaponAnimTypeHold.IsFist:
+                {
+                    GameManager.instance.player.animator.SetBool("IsFist", true);
+                    break;
+                }
+            case WeaponAnimTypeHold.IsMagic:
+                {
+                    GameManager.instance.player.animator.SetBool("IsMagic", true);
+                    break;
+                }
+
+            default:
+                break;
+        }
     }
 
-    private void Start()
+
+    public static void SetAttackAnimation()
     {
-        _player.isIdle = true;
-    }
-    private void Update()
-    {
-        var state = GetState();
+        SetWeaponAnimationTree();
+        var currentWeapon = GameManager.instance.player.weapon.GetWeaponType();
+        switch (currentWeapon)
+        {
+            case WeaponAnimTypeHold.IsSword:
+                {
+                    GameManager.instance.player.animator.SetTrigger("SwingSword");
+                    break;
+                }
+            case WeaponAnimTypeHold.IsDagger:
+                {
+                    GameManager.instance.player.animator.SetTrigger("ThrowDagger");
+                    break;
+                }
+            case WeaponAnimTypeHold.IsBow:
+                {
+                    GameManager.instance.player.animator.SetTrigger("ShootBow");
+                    break;
+                }
+            case WeaponAnimTypeHold.IsStaff:
+                {
+                    break;
+                }
+            case WeaponAnimTypeHold.IsFist:
+                {
+                    break;
+                }
+            case WeaponAnimTypeHold.IsMagic:
+                {
+                    break;
+                }
+
+            default:
+                break;
+        }
     }
 
     private int GetState()
