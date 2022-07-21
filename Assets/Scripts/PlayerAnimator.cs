@@ -78,19 +78,16 @@ public class PlayerAnimator : MonoBehaviour
         {
             case WeaponAnimTypeHold.IsSword:
                 {
-                    GameManager.instance.player.animator.SetTrigger("SwingSword");
                     GameManager.instance.player.animator.SetBool("IsSword", true);
                     break;
                 }
             case WeaponAnimTypeHold.IsDagger:
                 {
-                    GameManager.instance.player.animator.SetTrigger("ThrowDagger");
                     GameManager.instance.player.animator.SetBool("IsDagger", true);
                     break;
                 }
             case WeaponAnimTypeHold.IsBow:
                 {
-                    GameManager.instance.player.animator.SetTrigger("ShootBow");
                     GameManager.instance.player.animator.SetBool("IsBow", true);
                     break;
                 }
@@ -116,7 +113,44 @@ public class PlayerAnimator : MonoBehaviour
     }
 
 
-   
+    public static void SetAttackAnimation()
+    {
+        SetWeaponAnimationTree();
+        var currentWeapon = GameManager.instance.player.weapon.GetWeaponType();
+        switch (currentWeapon)
+        {
+            case WeaponAnimTypeHold.IsSword:
+                {
+                    GameManager.instance.player.animator.SetTrigger("SwingSword");
+                    break;
+                }
+            case WeaponAnimTypeHold.IsDagger:
+                {
+                    GameManager.instance.player.animator.SetTrigger("ThrowDagger");
+                    break;
+                }
+            case WeaponAnimTypeHold.IsBow:
+                {
+                    GameManager.instance.player.animator.SetTrigger("ShootBow");
+                    break;
+                }
+            case WeaponAnimTypeHold.IsStaff:
+                {
+                    break;
+                }
+            case WeaponAnimTypeHold.IsFist:
+                {
+                    break;
+                }
+            case WeaponAnimTypeHold.IsMagic:
+                {
+                    break;
+                }
+
+            default:
+                break;
+        }
+    }
 
     private int GetState()
     {
