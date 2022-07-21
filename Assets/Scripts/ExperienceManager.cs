@@ -33,7 +33,7 @@ public class ExperienceManager : MonoBehaviour
 
     public void CalculateNewExperienceToNextLevel()
 	{
-        var next = (int)Math.Round(experienceToNextLevel * 1.17);
+        var next = Mathf.RoundToInt(experienceToNextLevel * 1.17f);
         experienceToNextLevel = next;
 	}
 
