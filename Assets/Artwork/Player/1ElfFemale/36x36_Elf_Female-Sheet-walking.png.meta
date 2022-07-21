@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: dfc33c5e7eed2cd4b8df94ca4ef05d0f
+guid: 57c1248fb9d400147bbfc02c15e42b31
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -116,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 16x16_Dagger_Close_Attack-Sheet_0
+      name: 36x36_Elf_Female-Sheet-walking_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 1
-        width: 13
-        height: 14
+        x: 16
+        y: 0
+        width: 20
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,20 +130,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5eb7890f68e2af14195ff24f86b03a47
-      internalID: 1021548554
+      spriteID: fc72d5f4c4553d94b9f4f9245dc42922
+      internalID: 1250290157
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 16x16_Dagger_Close_Attack-Sheet_1
+      name: 36x36_Elf_Female-Sheet-walking_1
       rect:
         serializedVersion: 2
-        x: 32
-        y: 3
-        width: 15
-        height: 11
+        x: 51
+        y: 0
+        width: 20
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -151,20 +151,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00a5be68448ba5b478766f831734afd3
-      internalID: 694171558
+      spriteID: c25afb1d0279cb64eb20e0ee7c801e5d
+      internalID: 356161645
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 16x16_Dagger_Close_Attack-Sheet_2
+      name: 36x36_Elf_Female-Sheet-walking_2
       rect:
         serializedVersion: 2
-        x: 54
-        y: 6
-        width: 17
-        height: 7
+        x: 86
+        y: 0
+        width: 20
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,20 +172,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 153202971c37e0747bdd1e6c5e2b26fd
-      internalID: 887058234
+      spriteID: a95465826daa9c74cbbf89f1950e47fd
+      internalID: 1814724273
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 16x16_Dagger_Close_Attack-Sheet_3
+      name: 36x36_Elf_Female-Sheet-walking_3
       rect:
         serializedVersion: 2
-        x: 77
-        y: 6
-        width: 17
-        height: 7
+        x: 121
+        y: 0
+        width: 20
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,20 +193,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9be7fbc6edee3fc4cba7894e77e29010
-      internalID: -2021857520
+      spriteID: 62d808fbd7d78e544883ef1b8fe1f283
+      internalID: -1191259729
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 16x16_Dagger_Close_Attack-Sheet_4
+      name: 36x36_Elf_Female-Sheet-walking_4
       rect:
         serializedVersion: 2
-        x: 102
-        y: 6
-        width: 17
-        height: 7
+        x: 156
+        y: 0
+        width: 20
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,20 +214,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 22878edfc0fae8a48a2747506aed9d89
-      internalID: 1462714680
+      spriteID: 99bda295bb6a3684983109c28baf2f66
+      internalID: -1963458917
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 16x16_Dagger_Close_Attack-Sheet_5
+      name: 36x36_Elf_Female-Sheet-walking_5
       rect:
         serializedVersion: 2
-        x: 128
-        y: 3
-        width: 15
-        height: 11
+        x: 191
+        y: 0
+        width: 20
+        height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -235,20 +235,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4fa19b3851e6f2a478465969539341ef
-      internalID: 1306587207
+      spriteID: 3367866e0d094e641b669f4974ab8e14
+      internalID: 607283813
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 16x16_Dagger_Close_Attack-Sheet_6
+      name: 36x36_Elf_Female-Sheet-walking_6
       rect:
         serializedVersion: 2
-        x: 153
-        y: 1
-        width: 13
-        height: 14
+        x: 226
+        y: 0
+        width: 20
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -256,8 +256,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 65086a8ba7f923c438b6151e3afde784
-      internalID: 1351180104
+      spriteID: 2a6cb0acb1e06c940ac02d667404f9fe
+      internalID: 1301722350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 36x36_Elf_Female-Sheet-walking_7
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 0
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b73617ed25788143a665675aef379a5
+      internalID: -210573266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 36x36_Elf_Female-Sheet-walking_8
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 0
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aed37b0891b350a4ab655aeab8c17667
+      internalID: -699940406
       vertices: []
       indices: 
       edges: []
@@ -273,13 +315,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      16x16_Dagger_Close_Attack-Sheet_5: 1306587207
-      16x16_Dagger_Close_Attack-Sheet_6: 1351180104
-      16x16_Dagger_Close_Attack-Sheet_2: 887058234
-      16x16_Dagger_Close_Attack-Sheet_0: 1021548554
-      16x16_Dagger_Close_Attack-Sheet_3: -2021857520
-      16x16_Dagger_Close_Attack-Sheet_4: 1462714680
-      16x16_Dagger_Close_Attack-Sheet_1: 694171558
+      36x36_Elf_Female-Sheet-walking_4: -1963458917
+      36x36_Elf_Female-Sheet-walking_8: -699940406
+      36x36_Elf_Female-Sheet-walking_5: 607283813
+      36x36_Elf_Female-Sheet-walking_1: 356161645
+      36x36_Elf_Female-Sheet-walking_3: -1191259729
+      36x36_Elf_Female-Sheet-walking_2: 1814724273
+      36x36_Elf_Female-Sheet-walking_6: 1301722350
+      36x36_Elf_Female-Sheet-walking_7: -210573266
+      36x36_Elf_Female-Sheet-walking_0: 1250290157
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
