@@ -67,7 +67,7 @@ public class Weapon : Collidable
 
 		damage += additionalDamage;
 
-		return (int)damage;
+		return Mathf.RoundToInt(damage);
     }
 	
 	private void Attack()
@@ -154,4 +154,5 @@ public class Weapon : Collidable
 		Lightning,
 		Force
 	}
+
 }

@@ -8,7 +8,7 @@ public class CollectionController : MonoBehaviour
 {
     public string name; //for ui
     public string description; // for ui
-    public int skinId;
+    public int playerSkinId;
 
     public Sprite itemSprite;
     private HealthService healthService;
@@ -25,25 +25,24 @@ public class CollectionController : MonoBehaviour
         coll = gameObject.AddComponent<BoxCollider2D>();
         coll.enabled = true;
         coll.isTrigger = true;
-        if (skinId == 0)
+        if (playerSkinId == 0)
         {
-            skinId = GameManager.instance.player.skinId;
+            playerSkinId = GameManager.instance.player.skinId;
         }
     }
 
     void Update()
     {
         coll.enabled = true;
-
     }
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.tag.Equals("Player"))
+        if (coll.CompareTag("Player"))
         {
             Player.collectedAmount++;
             GameManager.instance.player.ChangeCurrentWeapon(weapon);
-            GameManager.instance.player.ChangeSkinId(skinId);
+            GameManager.instance.player.ChangeSkinId(playerSkinId);
             ChangeAllSkinValuesOfItemsOnTheFloor();
 
             Debug.Log("Collected object!");
@@ -68,8 +67,8 @@ public class CollectionController : MonoBehaviour
 
         foreach(GameObject item in items)
         {
-                item.GetComponent<CollectionController>().skinId = GameManager.instance.player.skinId;
+            item.GetComponent<CollectionController>().playerSkinId = GameManager.instance.player.skinId;
         }
-
     }
+
 }

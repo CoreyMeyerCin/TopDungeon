@@ -25,7 +25,7 @@ public class Item : Collectable
 
     private void Awake()
     {
-        rollerIntMax = 0; //what is this doing?
+        rollerIntMax = 0;
         foreach(Item item in itemList)
         {
             rollerIntMax++;
