@@ -1,0 +1,219 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9163766165448411578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9163766165448411581}
+  m_Layer: 0
+  m_Name: DaggerStabbing_Item
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9163766165448411581
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9163766165448411578}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0227221, y: 0.11211434, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6275993927676647345}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &9163766166403341906
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 9163766165448411581}
+    m_Modifications:
+    - target: {fileID: 2897208738703870434, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5fd148954d1900541bb912bc3609d855, type: 3}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870436, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: coll
+      value: 
+      objectReference: {fileID: 6275993927676647351}
+    - target: {fileID: 2897208738703870436, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: name
+      value: Dagger(Melee)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870436, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 1267015892094327048, guid: d589c6650733ef746988b629b75d3afb, type: 3}
+    - target: {fileID: 2897208738703870436, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870436, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: itemSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5fd148954d1900541bb912bc3609d855, type: 3}
+    - target: {fileID: 2897208738703870436, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: description
+      value: A Dagger for Melle Stabbing
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870437, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_Size.x
+      value: 0.010822594
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870437, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_Size.y
+      value: 0.01220113
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870437, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870437, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.0005066693
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870437, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870437, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870439, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_Name
+      value: DaggerStabbing
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897208738703870439, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+      propertyPath: m_TagString
+      value: ItemOnFloor
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+--- !u!4 &6275993927676647345 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2897208738703870435, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+  m_PrefabInstance: {fileID: 9163766166403341906}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6275993927676647349 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2897208738703870439, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+  m_PrefabInstance: {fileID: 9163766166403341906}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &4455271303282310589
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6275993927676647349}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
+--- !u!95 &9163766165623175583
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6275993927676647349}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fbc561a573847b049a853ea8141ead30, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!61 &6275993927676647351 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 2897208738703870437, guid: d0867991cb065c9488e29dc0b07fdd9e, type: 3}
+  m_PrefabInstance: {fileID: 9163766166403341906}
+  m_PrefabAsset: {fileID: 0}
