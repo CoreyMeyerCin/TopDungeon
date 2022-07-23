@@ -7,10 +7,10 @@ using System;
 public class PlayerAnimationController : MonoBehaviour
 {
 
-    public Player player = GameManager.instance.player;
-    Animator animator;
+    public Player player;
+    public Animator animator;
     private string currentState;
-    Dictionary<int, string> skinIds = new Dictionary<int, string>()
+    public Dictionary<int, string> skinIds = new Dictionary<int, string>()
     {
         {1,"WindArcherElfFemale"},
         {2,"WindArcherElfMale"}
@@ -28,6 +28,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void Start()
     {
+        player = GameManager.instance.player;
         animator = player.GetComponent<Animator>();
     }
 

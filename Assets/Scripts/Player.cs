@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : Mover
+public class Player : Fighter
 {
     public static Player instance;
     public Vector3 currentPosition;
@@ -9,6 +9,7 @@ public class Player : Mover
     public Animator animator;
     public PlayerAnimationController animationController;
     public int skinId =1;
+    public PlayerActionController actionController;
 
 
     public double playerDirection;
@@ -23,6 +24,7 @@ public class Player : Mover
     //public Projectile projectilePrefab;
     public Weapon weapon;
     public Transform firePoint;
+    public Stats playerStats;
 
     private float lastFire;
 
@@ -37,20 +39,16 @@ public class Player : Mover
     public Vector3 dashStart, dashEnd;
 
 
-    protected override void Start()
+    public void Start()
     {
         if (instance == null)
         {
             instance = this;
         }
-
-        base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentPosition = transform.position;
         firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
-        weapon = GetComponentInChildren<Weapon>();
-        weapon.projectilePrefab = GetComponentInChildren<Weapon>().projectilePrefab;
-        stats = GameManager.instance.playerStats;
+        playerStats = GetComponent<Stats>();
 
         PlayerAnimator.SetWeaponAnimationTree();
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).GetComponent<Projectile>();
@@ -86,7 +84,7 @@ public class Player : Mover
         float y = Input.GetAxisRaw("Vertical"); // same thing with the y axis with w, s, or no input
 
         //Reset MoveDelta
-        UpdateMotor(new Vector3(x, y, 0));
+        //UpdateMotor(new Vector3(x, y, 0));
         currentPosition = transform.position;
         
 
@@ -179,7 +177,7 @@ public class Player : Mover
             Debug.Log("wtf happened to my projectiles");
             weapon = weap;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
-        transform.GetChild(0).name=weap.name;
+        transform.GetChild(0).name=weap.weaponName;
         transform.GetChild(0).GetComponent<Weapon>().projectilePrefab = proj;
         transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
@@ -201,7 +199,7 @@ public class Player : Mover
         else
         weapon = weap;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weapon.holdPosition;
-        transform.GetChild(0).name = weap.name;
+        transform.GetChild(0).name=weap.weaponName;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
         transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
