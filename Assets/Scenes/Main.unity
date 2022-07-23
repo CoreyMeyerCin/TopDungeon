@@ -473,7 +473,7 @@ MonoBehaviour:
   cooldown: 1
   critChance: 5
   critMultiplier: 1.05
-  dashCooldown: 4
+  dashCooldown: 0.1
   dropChanceModifier: 0
   goldValue: 10
   hitpoints: 10
