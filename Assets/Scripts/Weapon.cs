@@ -9,7 +9,8 @@ public class Weapon : Collidable
 	public float baseDamage;
 	public float additionalDamage;
 	public float knockBack;
-	public string name;
+	public string weaponName;
+
 
 	private Animator anim;
 	private float lastSwingTime;

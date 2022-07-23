@@ -5,30 +5,29 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Stats : MonoBehaviour
+public class Stats :MonoBehaviour
 {
-    public float additionalDamage { get; set; } = 0;
-    public float attackSpeed { get; set; } = 1f;
-    public float baseDamage { get; set; } = 1;
-    public float cooldown { get; set; } = 1f;
-    public float critChance { get; set; } = 5f;
-    public float critMultiplier { get; set; } = 1.05f;
+    public float AdditionalDamage;
+    public float attackSpeed;
+    public float baseDamage;
+    public float cooldown;
+    public float critChance;
+    public float critMultiplier;
     public int combinedDamage
 	{
-        get { return Mathf.RoundToInt(baseDamage + additionalDamage); }
+        get { return Mathf.RoundToInt(baseDamage + AdditionalDamage); }
     }
-    public float dashTime { get; set; } = 1f;
-    public int dropChanceModifier { get; set; } = 0;
-    public int goldValue { get; set; } = 10;
-    public float hitpoints { get; set; } = 1f;
-    public float knockback { get; set; } = 5f;
-    public int level { get; set; } = 1;
-    public float lifesteal { get; set; } = 0;
-    public float maxHitpoints { get; set; } = 10f;
-    public float knockbackRecoverySpeed { get; set; }  = 0.2f; //how long it takes to recover after being knocked back
-    public float speed { get; set; } = 1f;
-    public int xpValue { get; set; } = 1;
-
+    public float dashTime;
+    public int dropChanceModifier;
+    public int goldValue;
+    public float hitpoints;
+    public float knockback;
+    public int level;
+    public float lifesteal;
+    public float maxHitpoints;
+    public float knockbackRecoverySpeed; //how long it takes to recover after being knocked back
+    public float speed;
+    public int xpValue;
 
     //USAGE:
     //Player.instance.stats.maxHitpoints = Player.instance.stats.IncreaseStatByFlatAmount(Player.instance.stats.maxHitpoints, 100);
