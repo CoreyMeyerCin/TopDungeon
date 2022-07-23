@@ -7,6 +7,8 @@ public class PlayerAnimator : MonoBehaviour
 {
     [SerializedField] private float _attackSpeed = 0.2f; // TODO: this needs to be able to be changed with Player.Stats.attackSpeed
     [SerializedField] private float _recoverySpeed = 0.2f; // this will also need to be changed from there
+
+
     private IPlayerController _player;
     private Animator _animator;
     private SpriteRenderer _renderer;
@@ -65,8 +67,13 @@ public class PlayerAnimator : MonoBehaviour
                {
                    GameManager.instance.player.animator.SetFloat("Speed", 0);
                }
+                if (Input.GetKey(KeyCode.LeftAlt))
+               {
+                GameManager.instance.player.animator.SetBool("isDashing", true);
+               }
     }
     
+   
     public static void SetWeaponAnimationTree()
     {
         foreach (AnimatorControllerParameter parameter in GameManager.instance.player.animator.parameters)

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player_ElfFemale_Idle_Sword
+  m_Name: WindArcher_Female_Dagger_Idle
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -195,11 +195,11 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 177472583, guid: a7eafca49194e584abee27640cd8bf4b, type: 3}
+      value: {fileID: 65404840, guid: 1c990c5cccac0264b8025eb00488e4e0, type: 3}
     - time: 1.15
-      value: {fileID: -2143406631, guid: a7eafca49194e584abee27640cd8bf4b, type: 3}
+      value: {fileID: 1077625185, guid: 1c990c5cccac0264b8025eb00488e4e0, type: 3}
     - time: 2.35
-      value: {fileID: 177472583, guid: a7eafca49194e584abee27640cd8bf4b, type: 3}
+      value: {fileID: 65404840, guid: 1c990c5cccac0264b8025eb00488e4e0, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -261,9 +261,9 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 177472583, guid: a7eafca49194e584abee27640cd8bf4b, type: 3}
-    - {fileID: -2143406631, guid: a7eafca49194e584abee27640cd8bf4b, type: 3}
-    - {fileID: 177472583, guid: a7eafca49194e584abee27640cd8bf4b, type: 3}
+    - {fileID: 65404840, guid: 1c990c5cccac0264b8025eb00488e4e0, type: 3}
+    - {fileID: 1077625185, guid: 1c990c5cccac0264b8025eb00488e4e0, type: 3}
+    - {fileID: 65404840, guid: 1c990c5cccac0264b8025eb00488e4e0, type: 3}
     - {fileID: 21300000, guid: 6742971a8cb592a4f83529bced8c290a, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2

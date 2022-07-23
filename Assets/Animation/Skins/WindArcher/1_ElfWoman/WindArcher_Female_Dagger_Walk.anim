@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player_ElfFemale_Walk_Sword
+  m_Name: WindArcher_Female_Dagger_Walk
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -582,25 +582,25 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: -1192173367, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
+      value: {fileID: -1676572656, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
     - time: 0.21666667
-      value: {fileID: -1352557823, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
+      value: {fileID: 1525149545, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
     - time: 0.41666666
-      value: {fileID: -2039987758, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
+      value: {fileID: -83413987, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
     - time: 0.65
-      value: {fileID: 310798429, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
+      value: {fileID: 960675567, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
     - time: 0.85
-      value: {fileID: 1777673889, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
+      value: {fileID: 1141430463, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
     - time: 1.05
-      value: {fileID: 1678343500, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
+      value: {fileID: 2005077155, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
     - time: 1.2833333
-      value: {fileID: 139655742, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
+      value: {fileID: 92334746, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
     - time: 1.4833333
-      value: {fileID: 1215811561, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
+      value: {fileID: 2136132129, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
     - time: 1.7
-      value: {fileID: -860918641, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
+      value: {fileID: 1347812991, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
     - time: 1.8833333
-      value: {fileID: -1192173367, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
+      value: {fileID: -1676572656, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -662,16 +662,16 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: -1192173367, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
-    - {fileID: -1352557823, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
-    - {fileID: -2039987758, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
-    - {fileID: 310798429, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
-    - {fileID: 1777673889, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
-    - {fileID: 1678343500, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
-    - {fileID: 139655742, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
-    - {fileID: 1215811561, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
-    - {fileID: -860918641, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
-    - {fileID: -1192173367, guid: cfd575cdd75c57e43874a50984da217d, type: 3}
+    - {fileID: -1676572656, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
+    - {fileID: 1525149545, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
+    - {fileID: -83413987, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
+    - {fileID: 960675567, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
+    - {fileID: 1141430463, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
+    - {fileID: 2005077155, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
+    - {fileID: 92334746, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
+    - {fileID: 2136132129, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
+    - {fileID: 1347812991, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
+    - {fileID: -1676572656, guid: f4f105186ad3a0648aea543568b7018a, type: 3}
     - {fileID: 21300000, guid: 6742971a8cb592a4f83529bced8c290a, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
