@@ -8,7 +8,7 @@ public class Player : Fighter
     private SpriteRenderer spriteRenderer;
     public Animator animator;
     public PlayerAnimationController animationController;
-    public int skinId =1;
+    public int skinId = 1;
     public PlayerActionController actionController;
 
 
@@ -75,7 +75,7 @@ public class Player : Fighter
         //playerAnimator.GetAnimation();
         //firePoint = this.transform;
         //this.GetComponentInChildren<Weapon>().transform.localPosition += new Vector3(0.096f,-0.011f,0);
-        
+
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).gameObject.GetComponent<Projectile>();
     }
     private void FixedUpdate()
@@ -86,37 +86,37 @@ public class Player : Fighter
         //Reset MoveDelta
         //UpdateMotor(new Vector3(x, y, 0));
         currentPosition = transform.position;
-        
+
 
 
 
 
 
         //firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
-        if (Input.GetKey(KeyCode.LeftAlt))
-        {
-            //Debug.LogWarning($"UpdateCheck: Time:{Time.time}, endDashTime: {endDashTime}");
-            if (isDashing == false && Time.time >= endDashTime)
-            {
-                isDashing = true;
-                currentDashTime = Time.time;
-                dashStart = currentPosition;
-                SetDashLocationGoal(playerDirection);
-                Dash(dashEnd);
-            }
-        }
+        //if (Input.GetKey(KeyCode.LeftAlt))
+        //{
+        //    //Debug.LogWarning($"UpdateCheck: Time:{Time.time}, endDashTime: {endDashTime}");
+        //    if (isDashing == false && Time.time >= endDashTime)
+        //    {
+        //        isDashing = true;
+        //        currentDashTime = Time.time;
+        //        dashStart = currentPosition;
+        //        SetDashLocationGoal(playerDirection);
+        //        Dash(dashEnd);
+        //    }
+        //}
 
-        //This stops the animation from overriding itself
-        if (isAttackPressed)
-        {
-            isAttackPressed = false;
-            if (!isAttacking)
-            {
-                isAttacking = true;
+        ////This stops the animation from overriding itself
+        //if (isAttackPressed)
+        //{
+        //    isAttackPressed = false;
+        //    if (!isAttacking)
+        //    {
+        //        isAttacking = true;
 
 
-            }
-        }
+        //    }
+        //}
     }
 
     public void ChangeSkinId(int skinChange)
@@ -128,7 +128,7 @@ public class Player : Fighter
         switch (playerDir)
         {
             case 0:
-                dashEnd = new Vector3(currentPosition.x + (stats.speed /5), currentPosition.y,currentPosition.z);
+                dashEnd = new Vector3(currentPosition.x + (stats.speed / 5), currentPosition.y, currentPosition.z);
                 return;
             case 0.5:
                 dashEnd = new Vector3(currentPosition.x + ((3 * stats.speed / 4) / 5), currentPosition.y - ((3 * stats.speed / 4) / 5), currentPosition.z);
@@ -153,24 +153,24 @@ public class Player : Fighter
                 return;
         }
     }
-    public void Dash(Vector3 dashEnding)
-    {
-        if (isDashing)
-            //Needs to call the PlayerAnimationController
-        {
-            endDashTime = Time.time + stats.dashTime; //add current time to 0f to start the dash sequence
-            //Debug.LogWarning($"Dashing is happening: Time:{Time.time}, endDashTime: {endDashTime}");
-            float perc = Mathf.Clamp01(currentDashTime / stats.dashTime);
+    //public void Dash(Vector3 dashEnding)
+    //{
+    //    if (isDashing)
+    //    //Needs to call the PlayerAnimationController
+    //    {
+    //        endDashTime = Time.time + stats.dashCooldown; //add current time to 0f to start the dash sequence
+    //        //Debug.LogWarning($"Dashing is happening: Time:{Time.time}, endDashTime: {endDashTime}");
+    //        float perc = Mathf.Clamp01(currentDashTime / stats.dashTime);
 
-            transform.position = Vector3.Lerp(dashStart, dashEnd, perc);
-            if(currentDashTime >= stats.dashTime)
-            {
-                isDashing = false;
-                transform.position = dashEnd;
-            }
-        }
-        
-    }
+    //        transform.position = Vector3.Lerp(dashStart, dashEnd, perc);
+    //        if (currentDashTime >= stats.dashTime)
+    //        {
+    //            isDashing = false;
+    //            transform.position = dashEnd;
+    //        }
+    //    }
+
+    //}
 
     public void ChangeCurrentProjectile(Projectile proj, Weapon weap)
     {
