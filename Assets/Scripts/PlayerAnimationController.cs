@@ -11,6 +11,7 @@ public class PlayerAnimationController : MonoBehaviour
     public Animator animator;
     private string currentState;
     public Dictionary<int, string> skinIds = new Dictionary<int, string>()
+
     {
         {1,"WindArcherElfFemale"},
         {2,"WindArcherElfMale"}

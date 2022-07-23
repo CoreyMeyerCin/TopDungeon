@@ -31,9 +31,9 @@ public class Player : Fighter
     //public float dashTime = 1f; //how long it takes to complete the full dash
     public float currentDashTime = 0f;
     public float endDashTime = 0f;
-
     public bool isAttacking;
     public bool isAttackPressed = false;
+
     public bool isMoving = false;
     public bool isDashing = false;
     public Vector3 dashStart, dashEnd;
@@ -103,6 +103,19 @@ public class Player : Fighter
                 dashStart = currentPosition;
                 SetDashLocationGoal(playerDirection);
                 Dash(dashEnd);
+                GameManager.instance.player.animator.SetBool("isDashing", false);
+            }
+        }
+
+        //This stops the animation from overriding itself
+        if (isAttackPressed)
+        {
+            isAttackPressed = false;
+            if (!isAttacking)
+            {
+                isAttacking = true;
+
+
             }
         }
 
@@ -157,6 +170,7 @@ public class Player : Fighter
     {
         if (isDashing)
             //Needs to call the PlayerAnimationController
+
         {
             endDashTime = Time.time + stats.dashTime; //add current time to 0f to start the dash sequence
             //Debug.LogWarning($"Dashing is happening: Time:{Time.time}, endDashTime: {endDashTime}");
@@ -177,7 +191,9 @@ public class Player : Fighter
             Debug.Log("wtf happened to my projectiles");
             weapon = weap;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
+
         transform.GetChild(0).name=weap.weaponName;
+
         transform.GetChild(0).GetComponent<Weapon>().projectilePrefab = proj;
         transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
@@ -200,6 +216,7 @@ public class Player : Fighter
         weapon = weap;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weapon.holdPosition;
         transform.GetChild(0).name=weap.weaponName;
+
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
         transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
