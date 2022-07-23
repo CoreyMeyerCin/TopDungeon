@@ -22,10 +22,18 @@ public abstract class Mover : Fighter //abstract means that it has to be inherit
         if(moveDelta.x > 0)
         {
             transform.localScale = Vector3.one; //sets Vecotor3 to (1,1,1), when using Vecor3.one it uses less memory
+            //GameManager.instance.player.animationController.ChangeAnimationState(PlayerAnimationController.PLAYER_WALK);
+
         }
         else if(moveDelta.x < 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
+            //GameManager.instance.player.animationController.ChangeAnimationState(PlayerAnimationController.PLAYER_WALK);
+
+        }
+        else if (moveDelta.x == 0)
+        {
+            //GameManager.instance.player.animationController.ChangeAnimationState(PlayerAnimationController.PLAYER_IDLE);
         }
 
         moveDelta += knockbackDirection;

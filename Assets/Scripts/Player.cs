@@ -7,7 +7,7 @@ public class Player : Mover
     public Vector3 currentPosition;
     private SpriteRenderer spriteRenderer;
     public Animator animator;
-    public PlayerAnimator playerAnimator;
+    public PlayerAnimationController animationController;
     public int skinId =1;
 
 
@@ -30,6 +30,8 @@ public class Player : Mover
     public float currentDashTime = 0f;
     public float endDashTime = 0f;
 
+    public bool isAttacking;
+    public bool isAttackPressed = false;
     public bool isMoving = false;
     public bool isDashing = false;
     public Vector3 dashStart, dashEnd;
@@ -67,7 +69,12 @@ public class Player : Mover
     private void Update()
     {
         GetPlayerDirection();
-        playerAnimator.GetAnimation();
+        if (Input.GetKeyDown(KeyCode.RightControl))
+        {
+            isAttackPressed = true;
+        }
+
+        //playerAnimator.GetAnimation();
         //firePoint = this.transform;
         //this.GetComponentInChildren<Weapon>().transform.localPosition += new Vector3(0.096f,-0.011f,0);
         
@@ -81,6 +88,7 @@ public class Player : Mover
         //Reset MoveDelta
         UpdateMotor(new Vector3(x, y, 0));
         currentPosition = transform.position;
+        
 
 
 
@@ -97,7 +105,18 @@ public class Player : Mover
                 dashStart = currentPosition;
                 SetDashLocationGoal(playerDirection);
                 Dash(dashEnd);
-                GameManager.instance.player.animator.SetBool("isDashing", false);
+            }
+        }
+
+        //This stops the animation from overriding itself
+        if (isAttackPressed)
+        {
+            isAttackPressed = false;
+            if (!isAttacking)
+            {
+                isAttacking = true;
+
+
             }
         }
     }
@@ -139,7 +158,7 @@ public class Player : Mover
     public void Dash(Vector3 dashEnding)
     {
         if (isDashing)
-            playerAnimator.GetAnimation();
+            //Needs to call the PlayerAnimationController
         {
             endDashTime = Time.time + stats.dashTime; //add current time to 0f to start the dash sequence
             //Debug.LogWarning($"Dashing is happening: Time:{Time.time}, endDashTime: {endDashTime}");
@@ -160,6 +179,7 @@ public class Player : Mover
             Debug.Log("wtf happened to my projectiles");
             weapon = weap;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
+        transform.GetChild(0).name=weap.name;
         transform.GetChild(0).GetComponent<Weapon>().projectilePrefab = proj;
         transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
@@ -181,6 +201,7 @@ public class Player : Mover
         else
         weapon = weap;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weapon.holdPosition;
+        transform.GetChild(0).name = weap.name;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
         transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
