@@ -30,8 +30,10 @@ public class Player : Mover
     public float currentDashTime = 0f;
     public float endDashTime = 0f;
 
+
     public bool isAttacking;
     public bool isAttackPressed = false;
+
     public bool isMoving = false;
     public bool isDashing = false;
     public Vector3 dashStart, dashEnd;
@@ -105,6 +107,7 @@ public class Player : Mover
                 dashStart = currentPosition;
                 SetDashLocationGoal(playerDirection);
                 Dash(dashEnd);
+                GameManager.instance.player.animator.SetBool("isDashing", false);
             }
         }
 
@@ -158,7 +161,9 @@ public class Player : Mover
     public void Dash(Vector3 dashEnding)
     {
         if (isDashing)
+
             //Needs to call the PlayerAnimationController
+            playerAnimator.GetAnimation();
         {
             endDashTime = Time.time + stats.dashTime; //add current time to 0f to start the dash sequence
             //Debug.LogWarning($"Dashing is happening: Time:{Time.time}, endDashTime: {endDashTime}");
