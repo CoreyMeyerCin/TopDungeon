@@ -152,7 +152,7 @@ public class EnemySkeletonController : EnemyController
             //Debug.LogWarning($"{this.name} has collided with a {coll.tag}");
             Damage dmg = new Damage()
             {
-                damageAmount = enemy.stats.combinedDamage,
+                damageAmount = enemy.stats.effectiveDamage,
                 origin = transform.position,
                 knockback = knockback
             };

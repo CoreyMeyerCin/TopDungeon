@@ -58,7 +58,7 @@ public class Weapon : Collidable
 
 	public int CalculateDamage()
     {
-		var damage = baseDamage + Player.instance.stats.combinedDamage;
+		var damage = baseDamage + Player.instance.stats.effectiveDamage;
 
 		if(Random.Range(0,100) <= Player.instance.stats.critChance)
         {

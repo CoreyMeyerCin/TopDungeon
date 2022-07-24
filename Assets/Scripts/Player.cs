@@ -225,8 +225,8 @@ public class Player : Fighter
     public void OnLevelUp()
     {
         stats.level++;
-        stats.maxHitpoints = stats.IncreaseStatByFlatAmount(stats.maxHitpoints, 5f);
-        stats.baseDamage = stats.IncreaseStatByFlatAmount(stats.baseDamage, 4f);
+        stats.maxHitpoints = stats.IncreaseByFlatAmount(stats.maxHitpoints, 5f);
+        stats.baseDamage = stats.IncreaseByFlatAmount(stats.baseDamage, 4f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

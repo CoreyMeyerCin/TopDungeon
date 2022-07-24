@@ -11,7 +11,7 @@ public class EnemyHitbox : Collidable
             var enemy = coll.GetComponent<Enemy>();
             Damage dmg = new Damage()
             {
-                damageAmount = enemy.stats.combinedDamage,
+                damageAmount = enemy.stats.effectiveDamage,
                 origin = transform.position,
                 knockback = enemy.stats.knockback
             };

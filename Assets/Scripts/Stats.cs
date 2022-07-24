@@ -7,16 +7,18 @@ using UnityEngine;
 
 public class Stats :MonoBehaviour
 {
-    public float AdditionalDamage;
-    public float attackSpeed;
+    //TODO: consider having base stats and bonus stats for all values. Levels scale base values
+    //then calculated fields that combine base and bonus to get the effective stat value. Probably only necessary to add as they become useful.
     public float baseDamage;
+    public float additionalDamage;
+    public int effectiveDamage
+	{
+        get { return Mathf.RoundToInt(baseDamage + additionalDamage); }
+    }
+    public float attackSpeed;
     public float cooldown;
     public float critChance;
     public float critMultiplier;
-    public int combinedDamage
-	{
-        get { return Mathf.RoundToInt(baseDamage + AdditionalDamage); }
-    }
     public float dashTimeLength;
     public float dashCooldown;
 
@@ -33,11 +35,11 @@ public class Stats :MonoBehaviour
 
     //USAGE:
     //Player.instance.stats.maxHitpoints = Player.instance.stats.IncreaseStatByFlatAmount(Player.instance.stats.maxHitpoints, 100);
-    public int IncreaseStatByFlatAmount(int currentValue, int increaseAmount)
+    public int IncreaseByFlatAmount(int currentValue, int increaseAmount)
     {
         return currentValue + increaseAmount;
     }
-    public float IncreaseStatByFlatAmount(float currentValue, float increaseAmount)
+    public float IncreaseByFlatAmount(float currentValue, float increaseAmount)
     {
         return currentValue + increaseAmount;
     }
@@ -49,7 +51,7 @@ public class Stats :MonoBehaviour
     /// <param name="currentValue"></param>
     /// <param name="increasePercentage"></param>
     /// <returns></returns>
-    public int IncreaseStatByPercentage(int currentValue, int increasePercentage)
+    public int IncreaseByPercentageOfCurrent(int currentValue, int increasePercentage)
     {
         float convertedPercentIncrease = increasePercentage / 100;
         int flattenedIncrease = Mathf.RoundToInt(currentValue * convertedPercentIncrease);
@@ -58,7 +60,7 @@ public class Stats :MonoBehaviour
             flattenedIncrease = 1;
         }
 
-        return IncreaseStatByFlatAmount(currentValue, flattenedIncrease);
+        return IncreaseByFlatAmount(currentValue, flattenedIncrease);
     }
     /// <summary>
     /// Enter the increasePercentage as an integer : 50 -> 50% increase
@@ -67,16 +69,52 @@ public class Stats :MonoBehaviour
     /// <param name="currentValue"></param>
     /// <param name="increasePercentage"></param>
     /// <returns></returns>
-    public float IncreaseStatByPercentage(float currentValue, float increasePercentage)
+    public float IncreaseByPercentageOfCurrent(float currentValue, float increasePercentage)
     {
         float convertedPercentIncrease = increasePercentage / 100;
         float flattenedIncrease = currentValue * convertedPercentIncrease;
         if (flattenedIncrease == 0)
         {
-            flattenedIncrease = 0.1f;
+            flattenedIncrease = 1f;
         }
 
-        return IncreaseStatByFlatAmount(currentValue, flattenedIncrease);
+        return IncreaseByFlatAmount(currentValue, flattenedIncrease);
     }
 
+    /// <summary>
+    /// Enter the increasePercentage as an integer : 50 -> 50% increase
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="baseValue"></param>
+    /// <param name="increasePercentage"></param>
+    /// <returns></returns>
+    public int IncreaByPercentageOfBase(int baseValue, int increasePercentage)
+	{
+        float convertedPercentIncrease = increasePercentage / 100;
+        int flattenedIncrease = Mathf.RoundToInt(baseValue * convertedPercentIncrease);
+        if (flattenedIncrease < 1)
+        {
+            flattenedIncrease = 1;
+        }
+
+        return IncreaseByFlatAmount(baseValue, flattenedIncrease);
+    }
+    /// <summary>
+    /// Enter the increasePercentage as an integer : 50 -> 50% increase
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="baseValue"></param>
+    /// <param name="increasePercentage"></param>
+    /// <returns></returns>
+    public float IncreaseByPercentageOfBase(float baseValue, float increasePercentage)
+    {
+        float convertedPercentIncrease = increasePercentage / 100;
+        float flattenedIncrease = baseValue * convertedPercentIncrease;
+        if (flattenedIncrease == 0)
+        {
+            flattenedIncrease = 1f;
+        }
+
+        return IncreaseByFlatAmount(baseValue, flattenedIncrease);
+    }
 }
