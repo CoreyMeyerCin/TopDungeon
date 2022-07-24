@@ -13,17 +13,16 @@ public class PlayerAnimationController : MonoBehaviour
     public Rigidbody2D rb2D;
 
     public Dictionary<int, string> skinIds = new Dictionary<int, string>()
-
     {
         {1,"WindArcherElfFemale"},
         {2,"WindArcherElfMale"}
     };
     //Animation States
-    public const string PLAYER_IDLE = "Idle";
-    public const string PLAYER_WALK = "Walk";
-    public const string PLAYER_RUN = "Run";
-    public const string PLAYER_DASH = "Dash";
-    public const string PLAYER_ATTACK = "Attack";
+    public string PLAYER_IDLE = "Idle";
+    public string PLAYER_WALK = "Walk";
+    public string PLAYER_RUN = "Run";
+    public string PLAYER_DASH = "Dash";
+    public string PLAYER_ATTACK = "Attack";
     private void Start()
     {
         player = GameManager.instance.player;
@@ -35,7 +34,7 @@ public class PlayerAnimationController : MonoBehaviour
     {
                 //These next 3 lines only work if we have titled the animations starting with the INT skinId.
         string currentSkin = skinIds[player.skinId];
-        string weaponName = player.transform.GetChild(0).name;
+        string weaponName = player.weapon.weaponName;
         currentState = newState;
                 /*Example of what the next string should look like:
                 * WindArcherFemaleThrowingDaggerIdle
@@ -49,5 +48,14 @@ public class PlayerAnimationController : MonoBehaviour
         animator.Play(currentAnimation);
                 //reassigns the current state
         currentState = newState;
+        //Debug.Log(currentAnimation);
     }
+
+    public void FlipX()
+    {
+        Vector3 currentScale = gameObject.transform.localScale;
+        currentScale.x *= -1;
+        gameObject.transform.localScale = currentScale;
+    }
+    
 }

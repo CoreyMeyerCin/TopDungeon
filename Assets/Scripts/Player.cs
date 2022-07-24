@@ -66,6 +66,7 @@ public class Player : Fighter
     private void Update()
     {
         GetPlayerDirection();
+
         if (Input.GetKeyDown(KeyCode.RightControl))
         {
             isAttackPressed = true;
@@ -179,7 +180,7 @@ public class Player : Fighter
             Debug.Log("wtf happened to my projectiles");
             weapon = weap;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
-        transform.GetChild(0).name=weap.weaponName;
+        transform.GetChild(0).GetComponent<Weapon>().weaponName=weap.weaponName;
         transform.GetChild(0).GetComponent<Weapon>().projectilePrefab = proj;
         transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
@@ -201,7 +202,7 @@ public class Player : Fighter
         else
         weapon = weap;
         transform.GetChild(0).GetComponent<Weapon>().holdPosition = weapon.holdPosition;
-        transform.GetChild(0).name=weap.weaponName;
+        transform.GetChild(0).GetComponent<Weapon>().weaponName = weap.weaponName;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
         transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
         transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
@@ -239,41 +240,49 @@ public class Player : Fighter
     }
 
     //Movement
-    public void GetPlayerDirection()
+    public double GetPlayerDirection()
     {
         if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
         {
             playerDirection = 0.5;
+            return playerDirection;
         }
         else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
         {
             playerDirection = 1.5;
+            return playerDirection;
         }
         else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
         {
             playerDirection = 2.5;
+            return playerDirection;
         }
         else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
         {
             playerDirection = 3.5;
+            return playerDirection;
         }
         else if (Input.GetKey(KeyCode.D))
         {
             playerDirection = 0;
+            return playerDirection;
         }
         else if (Input.GetKey(KeyCode.S))
         {
             playerDirection = 1;
+            return playerDirection;
         }
         else if (Input.GetKey(KeyCode.A))
         {
             playerDirection = 2;
+            return playerDirection;
         }
         else if (Input.GetKey(KeyCode.W))
         {
             playerDirection = 3;
+            return playerDirection;
         }
-        
+        return playerDirection;
 
     }
    

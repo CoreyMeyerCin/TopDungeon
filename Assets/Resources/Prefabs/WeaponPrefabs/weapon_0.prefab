@@ -139,12 +139,15 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   sprite: {fileID: -1906535724, guid: bb5eb99d61655564588e794444964628, type: 3}
-  weaponBaseDamage: 2
-  weaponExtraDamage: 0
-  hasExtraDamage: 0
+  baseDamage: 0
+  additionalDamage: 0
   knockBack: 2
+  weaponName: WoodenSword
   projectilePrefab: {fileID: 0}
+  swingPrefab: {fileID: 0}
   holdPosition: {x: 0.059, y: -0.05, z: 0}
   currentHoldPosition: {x: 0, y: 0, z: 0}
   weaponType: 0
   damageType: 0
+  animAttackType: 0
+  animHoldType: 0
