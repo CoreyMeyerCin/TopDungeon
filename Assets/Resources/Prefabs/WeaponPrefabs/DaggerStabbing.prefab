@@ -142,6 +142,7 @@ MonoBehaviour:
   baseDamage: 2
   additionalDamage: 0
   knockBack: 1
+  weaponName: Dagger
   projectilePrefab: {fileID: 0}
   swingPrefab: {fileID: 0}
   holdPosition: {x: 0.059, y: -0.05, z: 0}
