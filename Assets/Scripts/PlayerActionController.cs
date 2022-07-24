@@ -15,12 +15,14 @@ public class PlayerActionController : MonoBehaviour
     public LayerMask dashLayerMask;
     private Vector3 moveDirection;
     private Vector3 dashDirection;
+    private Vector3 lastMoveDirection;
     private float dashSpeed;
     private float xAxis;
     private float yAxis;
     public Stats stats;
     public bool isDashButtonDown;
-    public float dashCooldownTimer;
+    public float dashCooldown;
+    public float dashTimeLength;
     public bool dashAvailable;
     public bool isAttackPressed;
     public State state;
@@ -34,6 +36,13 @@ public class PlayerActionController : MonoBehaviour
     }
     private void Update()
     {
+        //Cooldown checker
+        if(Time.time > dashCooldown)
+        {
+            Debug.Log("Dash is now avaiable again");
+            dashAvailable = true;
+        }
+
         stats = GameManager.instance.playerStats;
         switch (state)
         {
@@ -69,25 +78,34 @@ public class PlayerActionController : MonoBehaviour
                 }
 
              moveDirection = new Vector3(moveX, moveY).normalized;//normalized makes it so diagnals doesnt moves absuardly fast
+                if (moveX != 0 || moveY != 0)
+                {
+                    lastMoveDirection = moveDirection;
+                }
 
                 if (Input.GetKeyDown(KeyCode.Space) && dashAvailable)
                 {
                     
                     isDashButtonDown = true;
                     dashAvailable = false;
-                    dashDirection = moveDirection;
+
+                    if (moveX == 0 && moveY == 0) 
+                    {
+                        dashDirection = lastMoveDirection;
+                    }
+                    else {
+                        dashDirection = moveDirection;
+                    }
                     dashSpeed = 4f;
-                    dashCooldownTimer = Time.time + stats.dashCooldown;
+                    dashTimeLength = Time.time + stats.dashTimeLength;
+                    dashCooldown = Time.time + stats.dashCooldown;
                     state = State.Dashing;
-                    Debug.Log($"DashAvaiable, now dashing\nDashCooldownTimer:{dashCooldownTimer}Time:{Time.time}player.stats.dashCooldown:{stats.dashCooldown}");
                 }
                 break;
 
             case State.Dashing:
-                if (dashCooldownTimer<Time.time)
+                if (dashTimeLength<Time.time)//this is how long the dash lasts
                 {
-                    Debug.Log("Dash is now avaiable again");
-                    dashAvailable = true;
                     state = State.Normal;
                 }
                 break;//this means ignore the input when we are dashing

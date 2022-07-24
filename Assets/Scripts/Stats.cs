@@ -17,7 +17,9 @@ public class Stats :MonoBehaviour
 	{
         get { return Mathf.RoundToInt(baseDamage + AdditionalDamage); }
     }
+    public float dashTimeLength;
     public float dashCooldown;
+
     public int dropChanceModifier;
     public int goldValue;
     public float hitpoints;
