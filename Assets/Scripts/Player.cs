@@ -33,8 +33,6 @@ public class Player : Fighter
     public float endDashTime = 0f;
     public bool isAttacking;
     public bool isAttackPressed = false;
-    public bool isAttacking;
-    public bool isAttackPressed = false;
     public bool isMoving = false;
     public bool isDashing = false;
     public Vector3 dashStart, dashEnd;
