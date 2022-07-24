@@ -24,8 +24,6 @@ public class PlayerActionController : MonoBehaviour
     public bool dashAvailable;
     public bool isAttackPressed;
     public State state;
-
-   
     private void Start()
     {
         player = GameManager.instance.player;
@@ -37,7 +35,6 @@ public class PlayerActionController : MonoBehaviour
     private void Update()
     {
         stats = GameManager.instance.playerStats;
-
         switch (state)
         {
             case State.Normal:
@@ -127,6 +124,4 @@ public class PlayerActionController : MonoBehaviour
                 break;
         }
     }
-
-    
 }

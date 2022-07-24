@@ -11,26 +11,24 @@ public class PlayerAnimationController : MonoBehaviour
     public Animator animator;
     private string currentState;
     public Rigidbody2D rb2D;
+
     public Dictionary<int, string> skinIds = new Dictionary<int, string>()
 
     {
         {1,"WindArcherElfFemale"},
         {2,"WindArcherElfMale"}
     };
-
     //Animation States
     public const string PLAYER_IDLE = "Idle";
     public const string PLAYER_WALK = "Walk";
     public const string PLAYER_RUN = "Run";
     public const string PLAYER_DASH = "Dash";
     public const string PLAYER_ATTACK = "Attack";
-
     private void Start()
     {
         player = GameManager.instance.player;
         animator = player.GetComponent<Animator>();
         rb2D = player.GetComponent<Rigidbody2D>();
-
     }
 
     public void ChangeAnimationState(string newState)
@@ -49,12 +47,7 @@ public class PlayerAnimationController : MonoBehaviour
 
                 //plays the animation we need
         animator.Play(currentAnimation);
-
                 //reassigns the current state
         currentState = newState;
     }
-
-
-  
-
 }

@@ -31,7 +31,8 @@ public class Player : Fighter
     //public float dashTime = 1f; //how long it takes to complete the full dash
     public float currentDashTime = 0f;
     public float endDashTime = 0f;
-
+    public bool isAttacking;
+    public bool isAttackPressed = false;
     public bool isAttacking;
     public bool isAttackPressed = false;
     public bool isMoving = false;
@@ -86,6 +87,7 @@ public class Player : Fighter
         //Reset MoveDelta
         //UpdateMotor(new Vector3(x, y, 0));
         currentPosition = transform.position;
+        
 
 
 
@@ -93,6 +95,7 @@ public class Player : Fighter
 
 
         //firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
+
         //if (Input.GetKey(KeyCode.LeftAlt))
         //{
         //    //Debug.LogWarning($"UpdateCheck: Time:{Time.time}, endDashTime: {endDashTime}");
@@ -117,6 +120,7 @@ public class Player : Fighter
 
         //    }
         //}
+
     }
 
     public void ChangeSkinId(int skinChange)
@@ -153,6 +157,7 @@ public class Player : Fighter
                 return;
         }
     }
+
     //public void Dash(Vector3 dashEnding)
     //{
     //    if (isDashing)
@@ -171,7 +176,6 @@ public class Player : Fighter
     //    }
 
     //}
-
     public void ChangeCurrentProjectile(Projectile proj, Weapon weap)
     {
             Debug.Log("wtf happened to my projectiles");
