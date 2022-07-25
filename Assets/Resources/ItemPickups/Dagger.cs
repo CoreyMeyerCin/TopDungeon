@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Dagger : MonoBehaviour, ICollectible
 {
+	public static event Action OnDaggerCollected;
 	public Weapon weapon;
 	public void OnCollect()
 	{

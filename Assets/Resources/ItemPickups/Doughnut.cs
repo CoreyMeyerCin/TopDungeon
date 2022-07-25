@@ -12,6 +12,6 @@ public class Doughnut : MonoBehaviour, ICollectible
 	{
 		Player.instance.stats.attackSpeed = Player.instance.stats.IncreaseByPercentageOfCurrent(Player.instance.stats.attackSpeed, attackSpeedIncreasePercent);
 		Destroy(gameObject);
-		OnDoughtnutCollected?.Invoke();
+		//OnDoughtnutCollected?.Invoke();
 	}
 }
