@@ -7,11 +7,12 @@ public class Doughnut : MonoBehaviour, ICollectible
 {
 	private readonly int attackSpeedIncreasePercent = 5;
 
-	public static event Action OnDoughtnutCollected;
+	public static event Action OnDoughnutCollected;
 	public void OnCollect()
 	{
 		Player.instance.stats.attackSpeed = Player.instance.stats.IncreaseByPercentageOfCurrent(Player.instance.stats.attackSpeed, attackSpeedIncreasePercent);
+		Debug.Log($"Attack speed increased to {Player.instance.stats.attackSpeed}");
 		Destroy(gameObject);
-		//OnDoughtnutCollected?.Invoke();
+		//OnDoughnutCollected?.Invoke();
 	}
 }

@@ -4,13 +4,13 @@ using UnityEngine.UI;
 public class Player : Fighter
 {
     public static Player instance;
-    public Vector3 currentPosition;
-    private SpriteRenderer spriteRenderer;
-    public Animator animator;
-    public PlayerAnimationController animationController;
-    public int skinId = 1;
-    public PlayerActionController actionController;
 
+    public Vector3 currentPosition;
+    public Animator animator;
+    private SpriteRenderer spriteRenderer;
+    public PlayerAnimationController animationController;
+    public PlayerActionController actionController;
+    public int skinId = 1;
 
     public double playerDirection;
     public Text collectedText;
@@ -24,7 +24,6 @@ public class Player : Fighter
     //public Projectile projectilePrefab;
     public Weapon weapon;
     public Transform firePoint;
-    public Stats playerStats;
 
     private float lastFire;
 
@@ -37,18 +36,24 @@ public class Player : Fighter
     public bool isDashing = false;
     public Vector3 dashStart, dashEnd;
 
+	public new void Awake()
+	{
+        animationController = GetComponent<PlayerAnimationController>();
+        actionController = GetComponent<PlayerActionController>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        base.Awake();
+    }
 
-    public void Start()
+	public void Start()
     {
         if (instance == null)
         {
             instance = this;
         }
-        spriteRenderer = GetComponent<SpriteRenderer>();
+
         currentPosition = transform.position;
         firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
-        playerStats = GetComponent<Stats>();
-
+        //playerStats = GetComponent<Stats>();
         PlayerAnimator.SetWeaponAnimationTree();
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).GetComponent<Projectile>();
     }
@@ -88,12 +93,6 @@ public class Player : Fighter
         //Reset MoveDelta
         //UpdateMotor(new Vector3(x, y, 0));
         currentPosition = transform.position;
-        
-
-
-
-
-
 
         //firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
 
@@ -237,56 +236,60 @@ public class Player : Fighter
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //UnityEngine.Debug.Log($"Player has collided");
+        //Debug.Log($"Player has collided");
         //if (collision.tag.Equals("Portal"))
         //{
-        //    UnityEngine.Debug.Log($"{collision}");
+        //    Debug.Log($"{collision}");
         //}
     }
 
-    //Movement
     public double GetPlayerDirection()
     {
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+        if (Input.anyKey)
         {
-            playerDirection = 0.5;
-            return playerDirection;
+
+            if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+            {
+                playerDirection = 0.5;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+            {
+                playerDirection = 1.5;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
+            {
+                playerDirection = 2.5;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+            {
+                playerDirection = 3.5;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                playerDirection = 0;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                playerDirection = 1;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                playerDirection = 2;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.W))
+            {
+                playerDirection = 3;
+                return playerDirection;
+            }
         }
-        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
-        {
-            playerDirection = 1.5;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
-        {
-            playerDirection = 2.5;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
-        {
-            playerDirection = 3.5;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            playerDirection = 0;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            playerDirection = 1;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            playerDirection = 2;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.W))
-        {
-            playerDirection = 3;
-            return playerDirection;
-        }
+
         return playerDirection;
 
     }

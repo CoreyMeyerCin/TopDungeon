@@ -6,7 +6,6 @@ using System;
 
 public class PlayerAnimationController : MonoBehaviour
 {
-    public Player player;
     public Animator animator;
     private string currentAnimationState;
     public Rigidbody2D rb2D;
@@ -25,16 +24,15 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void Start()
     {
-        player = GameManager.instance.player;
-        animator = player.GetComponent<Animator>();
-        rb2D = player.GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        rb2D = GetComponent<Rigidbody2D>();
     }
 
     public void ChangeAnimationState(string newAnimationState)
     {
         //These next 3 lines only work if we have titled the animations starting with the INT skinId.
-        string currentSkin = skinIds[player.skinId];
-        string weaponName = player.weapon.weaponName;
+        string currentSkin = skinIds[Player.instance.skinId];
+        string weaponName = Player.instance.weapon.weaponName;
         currentAnimationState = newAnimationState;
         /*Example of what the next string should look like:
         * WindArcherFemaleThrowingDaggerIdle

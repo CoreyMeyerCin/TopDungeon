@@ -5,33 +5,33 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Stats :MonoBehaviour
+public class Stats
 {
     //TODO: consider having base stats and bonus stats for all values. Levels scale base values
     //then calculated fields that combine base and bonus to get the effective stat value. Probably only necessary to add as they become useful.
-    public float baseDamage;
-    public float additionalDamage;
+    public float baseDamage = 5;
+    public float additionalDamage = 0;
     public int effectiveDamage
 	{
         get { return Mathf.RoundToInt(baseDamage + additionalDamage); }
     }
-    public float attackSpeed;
-    public float cooldown;
-    public float critChance;
-    public float critMultiplier;
-    public float dashTimeLength;
-    public float dashCooldown;
+    public float attackSpeed = 1;
+    public float cooldown = 1;
+    public float critChance = 1;
+    public float critMultiplier = 2;
+    public float dashTimeLength = 0.2f;
+    public float dashCooldown = 1;
 
-    public int dropChanceModifier;
-    public int goldValue;
-    public float hitpoints;
-    public float knockback;
-    public int level;
-    public float lifesteal;
-    public float maxHitpoints;
-    public float knockbackRecoverySpeed; //how long it takes to recover after being knocked back
-    public float speed;
-    public int xpValue;
+    public int dropChanceModifier = 0;
+    public int goldValue = 10;
+    public float hitpoints = 10;
+    public float knockback = 1;
+    public int level = 1;
+    public float lifesteal = 0;
+    public float maxHitpoints = 10;
+    public float knockbackRecoverySpeed = 1; //how long it takes to recover after being knocked back
+    public float speed = 1;
+    public int xpValue = 3;
 
     //USAGE:
     //Player.instance.stats.maxHitpoints = Player.instance.stats.IncreaseStatByFlatAmount(Player.instance.stats.maxHitpoints, 100);

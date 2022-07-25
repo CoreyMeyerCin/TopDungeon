@@ -11,7 +11,7 @@ public class Fighter : MonoBehaviour
 
     public Stats stats;
 
-	private void Awake()
+	public void Awake()
 	{
         stats = new Stats();
     }

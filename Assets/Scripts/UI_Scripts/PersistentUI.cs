@@ -31,16 +31,14 @@ public class PersistentUI : MonoBehaviour
     void Update()
     {
         //if (showGui) { canvas.enabled = true; } else { canvas.enabled = false; }
-        
-
-        hitPoints = GameManager.instance.player.stats.hitpoints;
-        maxHitPoints = GameManager.instance.player.stats.maxHitpoints;
+        hitPoints = Player.instance.stats.hitpoints;
+        maxHitPoints = Player.instance.stats.maxHitpoints;
         //currentExp = (float)GameManager.instance.experienceManager.GetExperience();
         //maxExp = (float)GameManager.instance.experienceManager.GetExperienceToNextLevel();
         healthText.text = $"HP:{hitPoints}/{maxHitPoints}";
         expText.text = $"EXP:{GameManager.instance.experienceManager.GetExperience()}/{GameManager.instance.experienceManager.GetExperienceToNextLevel()}";
-        //goldText.text = $"Gold:{GameManager.instance.player.gold}";
-        levelText.text = $"Level: {GameManager.instance.player.stats.level}";
+        //goldText.text = $"Gold:{Player.instance.gold}";
+        levelText.text = $"Level: {Player.instance.stats.level}";
 
         //if (Input.GetKeyDown(KeyCode.Tab) && !showGui)
         //{

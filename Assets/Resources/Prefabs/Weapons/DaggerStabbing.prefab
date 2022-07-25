@@ -150,4 +150,4 @@ MonoBehaviour:
   weaponType: 0
   damageType: 2
   animAttackType: 0
-  animHoldType: 0
+  animHoldType: 1

@@ -18,25 +18,25 @@ public class EnemySkeletonController : EnemyController
         currentPosition = transform.position;
         if (IsPlayerInRange(sightRange))
         {
-            UnityEngine.Debug.Log(" Hit A");
+            //Debug.Log(" Hit A");
             state = EnemyState.Follow;
             Follow();
         }
         else if (IsAwayFromHome(sightRange))
         {
-            UnityEngine.Debug.Log(" Hit B");
+            //Debug.Log(" Hit B");
             state = EnemyState.Idle;
             Idle();
         }
         else if (!IsAwayFromHome(sightRange) && currentPosition == homePosition)
         {
-            UnityEngine.Debug.Log(" Hit C");
+            //Debug.Log(" Hit C");
             state = EnemyState.Wander;
             Wander();
         }
         else if (!IsAwayFromHome(sightRange))
         {
-            UnityEngine.Debug.Log(" Hit D");
+            //Debug.Log(" Hit D");
             Wander();
         }
      
@@ -46,7 +46,7 @@ public class EnemySkeletonController : EnemyController
     {
         transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, enemy.stats.speed * Time.deltaTime);
         CheckIfWanderComplete(currentPosition, wanderGoal);
-        //UnityEngine.Debug.Log("Hit 1");
+        //Debug.Log("Hit 1");
         if (!chooseNewDirection)
         {
             StartCoroutine(ChooseDirection());
@@ -54,7 +54,7 @@ public class EnemySkeletonController : EnemyController
         }
         else if (chooseNewDirection)
         {
-            //UnityEngine.Debug.Log("Hit 3");
+            //Debug.Log("Hit 3");
             //transform.position += -transform.right * speed * Time.deltaTime;
             return;
         }
@@ -125,16 +125,16 @@ public class EnemySkeletonController : EnemyController
         //Debug.Log($"Enemy has collided with {coll.tag}");
         if (coll.tag.Equals("Wall"))
         {
-            Debug.Log(" Skeeleton OnCollide Wall true");
+            //Debug.Log(" Skeeleton OnCollide Wall true");
             if (state == EnemyState.Idle)
             {
-                Debug.LogWarning("Hit1");
+                //Debug.LogWarning("Hit1");
                 transform.position = Vector2.MoveTowards(currentPosition,
                             new Vector3(Random.Range(transform.position.x - 0.3f, transform.position.x + 0.3f),Random.Range(transform.position.y - 0.3f, transform.position.y + 0.3f) //y value
                                , 0), enemy.stats.speed * Time.deltaTime);
 
                 StartCoroutine(ChooseDirectionIdle());
-                Debug.LogWarning("Hit2");
+                //Debug.LogWarning("Hit2");
                 Idle();
             }
             else if (state == EnemyState.Wander)

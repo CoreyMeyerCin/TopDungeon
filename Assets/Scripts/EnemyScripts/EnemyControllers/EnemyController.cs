@@ -51,7 +51,7 @@ public class EnemyController : MonoBehaviour
     {
         lootManager = FindObjectOfType<LootManager>();
         player = GameObject.FindGameObjectWithTag("Player"); //this is why we use GameObject... Using the Tag is strong here
-        Debug.Log($"Found Player: {player.name}");
+        //Debug.Log($"Found Player: {player.name}");
         currentPosition = transform.position;
         boxCollider = gameObject.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = false;
@@ -82,48 +82,48 @@ public class EnemyController : MonoBehaviour
         currentPosition = transform.position;
         if (IsPlayerInRange(sightRange))
         {
-            //UnityEngine.Debug.Log(" Hit A");
+            //Debug.Log(" Hit A");
             state = EnemyState.Follow;
             Follow();
         }
         else if (IsAwayFromHome(sightRange))
         {
-            UnityEngine.Debug.Log(" Hit B general");
+            Debug.Log(" Hit B general");
             state = EnemyState.Idle;
             Idle();
         }
         else if (!IsAwayFromHome(sightRange) && currentPosition == homePosition)
         {
-            //UnityEngine.Debug.Log(" Hit C");
+            //Debug.Log(" Hit C");
             state = EnemyState.Wander;
             Wander();
         }
         else if (!IsAwayFromHome(sightRange))
         {
-            //UnityEngine.Debug.Log(" Hit D");
+            //Debug.Log(" Hit D");
             Wander();
         }
         //switch(currState)
         //{
         //    case (EnemyState.Idle):
-        //           // UnityEngine.Debug.Log("Idle");
+        //           // Debug.Log("Idle");
         //        Idle();   // Right now enemies just kind of aimlessly wander. If we want them to stand still we can make this
         //        break;
 
         //    case (EnemyState.Wander):
-        //            //UnityEngine.Debug.Log("Wander");
+        //            //Debug.Log("Wander");
         //            Wander();
         //        break;
 
         //    case (EnemyState.Follow):
-        //            //UnityEngine.Debug.Log("Follow");
+        //            //Debug.Log("Follow");
         //            Follow();
         //        break;
 
         //    //case (EnemyState.Die)://we already have this in the Enemy.cs but might want to transfer it to here
         //    //    break;
         //    case (EnemyState.Attack)://currently this doesnt do anything, once we have ranged enemies it will though
-        //            //UnityEngine.Debug.Log("Attack");
+        //            //Debug.Log("Attack");
         //            Attack();
         //        break;
         //}
@@ -147,7 +147,7 @@ public class EnemyController : MonoBehaviour
                                 , Random.Range(homePosition.y - sightRange, homePosition.y + sightRange) //y value
                                 , 0);
         //wanderGoal = Random.insideUnitCircle * range;
-        //UnityEngine.Debug.Log($"Current Position: {currentPosition}\nwanderGoal:{wanderGoal}");
+        //Debug.Log($"Current Position: {currentPosition}\nwanderGoal:{wanderGoal}");
         yield return new WaitForSeconds(Random.Range(1f, 4f));
 
         //Vector3 smoothLookAt = Vector3.Slerp(wanderOldGoal, wanderGoal, speed *Time.deltaTime);
@@ -180,7 +180,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Idle()
     {
-        Debug.Log("Hit idle");
+        //Debug.Log("Hit idle");
         transform.position = Vector2.MoveTowards(currentPosition, homePosition, enemy.stats.speed * Time.deltaTime);
         wanderGoal = homePosition;
     }
@@ -189,16 +189,16 @@ public class EnemyController : MonoBehaviour
     {
         transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, enemy.stats.speed * Time.deltaTime);
         CheckIfWanderComplete(currentPosition, wanderGoal);
-        //UnityEngine.Debug.Log("Hit 1");
+        //Debug.Log("Hit 1");
         if (!chooseNewDirection)
         {
-            Debug.Log("Hit 2");
+            //Debug.Log("Hit 2");
             StartCoroutine(ChooseDirection());
             return;
         }
         else if (chooseNewDirection)
         {
-            //UnityEngine.Debug.Log("Hit 3");
+            //Debug.Log("Hit 3");
             //transform.position += -transform.right * speed * Time.deltaTime;
             return;
         }
