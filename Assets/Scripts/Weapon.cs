@@ -10,7 +10,6 @@ public class Weapon : Collidable
 	public float additionalDamage;
 	public float knockBack;
 	public string weaponName;
-	private Animator anim;
 	private float lastSwingTime;
 	private bool attackAvailable;
 	public Projectile projectilePrefab;
@@ -31,7 +30,6 @@ public class Weapon : Collidable
 	{
 		base.Start();
 		//spriteRenderer = GetComponent<SpriteRenderer>(); // this will update our weapon look when we load 'this' in
-		anim = GetComponent<Animator>();
 		transform.localPosition = holdPosition;
 	}
 
@@ -67,7 +65,7 @@ public class Weapon : Collidable
 
 		damage += additionalDamage;
 
-		return (int)damage;
+		return Mathf.RoundToInt(damage);
     }
 	
 	private void Attack()
@@ -128,12 +126,13 @@ public class Weapon : Collidable
 	}
 }
 
-public enum WeaponAnimTypeAttack
+	public enum WeaponAnimTypeAttack
     {
 		SwingSword,
 		DaggerThrown,
 		ShootBow
     }
+
 	public enum WeaponAnimTypeHold
     {
 		IsSword,

@@ -47,22 +47,19 @@ public class PlayerActionController : MonoBehaviour
         playerDirection = GameManager.instance.player.GetPlayerDirection() ;
         isFacingRight = true;
     }
-    private void Update()
+    private void Update() //TODO: change parts here to only update when they change, like with stats
     {
         float moveX = 0f;
         float moveY = 0f;
         stats = GameManager.instance.playerStats;
         playerDirection = GameManager.instance.player.GetPlayerDirection();
         //Cooldown checker//
-        if (Time.time > dashCooldown && state==State.Dashing) { dashAvailable = true; }
-        if(Time.time > attackCooldown && state ==State.Attacking) {attackAvailable = true; state = State.Normal;}
-        /////////////////////
+        if (Time.time > dashCooldown && state == State.Dashing) { dashAvailable = true; }
+        if (Time.time > attackCooldown && state == State.Attacking) {attackAvailable = true; state = State.Normal;}
 
-        stats = GameManager.instance.playerStats;
         switch (state)
         {
             case State.Normal:
-
                 if (Input.GetKey(KeyCode.W))
                 {
                     moveY = 1f;
@@ -86,16 +83,14 @@ public class PlayerActionController : MonoBehaviour
                     moveX = 1f;
                 }
 
-             moveDirection = new Vector3(moveX, moveY).normalized;//normalized makes it so diagnals doesnt moves absuardly fast
+                moveDirection = new Vector3(moveX, moveY).normalized;//normalized makes it so diagnals doesnt moves absuardly fast
                 
                 if (moveX != 0 || moveY != 0)
                 {
                     lastMoveDirection = moveDirection;
                     animationController.ChangeAnimationState(animationController.PLAYER_WALK);
-
-
                 }
-                if(moveX == 0 && moveY == 0)
+                if (moveX == 0 && moveY == 0)
                 {
                     animationController.ChangeAnimationState(animationController.PLAYER_IDLE);
                 }
@@ -124,8 +119,7 @@ public class PlayerActionController : MonoBehaviour
                 break;
 
             case State.Dashing:
-                
-                    animationController.ChangeAnimationState(animationController.PLAYER_DASH);
+                animationController.ChangeAnimationState(animationController.PLAYER_DASH);
                 if (dashTimeLength < Time.time)//this is how long the dash lasts
                 {
                     Debug.Log("Dashing Ended");

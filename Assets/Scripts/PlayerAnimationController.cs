@@ -6,23 +6,23 @@ using System;
 
 public class PlayerAnimationController : MonoBehaviour
 {
-
     public Player player;
     public Animator animator;
-    private string currentState;
+    private string currentAnimationState;
     public Rigidbody2D rb2D;
+
+    public readonly string PLAYER_IDLE = "Idle";
+    public readonly string PLAYER_WALK = "Walk";
+    public readonly string PLAYER_RUN = "Run";
+    public readonly string PLAYER_DASH = "Dash";
+    public readonly string PLAYER_ATTACK = "Attack";
 
     public Dictionary<int, string> skinIds = new Dictionary<int, string>()
     {
         {1,"WindArcherElfFemale"},
         {2,"WindArcherElfMale"}
     };
-    //Animation States
-    public string PLAYER_IDLE = "Idle";
-    public string PLAYER_WALK = "Walk";
-    public string PLAYER_RUN = "Run";
-    public string PLAYER_DASH = "Dash";
-    public string PLAYER_ATTACK = "Attack";
+
     private void Start()
     {
         player = GameManager.instance.player;
@@ -30,26 +30,28 @@ public class PlayerAnimationController : MonoBehaviour
         rb2D = player.GetComponent<Rigidbody2D>();
     }
 
-    public void ChangeAnimationState(string newState)
+    public void ChangeAnimationState(string newAnimationState)
     {
-                //These next 3 lines only work if we have titled the animations starting with the INT skinId.
+        //These next 3 lines only work if we have titled the animations starting with the INT skinId.
         string currentSkin = skinIds[player.skinId];
         string weaponName = player.weapon.weaponName;
-        currentState = newState;
-                /*Example of what the next string should look like:
-                * WindArcherFemaleThrowingDaggerIdle
-                */
-        string currentAnimation = currentSkin + weaponName + newState;
+        currentAnimationState = newAnimationState;
+        /*Example of what the next string should look like:
+        * WindArcherFemaleThrowingDaggerIdle
+        */
+        string currentAnimation = currentSkin + weaponName + newAnimationState;
 
-                //This stops the animation form interrupting itself
-        if (currentState == currentAnimation) return;
+        if (currentAnimationState == currentAnimation) return; //stops the animation form interrupting itself
 
-                //plays the animation we need
         animator.Play(currentAnimation);
-                //reassigns the current state
-        currentState = newState;
+        currentAnimationState = newAnimationState;
         //Debug.Log(currentAnimation);
     }
+
+    public void RefreshSprite()
+	{
+        ChangeAnimationState(currentAnimationState);
+	}
 
     public void FlipX()
     {
