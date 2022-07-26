@@ -7,7 +7,15 @@ public class EnemyController : MonoBehaviour
 {
     GameObject player; // this will point at the player.instance... we should use GameObject for now on instead of public Player player because GameObject has more tools for us to use.
     public EnemyState state = EnemyState.Idle;
-    public EnemyType type; //Melee or ranged for now may add burrow and flying
+    public EnemyType type;
+
+    public GameObject bulletPrefab; // put the instance of the bullet here, this allows us to use magic and projectiles the same way. We just have to build the prefabs to do what we want.
+    public BoxCollider2D boxCollider;
+    public Collider2D[] hits = new Collider2D[10];
+    protected CharacterController characterController;
+    public LootManager lootManager;
+    public Enemy enemy; //TODO: refactor this so it just directly accesses the Enemy.cs sibling script on the GameObject this script is on
+    public ContactFilter2D filter;
 
     //many of these fields need to be migrated to Enemy.cs
     public int knockback;
@@ -20,10 +28,6 @@ public class EnemyController : MonoBehaviour
     protected bool isDead = false; //TODO: is this necessary?
     protected bool attackOnCooldown = false;
     protected bool playerNotInRoom;
-    public GameObject bulletPrefab; // put the instance of the bullet here, this allows us to use magic and projectiles the same way. We just have to build the prefabs to do what we want.
-    public BoxCollider2D boxCollider;
-    public Collider2D[] hits = new Collider2D[10];
-    public ContactFilter2D filter;
     public float wanderCooldown = 1f;
     public float wanderStart;
     public float wanderRange;
@@ -33,9 +37,6 @@ public class EnemyController : MonoBehaviour
     public Vector3 homePosition;
     public float distanceFromHome;
     public bool collidingWithPlayer;
-    protected CharacterController characterController;
-    public Enemy enemy; //TODO: refactor this so it just directly accesses the Enemy.cs sibling script on the GameObject this script is on
-    public LootManager lootManager;
 
     //TODO: move into item controller and loot into proper drop-tables
  
@@ -55,7 +56,6 @@ public class EnemyController : MonoBehaviour
         currentPosition = transform.position;
         boxCollider = gameObject.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = false;
-
     }
 
 
@@ -242,23 +242,25 @@ public class EnemyController : MonoBehaviour
             if(state == EnemyState.Wander)
             {
                 StartCoroutine(ChooseDirection());
-            }
-           
-        }
-        if (coll.CompareTag("Player"))
-        {
-            //Debug.LogWarning($"{this.name} has collided with a {coll.tag}");
-            Damage dmg = new Damage()
-            {
-                damageAmount = enemy.stats.effectiveDamage,
-                origin = transform.position,
-                knockback = knockback
-            };
-            coll.SendMessage("ReceiveDamage", dmg);
-        }
-    }
+			}
 
-    public void Death() //TODO: refactor this so it only triggers an OnEnemyKill event and the logic is handled through those events
+		}
+		
+        if (coll.CompareTag("Player") && !coll.gameObject.GetComponent<Fighter>().isImmune)
+		{
+			Damage dmg = new Damage()
+			{
+				damageAmount = enemy.stats.effectiveDamage,
+				origin = transform.position,
+				knockback = knockback
+			};
+			Debug.Log($"EnemyController OnCollide sending damage to {coll.tag}");
+			coll.SendMessage("ReceiveDamage", dmg);
+		}
+
+	}
+
+	public void Death() //TODO: refactor this so it only triggers an OnEnemyKill event and the logic is handled through those events
     {
         Debug.LogWarning($"Death Happened for {gameObject}");
         GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
@@ -277,13 +279,14 @@ public class EnemyController : MonoBehaviour
         //Debug.LogWarning($"Rolling for item drop chance...");
         return Random.Range(1, Item.DROP_CHANCE_CEILING) >= Item.ITEM_DROP_THRESHOLD;
     }
+
     public int OnDeathCalculateExperienceEarned()
     {
         var totalExperience = Mathf.RoundToInt((enemy.stats.xpValue * enemy.stats.level) / (1 + enemy.stats.level));
         return totalExperience;
     }
 
-    public enum EnemyState //these should probably be inside of Enemy
+    public enum EnemyState 
     {
         Idle,
         Wander,
@@ -292,12 +295,13 @@ public class EnemyController : MonoBehaviour
         Attack
     }
 
-    public enum EnemyType
+    public enum EnemyType //TODO: this should probably be inside of Enemy
     {
         Melee,
         Ranged,
         Caster
     }
+
 }
 
 

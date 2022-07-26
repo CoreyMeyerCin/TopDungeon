@@ -291,8 +291,13 @@ public class Player : Fighter
         }
 
         return playerDirection;
-
     }
+
+    public void Death()
+	{
+        Debug.Log("Player has died");
+	}
+
    
     //************************************************
     //ACCESSOR METHODS

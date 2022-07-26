@@ -87,7 +87,7 @@ public class Weapon : Collidable
 
 	protected override void OnCollide(Collider2D coll)
 	{
-		if (coll.CompareTag("Enemy"))
+		if (coll.CompareTag("Enemy") && !coll.GetComponent<Fighter>().isImmune)
 		{
 			Damage dmg = new Damage()
 			{
@@ -95,6 +95,7 @@ public class Weapon : Collidable
 				origin = transform.position,
 				knockback = knockBack
 			};
+			Debug.Log("Weapon OnCollide sending damage");
 			coll.SendMessage("ReceiveDamage", dmg); // send the damage over to the enemy with ReceiveDamage()
 		}
 
