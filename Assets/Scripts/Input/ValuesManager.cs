@@ -38,7 +38,6 @@ namespace WaveFunctionCollapse
             }
             return new Vector2(_grid[0].Length, _grid.Length);
         }
-
         private void SetIndexToGridPosition(IValue<T>[][] gridOfValues, int row, int col)
         {
             if (valueIndexDictionary.ContainsValue(gridOfValues[row][col]))
