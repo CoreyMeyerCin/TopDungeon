@@ -53,5 +53,4 @@ public class InputReader: IInputReader<TileBase>
             return gridOfInputTiles;
         }
     }
-
 }
