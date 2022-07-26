@@ -11,4 +11,5 @@ public static class Actions
 {
 	public static Action<int> OnExperienceChanged;
 	public static Action OnLevelUp;
+	public static Action<Weapon> OnWeaponChanged;
 }

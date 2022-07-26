@@ -4,16 +4,8 @@ using UnityEngine;
 
 public class PlayerActionController : MonoBehaviour
 {
-    public enum State
-    {
-        Normal,
-        Dashing,
-        Attacking
-    }
-
-    public Player player;
     public Rigidbody2D rb2D;
-    public PlayerAnimationController animationController;
+    public PlayerAnimationController playerAnimationController;
     public LayerMask dashLayerMask;
     public Vector3 moveDirection;
     public Vector3 dashDirection;
@@ -21,7 +13,6 @@ public class PlayerActionController : MonoBehaviour
     public float dashSpeed;
     private float xAxis;
     private float yAxis;
-    public Stats stats;
     public bool isFacingRight;
     public bool isFacingLeft;
     public bool isDashButtonDown;
@@ -35,34 +26,34 @@ public class PlayerActionController : MonoBehaviour
     public bool isAttacking;
     public State state;
     public double playerDirection;
-    private void Start()
+
+	private void Awake()
+	{
+
+    }
+
+	private void Start()
     {
-        player = GameManager.instance.player;
-        rb2D=GameManager.instance.player.GetComponent<Rigidbody2D>();
-        stats = GameManager.instance.playerStats;
-        animationController = GameManager.instance.player.animationController;
+        rb2D = GetComponent<Rigidbody2D>();
+        playerAnimationController = GetComponent<PlayerAnimationController>();
         dashAvailable = true;
         attackAvailable = true;
         state = State.Normal;
-        playerDirection = GameManager.instance.player.GetPlayerDirection() ;
         isFacingRight = true;
     }
-    private void Update()
+
+    private void Update() //TODO: change parts here to only update when they change, like with stats
     {
         float moveX = 0f;
         float moveY = 0f;
-        stats = GameManager.instance.playerStats;
-        playerDirection = GameManager.instance.player.GetPlayerDirection();
+        playerDirection = Player.instance.GetPlayerDirection();
         //Cooldown checker//
-        if (Time.time > dashCooldown && state==State.Dashing) { dashAvailable = true; }
-        if(Time.time > attackCooldown && state ==State.Attacking) {attackAvailable = true; state = State.Normal;}
-        /////////////////////
+        if (Time.time > dashCooldown && state == State.Dashing) { dashAvailable = true; }
+        if (Time.time > attackCooldown && state == State.Attacking) {attackAvailable = true; state = State.Normal;}
 
-        stats = GameManager.instance.playerStats;
         switch (state)
         {
             case State.Normal:
-
                 if (Input.GetKey(KeyCode.W))
                 {
                     moveY = 1f;
@@ -73,41 +64,39 @@ public class PlayerActionController : MonoBehaviour
                 }
                 if (Input.GetKey(KeyCode.A))
                 {
-                    if (isFacingRight) { animationController.FlipX();}
+                    if (isFacingRight) { Player.instance.animationController.FlipX(); }
                     isFacingLeft = true;
                     isFacingRight = false;
                     moveX = -1f;
                 }
                 if (Input.GetKey(KeyCode.D))
                 {
-                    if (isFacingLeft) { animationController.FlipX(); }
+                    if (isFacingLeft) { Player.instance.animationController.FlipX(); }
                     isFacingLeft = false;
                     isFacingRight = true;
                     moveX = 1f;
                 }
 
-             moveDirection = new Vector3(moveX, moveY).normalized;//normalized makes it so diagnals doesnt moves absuardly fast
+                moveDirection = new Vector3(moveX, moveY).normalized;//normalized makes it so diagnals doesnt moves absuardly fast
                 
                 if (moveX != 0 || moveY != 0)
                 {
                     lastMoveDirection = moveDirection;
-                    animationController.ChangeAnimationState(animationController.PLAYER_WALK);
-
-
+                    Player.instance.animationController.ChangeAnimationState(Player.instance.animationController.PLAYER_WALK);
                 }
-                if(moveX == 0 && moveY == 0)
+                if (moveX == 0 && moveY == 0)
                 {
-                    animationController.ChangeAnimationState(animationController.PLAYER_IDLE);
+                    Player.instance.animationController.ChangeAnimationState(Player.instance.animationController.PLAYER_IDLE);
                 }
                 if (Input.GetKeyDown(KeyCode.Mouse0) && attackAvailable)//Basic Attack
                 {
                     //Debug.Log("Start the attack animation");
                     isAttackPressed = true;
                     attackAvailable = false;
-                    attackTimeLength = Time.time + stats.attackSpeed;
-                    attackCooldown = Time.time + stats.attackSpeed;
+                    attackTimeLength = Time.time + Player.instance.stats.attackSpeed;
+                    attackCooldown = Time.time + Player.instance.stats.attackSpeed;
                     state = State.Attacking;
-                    animationController.ChangeAnimationState(animationController.PLAYER_ATTACK);
+                    Player.instance.animationController.ChangeAnimationState(Player.instance.animationController.PLAYER_ATTACK);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Space) && dashAvailable)
@@ -116,19 +105,18 @@ public class PlayerActionController : MonoBehaviour
                     dashAvailable = false;
                     dashDirection = lastMoveDirection; 
                     dashSpeed = 4f;
-                    dashTimeLength = Time.time + stats.dashTimeLength;
-                    dashCooldown = Time.time + stats.dashCooldown;
+                    dashTimeLength = Time.time + Player.instance.stats.dashTimeLength;
+                    dashCooldown = Time.time + Player.instance.stats.dashCooldown;
                     state = State.Dashing;
-                    Debug.Log("Dashing Started");
+                    //Debug.Log("Dashing Started");
                 }
                 break;
 
             case State.Dashing:
-                
-                    animationController.ChangeAnimationState(animationController.PLAYER_DASH);
+                Player.instance.animationController.ChangeAnimationState(Player.instance.animationController.PLAYER_DASH);
                 if (dashTimeLength < Time.time)//this is how long the dash lasts
                 {
-                    Debug.Log("Dashing Ended");
+                    //Debug.Log("Dashing Ended");
                     state = State.Normal;
                 }
                 break;//this means ignore the input when we are dashing
@@ -146,14 +134,14 @@ public class PlayerActionController : MonoBehaviour
                 }
                 if (Input.GetKey(KeyCode.A))
                 {
-                    if (isFacingRight) { animationController.FlipX(); }
+                    if (isFacingRight) { Player.instance.animationController.FlipX(); }
                     isFacingLeft = true;
                     isFacingRight = false;
                     moveX = -1f;
                 }
                 if (Input.GetKey(KeyCode.D))
                 {
-                    if (isFacingLeft) { animationController.FlipX(); }
+                    if (isFacingLeft) { Player.instance.animationController.FlipX(); }
                     isFacingLeft = false;
                     isFacingRight = true;
                     moveX = 1f;
@@ -190,8 +178,8 @@ public class PlayerActionController : MonoBehaviour
                         dashDirection = moveDirection;
                     }
                     dashSpeed = 4f;
-                    dashTimeLength = Time.time + stats.dashTimeLength;
-                    dashCooldown = Time.time + stats.dashCooldown;
+                    dashTimeLength = Time.time + Player.instance.stats.dashTimeLength;
+                    dashCooldown = Time.time + Player.instance.stats.dashCooldown;
                     state = State.Dashing;
                 }
                 break;
@@ -203,7 +191,7 @@ public class PlayerActionController : MonoBehaviour
         switch (state)
         {
             case State.Normal:
-                rb2D.velocity = moveDirection * stats.speed;
+                rb2D.velocity = moveDirection * Player.instance.stats.speed;
 
                 //if (isDashButtonDown)
                 //{
@@ -228,8 +216,17 @@ public class PlayerActionController : MonoBehaviour
                 break;
 
             case State.Attacking:
-                rb2D.velocity = moveDirection * stats.speed;
+                rb2D.velocity = moveDirection * Player.instance.stats.speed;
                 break;
         }
     }
+
+    public enum State
+    {
+        Normal,
+        Dashing,
+        Attacking
+    }
+
+
 }

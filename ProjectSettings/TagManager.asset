@@ -16,6 +16,7 @@ TagManager:
   - EnemySpawner
   - LootManager
   - ItemOnFloor
+  - Collectible
   layers:
   - Default
   - TransparentFX

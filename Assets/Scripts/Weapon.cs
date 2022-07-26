@@ -10,7 +10,6 @@ public class Weapon : Collidable
 	public float additionalDamage;
 	public float knockBack;
 	public string weaponName;
-	private Animator anim;
 	private float lastSwingTime;
 	private bool attackAvailable;
 	public Projectile projectilePrefab;
@@ -31,7 +30,6 @@ public class Weapon : Collidable
 	{
 		base.Start();
 		//spriteRenderer = GetComponent<SpriteRenderer>(); // this will update our weapon look when we load 'this' in
-		anim = GetComponent<Animator>();
 		transform.localPosition = holdPosition;
 	}
 
@@ -58,7 +56,7 @@ public class Weapon : Collidable
 
 	public int CalculateDamage()
     {
-		var damage = baseDamage + Player.instance.stats.combinedDamage;
+		var damage = baseDamage + Player.instance.stats.effectiveDamage;
 
 		if(Random.Range(0,100) <= Player.instance.stats.critChance)
         {
@@ -67,7 +65,7 @@ public class Weapon : Collidable
 
 		damage += additionalDamage;
 
-		return (int)damage;
+		return Mathf.RoundToInt(damage);
     }
 	
 	private void Attack()
@@ -89,7 +87,7 @@ public class Weapon : Collidable
 
 	protected override void OnCollide(Collider2D coll)
 	{
-		if (coll.CompareTag("Enemy"))
+		if (coll.CompareTag("Enemy") && !coll.GetComponent<Fighter>().isImmune)
 		{
 			Damage dmg = new Damage()
 			{
@@ -97,6 +95,7 @@ public class Weapon : Collidable
 				origin = transform.position,
 				knockback = knockBack
 			};
+			Debug.Log("Weapon OnCollide sending damage");
 			coll.SendMessage("ReceiveDamage", dmg); // send the damage over to the enemy with ReceiveDamage()
 		}
 
@@ -128,12 +127,13 @@ public class Weapon : Collidable
 	}
 }
 
-public enum WeaponAnimTypeAttack
+	public enum WeaponAnimTypeAttack
     {
 		SwingSword,
 		DaggerThrown,
 		ShootBow
     }
+
 	public enum WeaponAnimTypeHold
     {
 		IsSword,
