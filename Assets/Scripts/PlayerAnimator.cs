@@ -12,7 +12,6 @@ public class PlayerAnimator : MonoBehaviour
     private IPlayerController _player;
     private Animator _animator;
     private SpriteRenderer _renderer;
-    private Player player;
     private float _lockedTill;
     private bool _idle;
     private bool _walking;
@@ -24,7 +23,6 @@ public class PlayerAnimator : MonoBehaviour
     private void Start()
     {
         _player.isIdle = true;
-        player = GameManager.instance.player;
         SetWeaponAnimationTree();
         GetAnimation();
     }
@@ -36,81 +34,74 @@ public class PlayerAnimator : MonoBehaviour
     {
         get
         {
-            return GameManager.instance.player.transform.GetChild(0).GetComponent<Weapon>().animHoldType;
+            return Player.instance.transform.GetChild(0).GetComponent<Weapon>().animHoldType;
         }
     }
 
     private void Awake()
     {
-        //if(!TryGetComponent(out IPlayerController player))
-        //{
-        //    Destroy(this);
-        //    return;
-        //}
-        //_player = player;
         _animator = GetComponent<Animator>();
         _renderer = GetComponent<SpriteRenderer>();
     }
 
     public void GetAnimation()
     {
-        
-        GameManager.instance.player.animator.SetInteger("SkinInt", GameManager.instance.player.skinId) ;
-               if (Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S))
-               {
-                //Debug.Log($"Hitting animation A {GameManager.instance.playerStats.speed}");
-                   GameManager.instance.player.animator.SetFloat("Speed", Mathf.Abs(GameManager.instance.playerStats.speed));
-               }
+        Player.instance.animator.SetInteger("SkinInt", Player.instance.skinId);
+        if (Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S))
+        {
+        //Debug.Log($"Hitting animation A {Player.instanceStats.speed}");
+            Player.instance.animator.SetFloat("Speed", Mathf.Abs(Player.instance.stats.speed));
+        }
+        else if ((Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.W))
+                && !Input.GetKey(KeyCode.A) || !Input.GetKey(KeyCode.S) || !Input.GetKey(KeyCode.D) || !Input.GetKey(KeyCode.W))
+        {
+            Player.instance.animator.SetFloat("Speed", 0);
+        }
 
-               else if ((Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.W))
-                   && !Input.GetKey(KeyCode.A) || !Input.GetKey(KeyCode.S) || !Input.GetKey(KeyCode.D) || !Input.GetKey(KeyCode.W))
-               {
-                   GameManager.instance.player.animator.SetFloat("Speed", 0);
-               }
-                if (Input.GetKey(KeyCode.LeftAlt))
-               {
-                GameManager.instance.player.animator.SetBool("isDashing", true);
-               }
+        if (Input.GetKey(KeyCode.LeftAlt))
+        {
+            Player.instance.animator.SetBool("isDashing", true);
+        }
     }
     
    
     public static void SetWeaponAnimationTree()
     {
-        foreach (AnimatorControllerParameter parameter in GameManager.instance.player.animator.parameters)
+        foreach (AnimatorControllerParameter parameter in Player.instance.animator.parameters)
         {
-            GameManager.instance.player.animator.SetBool(parameter.name, false);
+            Player.instance.animator.SetBool(parameter.name, false);
         }
-        var currentWeapon = GameManager.instance.player.weapon.GetWeaponType();
+        var currentWeapon = Player.instance.weapon.GetWeaponType();
         switch (currentWeapon)
         {
             case WeaponAnimTypeHold.IsSword:
                 {
-                    GameManager.instance.player.animator.SetBool("IsSword", true);
+                    Player.instance.animator.SetBool("IsSword", true);
                     break;
                 }
             case WeaponAnimTypeHold.IsDagger:
                 {
-                    GameManager.instance.player.animator.SetBool("IsDagger", true);
+                    Player.instance.animator.SetBool("IsDagger", true);
                     break;
                 }
             case WeaponAnimTypeHold.IsBow:
                 {
-                    GameManager.instance.player.animator.SetBool("IsBow", true);
+                    Player.instance.animator.SetBool("IsBow", true);
                     break;
                 }
             case WeaponAnimTypeHold.IsStaff:
                 {
-                    GameManager.instance.player.animator.SetBool("IsStaff", true);
+                    Player.instance.animator.SetBool("IsStaff", true);
                     break;
                 }
             case WeaponAnimTypeHold.IsFist:
                 {
-                    GameManager.instance.player.animator.SetBool("IsFist", true);
+                    Player.instance.animator.SetBool("IsFist", true);
                     break;
                 }
             case WeaponAnimTypeHold.IsMagic:
                 {
-                    GameManager.instance.player.animator.SetBool("IsMagic", true);
+                    Player.instance.animator.SetBool("IsMagic", true);
                     break;
                 }
 
@@ -123,22 +114,22 @@ public class PlayerAnimator : MonoBehaviour
     public static void SetAttackAnimation()
     {
         SetWeaponAnimationTree();
-        var currentWeapon = GameManager.instance.player.weapon.GetWeaponType();
+        var currentWeapon = Player.instance.weapon.GetWeaponType();
         switch (currentWeapon)
         {
             case WeaponAnimTypeHold.IsSword:
                 {
-                    GameManager.instance.player.animator.SetTrigger("SwingSword");
+                    Player.instance.animator.SetTrigger("SwingSword");
                     break;
                 }
             case WeaponAnimTypeHold.IsDagger:
                 {
-                    GameManager.instance.player.animator.SetTrigger("ThrowDagger");
+                    Player.instance.animator.SetTrigger("ThrowDagger");
                     break;
                 }
             case WeaponAnimTypeHold.IsBow:
                 {
-                    GameManager.instance.player.animator.SetTrigger("ShootBow");
+                    Player.instance.animator.SetTrigger("ShootBow");
                     break;
                 }
             case WeaponAnimTypeHold.IsStaff:

@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 6913753073783680122}
   - component: {fileID: 6913753073783680117}
   - component: {fileID: 6913753073783680116}
-  - component: {fileID: 1498921315293972302}
   - component: {fileID: 8236964175691665868}
-  - component: {fileID: 8236964175691665860}
-  - component: {fileID: 8236964175691665863}
-  - component: {fileID: 8236964175691665862}
+  - component: {fileID: -5148237070577036788}
+  - component: {fileID: -5349009378811799352}
+  - component: {fileID: 4034950214747456217}
+  - component: {fileID: -2514653073002389923}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -106,12 +106,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22e8e8aa86ac024faacf5aa2000ae41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 8236964175691665862}
   currentPosition: {x: 0, y: 0, z: 0}
   animator: {fileID: 8236964175691665868}
-  animationController: {fileID: 8236964175691665860}
+  animationController: {fileID: 0}
+  actionController: {fileID: 0}
   skinId: 1
-  actionController: {fileID: 8236964175691665863}
   playerDirection: 0
   collectedText: {fileID: 0}
   gold: 0
@@ -119,7 +118,6 @@ MonoBehaviour:
   spriteService: {fileID: 0}
   weapon: {fileID: 0}
   firePoint: {fileID: 6913753073783680123}
-  playerStats: {fileID: 0}
   currentDashTime: 0
   endDashTime: 0
   isAttacking: 0
@@ -154,27 +152,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.14057529, y: 0.24941371}
   m_EdgeRadius: 0
---- !u!50 &1498921315293972302
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6913753073783680119}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
 --- !u!95 &8236964175691665868
 Animator:
   serializedVersion: 4
@@ -195,7 +172,53 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8236964175691665860
+--- !u!114 &-5148237070577036788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6913753073783680119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 656a66c07b2461747822b6a1d32701ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-5349009378811799352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6913753073783680119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239d1ac6e8776944ea1ceeb1e0c7324d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb2D: {fileID: 0}
+  animationController: {fileID: 0}
+  dashLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  moveDirection: {x: 0, y: 0, z: 0}
+  dashDirection: {x: 0, y: 0, z: 0}
+  lastMoveDirection: {x: 0, y: 0, z: 0}
+  dashSpeed: 0
+  isFacingRight: 0
+  isFacingLeft: 0
+  isDashButtonDown: 0
+  dashCooldown: 0
+  dashTimeLength: 0
+  dashAvailable: 0
+  isAttackPressed: 0
+  attackTimeLength: 0
+  attackCooldown: 0
+  attackAvailable: 0
+  isAttacking: 0
+  state: 0
+  playerDirection: 0
+--- !u!114 &4034950214747456217
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,35 +231,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
---- !u!114 &8236964175691665863
-MonoBehaviour:
+  animator: {fileID: 0}
+  rb2D: {fileID: 0}
+--- !u!50 &-2514653073002389923
+Rigidbody2D:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6913753073783680119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 239d1ac6e8776944ea1ceeb1e0c7324d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8236964175691665862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6913753073783680119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2a62919ed17d0944be5c9d1d3c2b5a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!1001 &3511762107616810912
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 6913753073783680123}
     m_Modifications:
     - target: {fileID: 937975423885794800, guid: 32f37d8881a1b094a9bd81ce951f08c8, type: 3}
@@ -288,6 +311,7 @@ PrefabInstance:
       value: Particles
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 32f37d8881a1b094a9bd81ce951f08c8, type: 3}
 --- !u!4 &4447325154672839248 stripped
 Transform:
@@ -368,6 +392,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 6913753073783680123}
     m_Modifications:
     - target: {fileID: 5912550435728177650, guid: a5f10825f95ed0841af1787ee8877cc9, type: 3}
@@ -467,6 +492,7 @@ PrefabInstance:
       value: weapon_0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: a5f10825f95ed0841af1787ee8877cc9, type: 3}
 --- !u!4 &2269272879747673222 stripped
 Transform:
@@ -478,6 +504,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 2
     m_TransformParent: {fileID: 6913753073783680123}
     m_Modifications:
     - target: {fileID: 437873421301350808, guid: fb8d8b1120f6602489eefbcdc6a46271, type: 3}
@@ -537,6 +564,7 @@ PrefabInstance:
       value: PlayerHand
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: fb8d8b1120f6602489eefbcdc6a46271, type: 3}
 --- !u!4 &5692205894982920021 stripped
 Transform:

@@ -7,7 +7,15 @@ public class EnemyController : MonoBehaviour
 {
     GameObject player; // this will point at the player.instance... we should use GameObject for now on instead of public Player player because GameObject has more tools for us to use.
     public EnemyState state = EnemyState.Idle;
-    public EnemyType type; //Melee or ranged for now may add burrow and flying
+    public EnemyType type;
+
+    public GameObject bulletPrefab; // put the instance of the bullet here, this allows us to use magic and projectiles the same way. We just have to build the prefabs to do what we want.
+    public BoxCollider2D boxCollider;
+    public Collider2D[] hits = new Collider2D[10];
+    protected CharacterController characterController;
+    public LootManager lootManager;
+    public Enemy enemy; //TODO: refactor this so it just directly accesses the Enemy.cs sibling script on the GameObject this script is on
+    public ContactFilter2D filter;
 
     //many of these fields need to be migrated to Enemy.cs
     public int knockback;
@@ -20,10 +28,6 @@ public class EnemyController : MonoBehaviour
     protected bool isDead = false; //TODO: is this necessary?
     protected bool attackOnCooldown = false;
     protected bool playerNotInRoom;
-    public GameObject bulletPrefab; // put the instance of the bullet here, this allows us to use magic and projectiles the same way. We just have to build the prefabs to do what we want.
-    public BoxCollider2D boxCollider;
-    public Collider2D[] hits = new Collider2D[10];
-    public ContactFilter2D filter;
     public float wanderCooldown = 1f;
     public float wanderStart;
     public float wanderRange;
@@ -33,9 +37,6 @@ public class EnemyController : MonoBehaviour
     public Vector3 homePosition;
     public float distanceFromHome;
     public bool collidingWithPlayer;
-    protected CharacterController characterController;
-    public Enemy enemy; //TODO: refactor this so it just directly accesses the Enemy.cs sibling script on the GameObject this script is on
-    public LootManager lootManager;
 
     //TODO: move into item controller and loot into proper drop-tables
  
@@ -51,11 +52,10 @@ public class EnemyController : MonoBehaviour
     {
         lootManager = FindObjectOfType<LootManager>();
         player = GameObject.FindGameObjectWithTag("Player"); //this is why we use GameObject... Using the Tag is strong here
-        Debug.Log($"Found Player: {player.name}");
+        //Debug.Log($"Found Player: {player.name}");
         currentPosition = transform.position;
         boxCollider = gameObject.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = false;
-
     }
 
 
@@ -82,48 +82,48 @@ public class EnemyController : MonoBehaviour
         currentPosition = transform.position;
         if (IsPlayerInRange(sightRange))
         {
-            //UnityEngine.Debug.Log(" Hit A");
+            //Debug.Log(" Hit A");
             state = EnemyState.Follow;
             Follow();
         }
         else if (IsAwayFromHome(sightRange))
         {
-            UnityEngine.Debug.Log(" Hit B general");
+            Debug.Log(" Hit B general");
             state = EnemyState.Idle;
             Idle();
         }
         else if (!IsAwayFromHome(sightRange) && currentPosition == homePosition)
         {
-            //UnityEngine.Debug.Log(" Hit C");
+            //Debug.Log(" Hit C");
             state = EnemyState.Wander;
             Wander();
         }
         else if (!IsAwayFromHome(sightRange))
         {
-            //UnityEngine.Debug.Log(" Hit D");
+            //Debug.Log(" Hit D");
             Wander();
         }
         //switch(currState)
         //{
         //    case (EnemyState.Idle):
-        //           // UnityEngine.Debug.Log("Idle");
+        //           // Debug.Log("Idle");
         //        Idle();   // Right now enemies just kind of aimlessly wander. If we want them to stand still we can make this
         //        break;
 
         //    case (EnemyState.Wander):
-        //            //UnityEngine.Debug.Log("Wander");
+        //            //Debug.Log("Wander");
         //            Wander();
         //        break;
 
         //    case (EnemyState.Follow):
-        //            //UnityEngine.Debug.Log("Follow");
+        //            //Debug.Log("Follow");
         //            Follow();
         //        break;
 
         //    //case (EnemyState.Die)://we already have this in the Enemy.cs but might want to transfer it to here
         //    //    break;
         //    case (EnemyState.Attack)://currently this doesnt do anything, once we have ranged enemies it will though
-        //            //UnityEngine.Debug.Log("Attack");
+        //            //Debug.Log("Attack");
         //            Attack();
         //        break;
         //}
@@ -147,7 +147,7 @@ public class EnemyController : MonoBehaviour
                                 , Random.Range(homePosition.y - sightRange, homePosition.y + sightRange) //y value
                                 , 0);
         //wanderGoal = Random.insideUnitCircle * range;
-        //UnityEngine.Debug.Log($"Current Position: {currentPosition}\nwanderGoal:{wanderGoal}");
+        //Debug.Log($"Current Position: {currentPosition}\nwanderGoal:{wanderGoal}");
         yield return new WaitForSeconds(Random.Range(1f, 4f));
 
         //Vector3 smoothLookAt = Vector3.Slerp(wanderOldGoal, wanderGoal, speed *Time.deltaTime);
@@ -180,7 +180,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Idle()
     {
-        Debug.Log("Hit idle");
+        //Debug.Log("Hit idle");
         transform.position = Vector2.MoveTowards(currentPosition, homePosition, enemy.stats.speed * Time.deltaTime);
         wanderGoal = homePosition;
     }
@@ -189,16 +189,16 @@ public class EnemyController : MonoBehaviour
     {
         transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, enemy.stats.speed * Time.deltaTime);
         CheckIfWanderComplete(currentPosition, wanderGoal);
-        //UnityEngine.Debug.Log("Hit 1");
+        //Debug.Log("Hit 1");
         if (!chooseNewDirection)
         {
-            Debug.Log("Hit 2");
+            //Debug.Log("Hit 2");
             StartCoroutine(ChooseDirection());
             return;
         }
         else if (chooseNewDirection)
         {
-            //UnityEngine.Debug.Log("Hit 3");
+            //Debug.Log("Hit 3");
             //transform.position += -transform.right * speed * Time.deltaTime;
             return;
         }
@@ -242,23 +242,25 @@ public class EnemyController : MonoBehaviour
             if(state == EnemyState.Wander)
             {
                 StartCoroutine(ChooseDirection());
-            }
-           
-        }
-        if (coll.CompareTag("Player"))
-        {
-            //Debug.LogWarning($"{this.name} has collided with a {coll.tag}");
-            Damage dmg = new Damage()
-            {
-                damageAmount = enemy.stats.combinedDamage,
-                origin = transform.position,
-                knockback = knockback
-            };
-            coll.SendMessage("ReceiveDamage", dmg);
-        }
-    }
+			}
 
-    public void Death() //TODO: refactor this so it only triggers an OnEnemyKill event and the logic is handled through those events
+		}
+		
+        if (coll.CompareTag("Player") && !coll.gameObject.GetComponent<Fighter>().isImmune)
+		{
+			Damage dmg = new Damage()
+			{
+				damageAmount = enemy.stats.effectiveDamage,
+				origin = transform.position,
+				knockback = knockback
+			};
+			Debug.Log($"EnemyController OnCollide sending damage to {coll.tag}");
+			coll.SendMessage("ReceiveDamage", dmg);
+		}
+
+	}
+
+	public void Death() //TODO: refactor this so it only triggers an OnEnemyKill event and the logic is handled through those events
     {
         Debug.LogWarning($"Death Happened for {gameObject}");
         GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
@@ -277,13 +279,14 @@ public class EnemyController : MonoBehaviour
         //Debug.LogWarning($"Rolling for item drop chance...");
         return Random.Range(1, Item.DROP_CHANCE_CEILING) >= Item.ITEM_DROP_THRESHOLD;
     }
+
     public int OnDeathCalculateExperienceEarned()
     {
         var totalExperience = Mathf.RoundToInt((enemy.stats.xpValue * enemy.stats.level) / (1 + enemy.stats.level));
         return totalExperience;
     }
 
-    public enum EnemyState //these should probably be inside of Enemy
+    public enum EnemyState 
     {
         Idle,
         Wander,
@@ -292,12 +295,13 @@ public class EnemyController : MonoBehaviour
         Attack
     }
 
-    public enum EnemyType
+    public enum EnemyType //TODO: this should probably be inside of Enemy
     {
         Melee,
         Ranged,
         Caster
     }
+
 }
 
 

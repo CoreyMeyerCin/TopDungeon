@@ -9,44 +9,41 @@ public class EnemySkeletonController : EnemyController
     //public float unstickToWallOnBadFollow;
 
     //aggressionRange MUST be smaller than follow range(maybe equal, but that is redundant)
-    public float aggressionRange;//when the skeleton is within this aggression range it will then begin to hone in more percisely on the player
+    public float aggressionRange; //when the skeleton is within this aggression range it will then begin to hone in more percisely on the player
     protected override void FixedUpdate()
     {
-        //Debug.Log($"Current EnemyState: {currState}");
-
-
         currentPosition = transform.position;
         if (IsPlayerInRange(sightRange))
         {
-            UnityEngine.Debug.Log(" Hit A");
+            //Debug.Log(" Hit A");
             state = EnemyState.Follow;
             Follow();
         }
         else if (IsAwayFromHome(sightRange))
         {
-            UnityEngine.Debug.Log(" Hit B");
+            //Debug.Log(" Hit B");
             state = EnemyState.Idle;
             Idle();
         }
         else if (!IsAwayFromHome(sightRange) && currentPosition == homePosition)
         {
-            UnityEngine.Debug.Log(" Hit C");
+            //Debug.Log(" Hit C");
             state = EnemyState.Wander;
             Wander();
         }
         else if (!IsAwayFromHome(sightRange))
         {
-            UnityEngine.Debug.Log(" Hit D");
+            //Debug.Log(" Hit D");
             Wander();
         }
-     
 
     }
+
     protected override void Wander()
     {
         transform.position = Vector2.MoveTowards(currentPosition, wanderGoal, enemy.stats.speed * Time.deltaTime);
         CheckIfWanderComplete(currentPosition, wanderGoal);
-        //UnityEngine.Debug.Log("Hit 1");
+        //Debug.Log("Hit 1");
         if (!chooseNewDirection)
         {
             StartCoroutine(ChooseDirection());
@@ -54,11 +51,12 @@ public class EnemySkeletonController : EnemyController
         }
         else if (chooseNewDirection)
         {
-            //UnityEngine.Debug.Log("Hit 3");
+            //Debug.Log("Hit 3");
             //transform.position += -transform.right * speed * Time.deltaTime;
             return;
         }
     }
+
     protected override void Follow()
     {
         transform.position = Vector2.MoveTowards(transform.position, followGoal, enemy.stats.speed * Time.deltaTime);
@@ -82,7 +80,6 @@ public class EnemySkeletonController : EnemyController
 
     }
     
-
     protected virtual IEnumerator FollowChooseDirectionWithOffset()// this loops over all the times within it put together
     {
         chooseNewDirection = true;// we do this so we do not overlap the Choose Direction function with itself
@@ -92,6 +89,7 @@ public class EnemySkeletonController : EnemyController
                                 , 0);
         yield return new WaitForSeconds(Random.Range(2f, 4f));
     }
+
     protected virtual IEnumerator FollowChooseDirectionWithoutOffset()
     {
         chooseNewDirection = true;// we do this so we do not overlap the Choose Direction function with itself
@@ -101,6 +99,7 @@ public class EnemySkeletonController : EnemyController
                                 , 0);
         yield return new WaitForSeconds(Random.Range(1f, 2f));
     }
+
     protected virtual void CheckIfFollowComplete(Vector3 currPosition, Vector3 folGoal)
     {
         if (currPosition == folGoal)
@@ -112,29 +111,32 @@ public class EnemySkeletonController : EnemyController
             chooseNewDirection = true;
         }
     }
+
     protected virtual IEnumerator ChooseDirectionIdle()
     {
         chooseNewDirection = true;// we do this so we do not overlap the Choose Direction function with itself
 
         yield return new WaitForSeconds(Random.Range(0.5f, 1f));
     }
+
     protected override void OnCollide(Collider2D coll)
     {
-
         //TODO: Fix the collision with "Wall". I think we need to take out Idle, or fix it some, or add pathfinding. I am not 100% sure at the moment
         //Debug.Log($"Enemy has collided with {coll.tag}");
-        if (coll.tag.Equals("Wall"))
+        if (coll.CompareTag("Wall"))
         {
-            Debug.Log(" Skeeleton OnCollide Wall true");
+            //Debug.Log(" Skeeleton OnCollide Wall true");
             if (state == EnemyState.Idle)
             {
-                Debug.LogWarning("Hit1");
-                transform.position = Vector2.MoveTowards(currentPosition,
-                            new Vector3(Random.Range(transform.position.x - 0.3f, transform.position.x + 0.3f),Random.Range(transform.position.y - 0.3f, transform.position.y + 0.3f) //y value
-                               , 0), enemy.stats.speed * Time.deltaTime);
+                //Debug.LogWarning("Hit1");
+                transform.position = Vector2.MoveTowards(
+                    currentPosition
+                    ,new Vector3(Random.Range(transform.position.x - 0.3f, transform.position.x + 0.3f), Random.Range(transform.position.y - 0.3f, transform.position.y + 0.3f) //y value
+                    ,0), enemy.stats.speed * Time.deltaTime
+                );
 
                 StartCoroutine(ChooseDirectionIdle());
-                Debug.LogWarning("Hit2");
+                //Debug.LogWarning("Hit2");
                 Idle();
             }
             else if (state == EnemyState.Wander)
@@ -147,16 +149,18 @@ public class EnemySkeletonController : EnemyController
             }
 
         }
-        if (coll.tag.Equals("Player"))
+        
+        if (coll.CompareTag("Player") && !coll.gameObject.GetComponent<Fighter>().isImmune)
         {
-            //Debug.LogWarning($"{this.name} has collided with a {coll.tag}");
             Damage dmg = new Damage()
             {
-                damageAmount = enemy.stats.combinedDamage,
+                damageAmount = enemy.stats.effectiveDamage,
                 origin = transform.position,
                 knockback = knockback
             };
+            Debug.Log($"EnemySkeletonController OnCollide sending damage to {coll.tag}");
             coll.SendMessage("ReceiveDamage", dmg);
         }
     }
+
 }

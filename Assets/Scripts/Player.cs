@@ -4,13 +4,13 @@ using UnityEngine.UI;
 public class Player : Fighter
 {
     public static Player instance;
-    public Vector3 currentPosition;
-    private SpriteRenderer spriteRenderer;
-    public Animator animator;
-    public PlayerAnimationController animationController;
-    public int skinId = 1;
-    public PlayerActionController actionController;
 
+    public Vector3 currentPosition;
+    public Animator animator;
+    private SpriteRenderer spriteRenderer;
+    public PlayerAnimationController animationController;
+    public PlayerActionController actionController;
+    public int skinId = 1;
 
     public double playerDirection;
     public Text collectedText;
@@ -24,7 +24,6 @@ public class Player : Fighter
     //public Projectile projectilePrefab;
     public Weapon weapon;
     public Transform firePoint;
-    public Stats playerStats;
 
     private float lastFire;
 
@@ -37,18 +36,24 @@ public class Player : Fighter
     public bool isDashing = false;
     public Vector3 dashStart, dashEnd;
 
+	public new void Awake()
+	{
+        animationController = GetComponent<PlayerAnimationController>();
+        actionController = GetComponent<PlayerActionController>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        base.Awake();
+    }
 
-    public void Start()
+	public void Start()
     {
         if (instance == null)
         {
             instance = this;
         }
-        spriteRenderer = GetComponent<SpriteRenderer>();
+
         currentPosition = transform.position;
         firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
-        playerStats = GetComponent<Stats>();
-
+        //playerStats = GetComponent<Stats>();
         PlayerAnimator.SetWeaponAnimationTree();
         //projectilePrefab = GameManager.instance.player.transform.GetChild(0).GetComponent<Projectile>();
     }
@@ -56,11 +61,13 @@ public class Player : Fighter
     private void OnEnable()
     {
         Actions.OnLevelUp += OnLevelUp;
+        Actions.OnWeaponChanged += ChangeCurrentWeapon;
     }
 
     private void OnDisable()
     {
         Actions.OnLevelUp -= OnLevelUp;
+        Actions.OnWeaponChanged -= ChangeCurrentWeapon;
     }
 
     private void Update()
@@ -86,12 +93,6 @@ public class Player : Fighter
         //Reset MoveDelta
         //UpdateMotor(new Vector3(x, y, 0));
         currentPosition = transform.position;
-        
-
-
-
-
-
 
         //firePoint.position = transform.GetChild(0).GetComponent<Weapon>().holdPosition;
 
@@ -177,8 +178,8 @@ public class Player : Fighter
     //}
     public void ChangeCurrentProjectile(Projectile proj, Weapon weap)
     {
-            Debug.Log("wtf happened to my projectiles");
-            weapon = weap;
+        Debug.Log("wtf happened to my projectiles");
+        weapon = weap;
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
         transform.GetChild(0).GetComponent<Weapon>().weaponName=weap.weaponName;
         transform.GetChild(0).GetComponent<Weapon>().projectilePrefab = proj;
@@ -198,6 +199,7 @@ public class Player : Fighter
 
     public void ChangeCurrentWeapon(Weapon weap)
     {
+<<<<<<< HEAD
         if(weap == null) return;
         else
         weapon = weap;
@@ -216,6 +218,29 @@ public class Player : Fighter
         //transform.GetChild(0).GetComponent<BoxCollider2D>().offset = weap.boxCollider.offset;
         //transform.GetChild(0).GetComponent<BoxCollider2D>().size = weap.boxCollider.size;
         PlayerAnimator.SetWeaponAnimationTree();
+=======
+        if (weap != null)
+		{
+            weapon = weap;
+            transform.GetChild(0).GetComponent<Weapon>().holdPosition = weapon.holdPosition;
+            transform.GetChild(0).GetComponent<Weapon>().weaponName = weap.weaponName;
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
+            transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
+            transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
+            transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
+            transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
+            transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
+            //transform.GetChild(0).GetComponent<Animator>().enabled = true;
+            transform.GetChild(0).GetComponent<Weapon>().holdPosition = weap.holdPosition;
+            transform.GetChild(0).GetComponent<Weapon>().animAttackType = weap.animAttackType;
+            transform.GetChild(0).GetComponent<Weapon>().animHoldType = weap.animHoldType;
+            //transform.GetChild(0).GetComponent<BoxCollider2D>().offset = weap.boxCollider.offset;
+            //transform.GetChild(0).GetComponent<BoxCollider2D>().size = weap.boxCollider.size;
+            PlayerAnimator.SetWeaponAnimationTree();
+
+            Debug.Log($"Equipped {weap.weaponName}");
+        }
+>>>>>>> a7e17aaf426cfad08fcc67acfe00c97eb8a03360
     }
 
     public void SwapSprite(int skinId)
@@ -226,24 +251,28 @@ public class Player : Fighter
     public void OnLevelUp()
     {
         stats.level++;
-        stats.maxHitpoints = stats.IncreaseStatByFlatAmount(stats.maxHitpoints, 5f);
-        stats.baseDamage = stats.IncreaseStatByFlatAmount(stats.baseDamage, 4f);
+        stats.maxHitpoints = stats.IncreaseByFlatAmount(stats.maxHitpoints, 5f);
+        stats.baseDamage = stats.IncreaseByFlatAmount(stats.baseDamage, 4f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //UnityEngine.Debug.Log($"Player has collided");
+        //Debug.Log($"Player has collided");
         //if (collision.tag.Equals("Portal"))
         //{
-        //    UnityEngine.Debug.Log($"{collision}");
+        //    Debug.Log($"{collision}");
         //}
     }
 
+<<<<<<< HEAD
     //Movement
+=======
+>>>>>>> a7e17aaf426cfad08fcc67acfe00c97eb8a03360
     public double GetPlayerDirection()
     {
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+        if (Input.anyKey)
         {
+<<<<<<< HEAD
             playerDirection = 0.5;
             return playerDirection;
         }
@@ -283,8 +312,59 @@ public class Player : Fighter
             return playerDirection;
         }
         return playerDirection;
+=======
+>>>>>>> a7e17aaf426cfad08fcc67acfe00c97eb8a03360
 
+            if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
+            {
+                playerDirection = 0.5;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+            {
+                playerDirection = 1.5;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
+            {
+                playerDirection = 2.5;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+            {
+                playerDirection = 3.5;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                playerDirection = 0;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                playerDirection = 1;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                playerDirection = 2;
+                return playerDirection;
+            }
+            else if (Input.GetKey(KeyCode.W))
+            {
+                playerDirection = 3;
+                return playerDirection;
+            }
+        }
+
+        return playerDirection;
     }
+
+    public void Death()
+	{
+        Debug.Log("Player has died");
+	}
+
    
     //************************************************
     //ACCESSOR METHODS
