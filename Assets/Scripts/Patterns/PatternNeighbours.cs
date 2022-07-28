@@ -36,7 +36,8 @@ namespace WaveFunctionCollapse
         {
             foreach (var item in neighbours.directionPatternNeighbourDictionary)
             {
-                if (neighbours.directionPatternNeighbourDictionary.ContainsKey(item.Key) == false)
+                if (directionPatternNeighbourDictionary.ContainsKey(item.Key) == false)
+
                 {
                     directionPatternNeighbourDictionary.Add(item.Key, new HashSet<int>());
                 }
