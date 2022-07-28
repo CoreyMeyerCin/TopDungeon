@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+
 namespace WaveFunctionCollapse
 {
 
@@ -68,6 +69,7 @@ public class PatternManager
         }
 
        public HashSet<int> GetPossibleNeighboursForPatternInDirection(int patternIndex, Direction dir)
+
         {
             return patternPossibleNeighboursDictionary[patternIndex].GetNeighboursInDirection(dir);
         }
