@@ -15,21 +15,6 @@ public class Stats
 	{
         get { return Mathf.RoundToInt(baseDamage + additionalDamage); }
     }
-<<<<<<< HEAD
-    public float dashTimeLength;
-    public float dashCooldown;
-
-    public int dropChanceModifier;
-    public int goldValue;
-    public float hitpoints;
-    public float knockback;
-    public int level;
-    public float lifesteal;
-    public float maxHitpoints;
-    public float knockbackRecoverySpeed; //how long it takes to recover after being knocked back
-    public float speed;
-    public int xpValue;
-=======
     public float attackSpeed = 1;
     public float cooldown = 1;
     public float critChance = 1;
@@ -47,7 +32,6 @@ public class Stats
     public float knockbackRecoverySpeed = 1; //how long it takes to recover after being knocked back
     public float speed = 1;
     public int xpValue = 3;
->>>>>>> a7e17aaf426cfad08fcc67acfe00c97eb8a03360
 
     //USAGE:
     //Player.instance.stats.maxHitpoints = Player.instance.stats.IncreaseStatByFlatAmount(Player.instance.stats.maxHitpoints, 100);

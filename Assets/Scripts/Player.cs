@@ -199,26 +199,6 @@ public class Player : Fighter
 
     public void ChangeCurrentWeapon(Weapon weap)
     {
-<<<<<<< HEAD
-        if(weap == null) return;
-        else
-        weapon = weap;
-        transform.GetChild(0).GetComponent<Weapon>().holdPosition = weapon.holdPosition;
-        transform.GetChild(0).GetComponent<Weapon>().weaponName = weap.weaponName;
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weap.sprite;
-        transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
-        transform.GetChild(0).GetComponent<Weapon>().knockBack = weap.knockBack;
-        transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
-        transform.GetChild(0).GetComponent<Weapon>().baseDamage = weap.baseDamage;
-        transform.GetChild(0).GetComponent<Weapon>().weaponType = weap.weaponType;
-        //transform.GetChild(0).GetComponent<Animator>().enabled = true;
-        transform.GetChild(0).GetComponent<Weapon>().holdPosition = weap.holdPosition;
-        transform.GetChild(0).GetComponent<Weapon>().animAttackType = weap.animAttackType;
-        transform.GetChild(0).GetComponent<Weapon>().animHoldType = weap.animHoldType;
-        //transform.GetChild(0).GetComponent<BoxCollider2D>().offset = weap.boxCollider.offset;
-        //transform.GetChild(0).GetComponent<BoxCollider2D>().size = weap.boxCollider.size;
-        PlayerAnimator.SetWeaponAnimationTree();
-=======
         if (weap != null)
 		{
             weapon = weap;
@@ -240,7 +220,6 @@ public class Player : Fighter
 
             Debug.Log($"Equipped {weap.weaponName}");
         }
->>>>>>> a7e17aaf426cfad08fcc67acfe00c97eb8a03360
     }
 
     public void SwapSprite(int skinId)
@@ -264,56 +243,10 @@ public class Player : Fighter
         //}
     }
 
-<<<<<<< HEAD
-    //Movement
-=======
->>>>>>> a7e17aaf426cfad08fcc67acfe00c97eb8a03360
     public double GetPlayerDirection()
     {
         if (Input.anyKey)
         {
-<<<<<<< HEAD
-            playerDirection = 0.5;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
-        {
-            playerDirection = 1.5;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.W))
-        {
-            playerDirection = 2.5;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
-        {
-            playerDirection = 3.5;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            playerDirection = 0;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            playerDirection = 1;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            playerDirection = 2;
-            return playerDirection;
-        }
-        else if (Input.GetKey(KeyCode.W))
-        {
-            playerDirection = 3;
-            return playerDirection;
-        }
-        return playerDirection;
-=======
->>>>>>> a7e17aaf426cfad08fcc67acfe00c97eb8a03360
 
             if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.S))
             {
