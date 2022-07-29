@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Doughnut : MonoBehaviour, ICollectible
+public class Doughnut : MonoBehaviour, ICollectable
 {
 	private readonly int attackSpeedIncreasePercent = 5;
 
