@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowingDagger : MonoBehaviour, ICollectible
+public class ThrowingDagger : MonoBehaviour, ICollectable
 {
 	public Weapon weapon;
 	public void OnCollect()
