@@ -5,15 +5,14 @@ using UnityEngine;
 
 namespace WaveFunctionCollapse
 {
-    
-    public class NeighbourStrategySize2AndMore : IFindNeighbourStrategy
+    public class NeighboursStrategySize2andMore : IFindNeighbourStrategy
     {
         public Dictionary<int, PatternNeighbours> FindNeighbours(PatternDataResults patternFinderResult)
         {
-            Dictionary<int, PatternNeighbours> result=  new Dictionary<int, PatternNeighbours>();
-            foreach(var patternDataToCheck in patternFinderResult.PatternIndexDictionary) 
-            { 
-                foreach(var possibleNeighbourForPattern in patternFinderResult.PatternIndexDictionary)
+            Dictionary<int, PatternNeighbours> result = new Dictionary<int, PatternNeighbours>();
+            foreach (var patternDataToCheck in patternFinderResult.PatternIndexDictionary)
+            {
+                foreach (var possibleNeighbourForPattern in patternFinderResult.PatternIndexDictionary)
                 {
                     FindNeighboursInAllDirections(result, patternDataToCheck, possibleNeighbourForPattern);
                 }
@@ -22,8 +21,8 @@ namespace WaveFunctionCollapse
         }
 
         private void FindNeighboursInAllDirections(Dictionary<int, PatternNeighbours> result, KeyValuePair<int, PatternData> patternDataToCheck, KeyValuePair<int, PatternData> possibleNeighbourForPattern)
-        { 
-            foreach(Direction dir in Enum.GetValues(typeof(Direction)))
+        {
+            foreach (Direction dir in Enum.GetValues(typeof(Direction)))
             {
                 if (patternDataToCheck.Value.CompareGrid(dir, possibleNeighbourForPattern.Value))
                 {
@@ -36,5 +35,4 @@ namespace WaveFunctionCollapse
             }
         }
     }
-
 }

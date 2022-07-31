@@ -7,7 +7,7 @@ namespace WaveFunctionCollapse
     public class PatternData
     {
         private Pattern _pattern;
-        private int _frequency;
+        private int _frequency =1;
         private float _frequencyRelative;
         private float _frequencyRelativeLog2;
 

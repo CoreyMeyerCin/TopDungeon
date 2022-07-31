@@ -6,7 +6,6 @@ using WaveFunctionCollapse;
 
 namespace WaveFunctionCollapse
 {
-
     public class PatternNeighbours
     {
         public Dictionary<Direction, HashSet<int>> directionPatternNeighbourDictionary = new Dictionary<Direction, HashSet<int>>();
@@ -19,7 +18,7 @@ namespace WaveFunctionCollapse
             }
             else
             {
-                directionPatternNeighbourDictionary.Add(dir, new HashSet<int>() { patternIndex });//Hashsets do not take duplicates
+                directionPatternNeighbourDictionary.Add(dir, new HashSet<int>() { patternIndex });
             }
         }
 
@@ -44,5 +43,4 @@ namespace WaveFunctionCollapse
             }
         }
     }
-
 }
