@@ -15,12 +15,6 @@ namespace WaveFunctionCollapse
         public CoreHelper(PatternManager manager)
         {
             patternManager = manager;
-
-            for (int i = 0; i < patternManager.GetNuberOfPatterns(); i++)
-            {
-                totalFrequency += patternManager.GetPatternFrequency(i);
-            }
-            totalFrequencyLog = Mathf.Log(totalFrequency, 2);
         }
 
         public int SelectSolutionPatternFromFrequency(List<int> possibleValues)
@@ -77,8 +71,10 @@ namespace WaveFunctionCollapse
             float sum = 0;
             foreach (var possibleIndex in outputGrid.GetPossibleValueForPossition(position))
             {
+                totalFrequency += patternManager.GetPatternFrequency(possibleIndex);
                 sum += patternManager.GetPatternFrequencyLog2(possibleIndex);
             }
+            totalFrequencyLog = Mathf.Log(totalFrequency, 2);
             return totalFrequencyLog - (sum / totalFrequency);
         }
 
