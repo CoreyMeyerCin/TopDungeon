@@ -62,6 +62,7 @@ public class Test : MonoBehaviour
 
             PrefabUtility.SaveAsPrefabAsset(objectToSave, "Assets/Saved/output.prefab");
         }
+
     }
 
     // Update is called once per frame
