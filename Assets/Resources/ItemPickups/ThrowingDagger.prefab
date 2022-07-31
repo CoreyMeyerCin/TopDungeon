@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3163752028726240586}
   m_Layer: 12
   m_Name: ThrowingDagger
-  m_TagString: Collectible
+  m_TagString: Collectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,3 +124,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9490d84ed54cfb4cbe3d2b1a55466dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon: {fileID: 0}

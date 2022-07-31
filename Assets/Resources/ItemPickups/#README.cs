@@ -2,7 +2,7 @@
  * HOW TO CREATE ITEM PICKUPS
  *  
  * UNIVERSAL SETTINGS 
- * Tag: Collectible (with an i)
+ * Tag: Collectable
  * Layer: Item
  * 
  * Create a new prefab and add:
@@ -16,7 +16,7 @@
  *	
  * SCRIPT COMPOSITION
  * Create a script of the same name. At a minimum a script should have:
- *		-Monobehaviour + ICollectible inheritance
+ *		-Monobehaviour + ICollectable inheritance
  *		-OnCollect() method that handles everything necessary when the item is picked up
  *		-if it is a stat boosting item, set the increase parameters in here
  *		-an event action that can be invoked if necessary. We may not use most of these but it doesn't hurt to have them.
