@@ -29,7 +29,7 @@ namespace WaveFunctionCollapse
             }
         }
 
-        internal IFindNeighbourStrategy CreateInstance(string nameOfStrategy)
+        internal IFindNeighbourStrategy CreteInstance(string nameOfStrategy)
         {
             Type t = GetTypeToCreate(nameOfStrategy);
             if (t == null)

@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace WaveFunctionCollapse
 {
-
     public class CoreHelper
     {
         float totalFrequency = 0;
@@ -17,7 +16,7 @@ namespace WaveFunctionCollapse
         {
             patternManager = manager;
 
-            for(int i = 0; i < patternManager.GetNumberOfPatterns(); i++)
+            for (int i = 0; i < patternManager.GetNuberOfPatterns(); i++)
             {
                 totalFrequency += patternManager.GetPatternFrequency(i);
             }
@@ -26,21 +25,23 @@ namespace WaveFunctionCollapse
 
         public int SelectSolutionPatternFromFrequency(List<int> possibleValues)
         {
-            List<float> valueFrequencyFractions = GetListOfWeightsFromIndices(possibleValues);
-            float randomValue = UnityEngine.Random.Range(0, valueFrequencyFractions.Sum());
+            List<float> valueFrequenciesFractions = GetListOfWeightsFromIndices(possibleValues);
+            float randomValue = UnityEngine.Random.Range(0, valueFrequenciesFractions.Sum());
             float sum = 0;
             int index = 0;
-            foreach(var item in valueFrequencyFractions)
+            foreach (var item in valueFrequenciesFractions)
             {
                 sum += item;
-                if(randomValue <= sum)
+                if (randomValue <= sum)
                 {
                     return index;
                 }
                 index++;
             }
-            return index - 1;
+            return index;
         }
+
+
 
         private List<float> GetListOfWeightsFromIndices(List<int> possibleValues)
         {
@@ -51,45 +52,46 @@ namespace WaveFunctionCollapse
             },
             acc => acc).ToList();
             return valueFrequencies;
+
         }
 
         public List<VectorPair> Create4DirectionNeighbours(Vector2Int cellCoordinates, Vector2Int previousCell)
         {
             List<VectorPair> list = new List<VectorPair>()
             {
-                new VectorPair(cellCoordinates, cellCoordinates + new Vector2Int(1,0), Direction.Right, previousCell),
-                new VectorPair(cellCoordinates, cellCoordinates + new Vector2Int(-1,0), Direction.Left, previousCell),
-                new VectorPair(cellCoordinates, cellCoordinates + new Vector2Int(0,1), Direction.Up, previousCell),
-                new VectorPair(cellCoordinates, cellCoordinates + new Vector2Int(0,-1), Direction.Down, previousCell)
+                new VectorPair(cellCoordinates, cellCoordinates+new Vector2Int(1,0), Direction.Right,previousCell),
+                new VectorPair(cellCoordinates, cellCoordinates+new Vector2Int(-1,0), Direction.Left,previousCell),
+                new VectorPair(cellCoordinates, cellCoordinates+new Vector2Int(0,1), Direction.Up,previousCell),
+                new VectorPair(cellCoordinates, cellCoordinates+new Vector2Int(0,-1), Direction.Down,previousCell),
             };
             return list;
         }
 
         public List<VectorPair> Create4DirectionNeighbours(Vector2Int cellCoordinate)
         {
-            return Create4DirectionNeighbours(cellCoordinate,cellCoordinate);
+            return Create4DirectionNeighbours(cellCoordinate, cellCoordinate);
         }
 
-        public float CalculateEntropy(Vector2Int position, OutputGrid outputGrid) 
+        public float CalculateEntropy(Vector2Int position, OutputGrid outputGrid)
         {
             float sum = 0;
-            foreach(var possibleIndex in outputGrid.GetPossibleValueForPossition(position))
+            foreach (var possibleIndex in outputGrid.GetPossibleValueForPossition(position))
             {
-                sum += patternManager.GetPatternFrequencyLof2(possibleIndex);
+                sum += patternManager.GetPatternFrequencyLog2(possibleIndex);
             }
-            return totalFrequency - (sum / totalFrequency);
+            return totalFrequencyLog - (sum / totalFrequency);
         }
 
         public List<VectorPair> CheckIfNeighboursAreCollapsed(VectorPair pairToCheck, OutputGrid outputgrid)
         {
             return Create4DirectionNeighbours(pairToCheck.CellToPropagatePosition, pairToCheck.BaseCellPosition)
-                    .Where(x => outputgrid.CheckIfValidPosition(x.CellToPropagatePosition) && outputgrid.CheckIfCellIsCollapsed(x.CellToPropagatePosition) == false)
-                    .ToList();
+                .Where(x => outputgrid.CheckIfValidPosition(x.CellToPropagatePosition) && outputgrid.CheckIfCellIsCollapsed(x.CellToPropagatePosition) == false)
+                .ToList();
         }
 
         public bool CheckCellSolutionForCollision(Vector2Int cellCoordinates, OutputGrid outputGrid)
         {
-            foreach (var neighbour in Create4DirectionNeighbours(cellCoordinates)) 
+            foreach (var neighbour in Create4DirectionNeighbours(cellCoordinates))
             {
                 if (outputGrid.CheckIfValidPosition(neighbour.CellToPropagatePosition) == false)
                 {
@@ -98,19 +100,16 @@ namespace WaveFunctionCollapse
                 HashSet<int> possibleIndices = new HashSet<int>();
                 foreach (var patternIndexAtNeighbour in outputGrid.GetPossibleValueForPossition(neighbour.CellToPropagatePosition))
                 {
-                    var possibleNeighboursForBase = patternManager.GetPossibleNeighboursForPatternInDirection(patternIndexAtNeighbour,neighbour.DirectionFromBase.GetOppositeDirectionTo());
+                    var possibleNeighboursForBase = patternManager.GetPossibleNeighboursForPatternInDirection(patternIndexAtNeighbour, neighbour.DirectionFromBase.GetOppositeDirectionTo());
                     possibleIndices.UnionWith(possibleNeighboursForBase);
                 }
                 if (possibleIndices.Contains(outputGrid.GetPossibleValueForPossition(cellCoordinates).First()) == false)
                 {
                     return true;
                 }
-                
             }
-            return false;
 
+            return false;
         }
-        
     }
 }
-

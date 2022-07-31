@@ -4,23 +4,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace WaveFunctionCollapse { 
-public class Pattern
+namespace WaveFunctionCollapse
 {
+    public class Pattern
+    {
         private int _index;
         private int[][] _grid;
 
         public string HashIndex { get; set; }
-        public int Index { get => _index;}
+        public int Index { get => _index; }
 
-        public Pattern(int[][] grid, string hashcode, int index)
+        public Pattern(int[][] grid, string hashCode, int index)
         {
             _grid = grid;
-            HashIndex = hashcode;
+            HashIndex = hashCode;
             _index = index;
         }
 
-        public void SetGridValue(int x, int y, int value)
+        public void SetGridVAlue(int x, int y, int value)
         {
             _grid[y][x] = value;
         }
@@ -30,7 +31,7 @@ public class Pattern
             return _grid[y][x];
         }
 
-        public bool CheckValueAtPosition(int x , int y, int value)
+        public bool CheckValueAtPosition(int x, int y, int value)
         {
             return value.Equals(GetGridValue(x, y));
         }
@@ -40,11 +41,11 @@ public class Pattern
             int[][] myGrid = GetGridValuesInDirection(dir);
             int[][] otherGrid = pattern.GetGridValuesInDirection(dir.GetOppositeDirectionTo());
 
-            for(int row = 0; row < myGrid.Length; row++)
+            for (int row = 0; row < myGrid.Length; row++)
             {
-                for(int col = 0; col < myGrid[0].Length; col++)
+                for (int col = 0; col < myGrid[0].Length; col++)
                 {
-                    if (myGrid[row][col]!= otherGrid[row][col])
+                    if (myGrid[row][col] != otherGrid[row][col])
                     {
                         return false;
                     }
@@ -56,19 +57,19 @@ public class Pattern
         private int[][] GetGridValuesInDirection(Direction dir)
         {
             int[][] gridPartToCompare;
-            switch(dir)
+            switch (dir)
             {
                 case Direction.Up:
-                    gridPartToCompare = MyCollectionExtension.CreateJaggedArray<int[][]>(_grid.Length-1, _grid.Length);
-                    CreatePartOfGrid(0, _grid.Length,1,_grid.Length,gridPartToCompare);
+                    gridPartToCompare = MyCollectionExtension.CreateJaggedArray<int[][]>(_grid.Length - 1, _grid.Length);
+                    CreatePartOfGrid(0, _grid.Length, 1, _grid.Length, gridPartToCompare);
                     break;
                 case Direction.Down:
                     gridPartToCompare = MyCollectionExtension.CreateJaggedArray<int[][]>(_grid.Length - 1, _grid.Length);
-                    CreatePartOfGrid(0, _grid.Length, 0, _grid.Length-1, gridPartToCompare);
+                    CreatePartOfGrid(0, _grid.Length, 0, _grid.Length - 1, gridPartToCompare);
                     break;
                 case Direction.Left:
                     gridPartToCompare = MyCollectionExtension.CreateJaggedArray<int[][]>(_grid.Length, _grid.Length - 1);
-                    CreatePartOfGrid(0, _grid.Length-1, 0, _grid.Length, gridPartToCompare);
+                    CreatePartOfGrid(0, _grid.Length - 1, 0, _grid.Length, gridPartToCompare);
                     break;
                 case Direction.Right:
                     gridPartToCompare = MyCollectionExtension.CreateJaggedArray<int[][]>(_grid.Length, _grid.Length - 1);
@@ -76,23 +77,23 @@ public class Pattern
                     break;
                 default:
                     return _grid;
-
             }
+
             return gridPartToCompare;
         }
 
-        private void CreatePartOfGrid(int xMin, int xMax, int yMin, int yMax, int[][] gridPartToCompare)
+        private void CreatePartOfGrid(int xmin, int xmax, int ymin, int ymax, int[][] gridPartToCompare)
         {
             List<int> tempList = new List<int>();
-            for(int row =yMin; row < yMax; row++)
+            for (int row = ymin; row < ymax; row++)
             {
-                for(int col=xMin; col < xMax; col++)
+                for (int col = xmin; col < xmax; col++)
                 {
                     tempList.Add(_grid[row][col]);
                 }
             }
 
-            for(int i = 0; i <tempList.Count; i++)
+            for (int i = 0; i < tempList.Count; i++)
             {
                 int x = i % gridPartToCompare.Length;
                 int y = i / gridPartToCompare.Length;
@@ -100,4 +101,5 @@ public class Pattern
             }
         }
     }
+
 }

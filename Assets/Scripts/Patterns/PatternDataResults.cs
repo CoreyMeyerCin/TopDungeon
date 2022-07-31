@@ -3,61 +3,62 @@ using System.Collections.Generic;
 using UnityEngine;
 using Helpers;
 
-namespace WaveFunctionCollapse {
+namespace WaveFunctionCollapse
+{
     public class PatternDataResults
     {
-        private int[][] patternIndiciesGrid;
+        private int[][] patternIndicesGrid;
         public Dictionary<int, PatternData> PatternIndexDictionary { get; private set; }
 
-        public PatternDataResults(int[][] patternIndiciesGrid, Dictionary<int, PatternData> patternIndexDictionary)
+        public PatternDataResults(int[][] patternIndicesGrid, Dictionary<int, PatternData> patternIndexDictionary)
         {
-            this.patternIndiciesGrid = patternIndiciesGrid;
+            this.patternIndicesGrid = patternIndicesGrid;
             PatternIndexDictionary = patternIndexDictionary;
         }
 
         public int GetGridLengthX()
         {
-            return patternIndiciesGrid[0].Length;
+            return patternIndicesGrid[0].Length;
         }
 
         public int GetGridLengthY()
         {
-            return patternIndiciesGrid.Length;
+            return patternIndicesGrid.Length;
         }
 
         public int GetIndexAt(int x, int y)
         {
-            return patternIndiciesGrid[y][x];
+            return patternIndicesGrid[y][x];
         }
 
         public int GetNeighbourInDirection(int x, int y, Direction dir)
         {
-            if(patternIndiciesGrid.CheckJaggedArray2IfIndexIsValid(x,y) == false)
+            if (patternIndicesGrid.CheckJaggedArray2IfIndexIsValid(x, y) == false)
             {
                 return -1;
             }
             switch (dir)
             {
                 case Direction.Up:
-                    if (patternIndiciesGrid.CheckJaggedArray2IfIndexIsValid(x, y + 1))
+                    if (patternIndicesGrid.CheckJaggedArray2IfIndexIsValid(x, y + 1))
                     {
-                        return GetIndexAt(x, y+1);
+                        return GetIndexAt(x, y + 1);
                     }
                     return -1;
                 case Direction.Down:
-                    if (patternIndiciesGrid.CheckJaggedArray2IfIndexIsValid(x, y - 1))
+                    if (patternIndicesGrid.CheckJaggedArray2IfIndexIsValid(x, y - 1))
                     {
                         return GetIndexAt(x, y - 1);
                     }
-                    return - 1;
+                    return -1;
                 case Direction.Left:
-                    if (patternIndiciesGrid.CheckJaggedArray2IfIndexIsValid(x-1, y))
+                    if (patternIndicesGrid.CheckJaggedArray2IfIndexIsValid(x - 1, y))
                     {
-                        return GetIndexAt(x-1, y);
+                        return GetIndexAt(x - 1, y);
                     }
-                    return - 1;
+                    return -1;
                 case Direction.Right:
-                    if (patternIndiciesGrid.CheckJaggedArray2IfIndexIsValid(x + 1, y))
+                    if (patternIndicesGrid.CheckJaggedArray2IfIndexIsValid(x + 1, y))
                     {
                         return GetIndexAt(x + 1, y);
                     }
