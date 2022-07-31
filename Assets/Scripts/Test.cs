@@ -38,7 +38,7 @@ public class Test : MonoBehaviour
         valueManager = new ValuesManager<TileBase>(grid);
         manager = new PatternManager(patternSize);// this is where we change our pattern size
         manager.ProcessGrid(valueManager, equalWeights);
-        core = new WFCCore(5, 5, 500, manager);//this handels our demensions and iterations   (width, height, iterations)
+        core = new WFCCore(outputWidth, outputHeight, maxIteration, manager);//this handels our demensions and iterations   (width, height, iterations)
 
         
 
@@ -48,7 +48,6 @@ public class Test : MonoBehaviour
     {
         //Debug.Log("Inside of CreateTilemap()");
         output = new TileMapOutput(valueManager, outputTilemap);
-        Debug.Log($"TEST {output.valueManager}\n{outputTilemap}");
         var result = core.CreateOutputGrid();
         output.CreateOutput(manager, result,outputWidth,outputHeight);
     }

@@ -46,7 +46,7 @@ public class InputReader: IInputReader<TileBase>
             for(int row = 0; row < imagerParameters.Height; row++)
             {
                 for (int col = 0; col < imagerParameters.Width; col++){
-                    gridOfInputTiles[row][col] = imagerParameters.StackOfTiles.Dequeue().Tile;
+                    gridOfInputTiles[row][col] = imagerParameters.StackOftiles.Dequeue().Tile;
 
                 }    
             }
