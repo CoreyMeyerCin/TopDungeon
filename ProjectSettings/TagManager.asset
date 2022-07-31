@@ -16,7 +16,6 @@ TagManager:
   - EnemySpawner
   - LootManager
   - ItemOnFloor
-  - Collectible
   - WFCTileMap
   layers:
   - Default
