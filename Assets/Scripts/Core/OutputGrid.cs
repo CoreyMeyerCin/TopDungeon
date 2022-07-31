@@ -52,7 +52,8 @@ namespace WaveFunctionCollapse
             return GetPossibleValueForPossition(possition).Count <= 1;
         }
 
-        private HashSet<int> GetPossibleValueForPossition(Vector2Int possition)
+        public HashSet<int> GetPossibleValueForPossition(Vector2Int possition)
+
         {
             int index = GetIndexFromCoordinates(possition);
             if (indexPossiblePatternDictionary.ContainsKey(index))

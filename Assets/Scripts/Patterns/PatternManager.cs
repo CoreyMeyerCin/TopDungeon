@@ -72,7 +72,7 @@ public class PatternManager
             return patternPossibleNeighboursDictionary[patternIndex].GetNeighboursInDirection(dir);
         }
 
-        public float GetPatterFrequency(int index)
+        public float GetPatternFrequency(int index)
         {
             return GetPatternDataFromIndex(index).FrequencyRelative;
         }
