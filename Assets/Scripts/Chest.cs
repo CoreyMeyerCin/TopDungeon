@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Chest : Collectable
 {
-    //Comment here to test if my commits are going through correctly
-    //Change here because I am dumb
 
     public Sprite emptyChest;
     public int goldAmount = 10;  
