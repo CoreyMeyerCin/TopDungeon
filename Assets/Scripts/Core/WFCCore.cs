@@ -27,7 +27,7 @@ namespace WaveFunctionCollapse
                 //Debug.Log("Hit 1");
 
                 CoreSolver solver = new CoreSolver(this.outputGrid, this.patternManager);
-                int innerIteration = 100;
+                int innerIteration = 10000;//Change this to allow larger sizes
                 while (!solver.CheckForConflicts() && !solver.CheckIfSolved())
                 {
                     //Debug.Log("Hit 2");
