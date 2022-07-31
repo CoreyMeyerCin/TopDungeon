@@ -13,6 +13,7 @@ namespace WaveFunctionCollapse
 
         PatternManager patternManager;
         OutputGrid outputGrid;
+        CoreHelper coreHelper;
     }
 }
 
