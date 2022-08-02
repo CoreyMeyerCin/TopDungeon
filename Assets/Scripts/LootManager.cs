@@ -22,7 +22,6 @@ public class LootManager : MonoBehaviour
     public int itemIndex;
     public Sprite[] spriteList;
     public Item[] itemList;
-    public LootManager lootManager;
     public Rarity rarity;
 
 
