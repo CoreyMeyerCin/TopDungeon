@@ -263,7 +263,7 @@ public class EnemyController : MonoBehaviour
 	public void Death() //TODO: refactor this so it only triggers an OnEnemyKill event and the logic is handled through those events
     {
         GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
-        lootManager.DropLoot(enemy.stats.level, this.currentPosition, this.enemy);
+        lootManager.DropLoot(enemy.stats.level, currentPosition, enemy);
         Destroy(gameObject);
     }
 

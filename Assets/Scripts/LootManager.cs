@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LootManager : MonoBehaviour
 {
-    public static readonly int DROP_CHANCE_CEILING = 1001; //several of these fields need to be moved into a Controller class instead
+    public static readonly int DROP_CHANCE_CEILING = 1001;
     public static readonly int ITEM_DROP_THRESHOLD = 0; //roll must be between this value and drop_chance_ceiling for an item to drop
 
     //adjust rarity rates, compared to drop_chance_ceiling
@@ -26,11 +26,6 @@ public class LootManager : MonoBehaviour
     public Rarity rarity;
 
 
-    private bool ShouldDropItem()
-    {
-        return Random.Range(1, LootManager.DROP_CHANCE_CEILING) >= LootManager.ITEM_DROP_THRESHOLD;
-    }
-
     public int UpdateItemIndex()
     {
         int rollerIntMax = 0; //what is this doing?
@@ -41,11 +36,63 @@ public class LootManager : MonoBehaviour
         return itemIndex = Random.Range(0, rollerIntMax);
     }
 
-    public void DropLoot(int level, Vector3 enemyPosition, Enemy enemy) //all of this really needs to go into an item manager instead + other code that doesn't involve enemy directly
+    public void DropLoot(int level, Vector3 enemyPosition, Enemy enemy)
     {
         RollRarity(level);
         PickLootToDrop(enemyPosition, enemy);
     }
+
+    public void PickLootToDrop(Vector3 enemyPosition, Enemy enemy)
+    {
+        Player.instance.gold += OnDeathCalculateGoldEarned(enemy.stats.goldValue, enemy.stats.level);
+
+        if (ShouldDropItem())
+        {
+            Debug.Log($"Rolling for {rarity} loot drop");
+            switch (rarity)
+            {
+                case Rarity.Common:
+                    {
+                        Debug.LogWarning("Common item drop");
+                        int itemIndex = Random.Range(0, dropListCommon.Length - 1);
+                        Instantiate(dropListCommon[itemIndex], enemyPosition, Quaternion.Euler(new Vector3(0, 0, -90)));
+                        return;
+                    }
+
+                case Rarity.Uncommon:
+                    {
+                        Debug.LogWarning("Uncommon item drop");
+                        int itemIndex = Random.Range(0, dropListUncommon.Length - 1);
+                        Debug.Log($"Item Index:{itemIndex}");
+                        Instantiate(dropListUncommon[itemIndex], enemyPosition, Quaternion.Euler(new Vector3(0, 0, -90)));
+                        return;
+                    }
+                case Rarity.Rare:
+                    {
+                        Debug.LogWarning("Rare item drop");
+                        int itemIndex = Random.Range(0, dropListRare.Length - 1);
+                        Instantiate(dropListRare[itemIndex], enemyPosition, Quaternion.Euler(new Vector3(0, 0, -90)));
+                        return;
+                    }
+                case Rarity.Unique:
+                    {
+                        Debug.LogWarning("Unique item drop");
+                        int itemIndex = Random.Range(0, dropListUnique.Length - 1);
+                        Instantiate(dropListUnique[itemIndex], enemyPosition, Quaternion.Euler(new Vector3(0, 0, -90)));
+                        return;
+                    }
+                case Rarity.Legendary:
+                    {
+                        Debug.LogWarning("Legendary item drop");
+                        int itemIndex = Random.Range(0, dropListLegendary.Length - 1);
+                        Instantiate(dropListLegendary[itemIndex], enemyPosition, Quaternion.Euler(new Vector3(0, 0, -90)));
+                        return;
+                    }
+            }
+        }
+
+    }
+
     public void RollRarity(int enemyLevel)
     {
         var dropChanceFloor = Player.instance.stats.dropChanceModifier + (enemyLevel * 2);
@@ -56,6 +103,7 @@ public class LootManager : MonoBehaviour
         int roll = Random.Range(dropChanceFloor, DROP_CHANCE_CEILING);
         SetRarityFromRoll(roll);
     }
+
     public void SetRarityFromRoll(int roll)
     {
         if (roll >= LEGENDARY_THRSHOLD)
@@ -78,65 +126,15 @@ public class LootManager : MonoBehaviour
         {
             rarity = Rarity.Common;
         }
-        Debug.Log($"Rarity Set to:{rarity}");
+        Debug.Log($"Drop rarity: rolled {roll} - {rarity}");
     }
 
-    
-    public void PickLootToDrop(Vector3 enemyPosition, Enemy enemy)
+    private bool ShouldDropItem()
     {
-        Player.instance.gold += lootManager.OnDeathCalculateGoldEarned(enemy.stats.goldValue, enemy.stats.level);
-
-        if (!ShouldDropItem())
-        {
-            Debug.Log("No loot drop this time");
-        }
-        else
-        {
-            Debug.Log("Rolling for loot drop");
-            Debug.Log($"Current Rarity{rarity}");
-        switch (rarity)
-        {
-            case Rarity.Common:
-                {
-                    Debug.LogWarning("Common item drop");
-                    int itemIndex = Random.Range(0, lootManager.dropListCommon.Length - 1);
-                    Instantiate(lootManager.dropListCommon[itemIndex], enemyPosition, Quaternion.Euler(new Vector3(0, 0, -90)));
-                    return;
-                }
-
-            case Rarity.Uncommon:
-                {
-                    Debug.LogWarning("Uncommon item drop");
-                    int itemIndex = Random.Range(0, lootManager.dropListUncommon.Length - 1);
-                    Debug.Log($"Item Index:{itemIndex}");
-                    Instantiate(lootManager.dropListUncommon[itemIndex], enemyPosition, Quaternion.Euler(new Vector3(0, 0, -90)));
-                    return;
-                }
-            case Rarity.Rare:
-                {
-                    Debug.LogWarning("Rare item drop");
-                    int itemIndex = Random.Range(0, lootManager.dropListRare.Length - 1);
-                    Instantiate(lootManager.dropListRare[itemIndex], enemyPosition, Quaternion.Euler(new Vector3(0, 0, -90)));
-                    return;
-                }
-            case Rarity.Unique:
-                {
-                    Debug.LogWarning("Unique item drop");
-                    int itemIndex = Random.Range(0, lootManager.dropListUnique.Length - 1);
-                    Instantiate(lootManager.dropListUnique[itemIndex], enemyPosition, Quaternion.Euler(new Vector3(0, 0, -90)));
-                    return;
-                }
-            case Rarity.Legendary:
-                {
-                    Debug.LogWarning("Legendary item drop");
-                    int itemIndex = Random.Range(0, lootManager.dropListLegendary.Length - 1);
-                    Instantiate(lootManager.dropListLegendary[itemIndex], enemyPosition, Quaternion.Euler(new Vector3(0, 0, -90)));
-                    return;
-                }
-        }
-        }
+        var itemRoll = Random.Range(1, DROP_CHANCE_CEILING); //TODO: '1' here will be replaced with base drop chance + players drop chance
+        Debug.Log($"Rolled {itemRoll} - drop threshold is between {ITEM_DROP_THRESHOLD} and {DROP_CHANCE_CEILING}");
+        return itemRoll >= ITEM_DROP_THRESHOLD;
     }
-    
 
     public int AmountOfGoldDropped(int gold, int enemyLevel)
     {
