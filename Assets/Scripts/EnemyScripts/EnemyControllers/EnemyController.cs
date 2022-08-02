@@ -262,23 +262,11 @@ public class EnemyController : MonoBehaviour
 
 	public void Death() //TODO: refactor this so it only triggers an OnEnemyKill event and the logic is handled through those events
     {
-        Debug.LogWarning($"Death Happened for {gameObject}");
         GameManager.instance.experienceManager.OnExperienceChanged(OnDeathCalculateExperienceEarned());
-        Player.instance.gold += lootManager.OnDeathCalculateGoldEarned(enemy.stats.goldValue, enemy.stats.level);
-        if (ShouldDropItem())
-        {
-            Debug.LogWarning("Rolling for loot drop");
-            lootManager.RollForLootDrop(enemy.stats.level, this.currentPosition);
-        }
-        Debug.LogWarning("Destroying myself");
+        lootManager.DropLoot(enemy.stats.level, this.currentPosition, this.enemy);
         Destroy(gameObject);
     }
 
-    private bool ShouldDropItem()
-    {
-        //Debug.LogWarning($"Rolling for item drop chance...");
-        return Random.Range(1, Item.DROP_CHANCE_CEILING) >= Item.ITEM_DROP_THRESHOLD;
-    }
 
     public int OnDeathCalculateExperienceEarned()
     {
