@@ -10,18 +10,15 @@ public class PlayerActionController : MonoBehaviour
     public Vector3 moveDirection;
     public Vector3 dashDirection;
     public Vector3 lastMoveDirection;
-    
+    public float dashSpeed;
     private float xAxis;
     private float yAxis;
     public bool isFacingRight;
     public bool isFacingLeft;
-
-    public float dashSpeed;
     public bool isDashButtonDown;
     public float dashCooldown;
     public float dashTimeLength;
     public bool dashAvailable;
-
     public bool isAttackPressed;
     public float attackTimeLength;
     public float attackCooldown;
@@ -29,6 +26,11 @@ public class PlayerActionController : MonoBehaviour
     public bool isAttacking;
     public State state;
     public double playerDirection;
+
+	private void Awake()
+	{
+
+    }
 
 	private void Start()
     {
