@@ -47,6 +47,11 @@ public class PlayerAnimator : MonoBehaviour
     public void GetAnimation()
     {
         Player.instance.animator.SetInteger("SkinInt", Player.instance.skinId);
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Debug.Log("Dashing time");
+            Player.instance.animator.SetBool("isDashing", true);
+        }
         if (Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S))
         {
         //Debug.Log($"Hitting animation A {Player.instanceStats.speed}");
@@ -57,11 +62,7 @@ public class PlayerAnimator : MonoBehaviour
         {
             Player.instance.animator.SetFloat("Speed", 0);
         }
-
-        if (Input.GetKey(KeyCode.LeftAlt))
-        {
-            Player.instance.animator.SetBool("isDashing", true);
-        }
+        
     }
     
    
@@ -69,7 +70,10 @@ public class PlayerAnimator : MonoBehaviour
     {
         foreach (AnimatorControllerParameter parameter in Player.instance.animator.parameters)
         {
+            if (parameter.defaultBool)
+            {
             Player.instance.animator.SetBool(parameter.name, false);
+            }
         }
         var currentWeapon = Player.instance.weapon.GetWeaponType();
         switch (currentWeapon)

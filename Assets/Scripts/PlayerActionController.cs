@@ -48,7 +48,7 @@ public class PlayerActionController : MonoBehaviour
         float moveY = 0f;
         playerDirection = Player.instance.GetPlayerDirection();
         //Cooldown checker//
-        if (Time.time > dashCooldown && state == State.Dashing) { dashAvailable = true; }
+        if (Time.time >= dashCooldown && state == State.Normal){ dashAvailable = true; }
         if (Time.time > attackCooldown && state == State.Attacking) {attackAvailable = true; state = State.Normal;}
 
         switch (state)
@@ -110,13 +110,19 @@ public class PlayerActionController : MonoBehaviour
                     state = State.Dashing;
                     //Debug.Log("Dashing Started");
                 }
+                if (Input.GetKeyDown(KeyCode.Space) && !dashAvailable)
+                {
+                   
+                    Debug.Log("Dash not available");
+                }
+
                 break;
 
             case State.Dashing:
                 Player.instance.animationController.ChangeAnimationState(Player.instance.animationController.PLAYER_DASH);
                 if (dashTimeLength < Time.time)//this is how long the dash lasts
                 {
-                    //Debug.Log("Dashing Ended");
+                    Debug.Log("Dashing Ended");
                     state = State.Normal;
                 }
                 break;//this means ignore the input when we are dashing
