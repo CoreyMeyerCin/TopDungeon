@@ -7,6 +7,10 @@ public abstract class Mover : Fighter //abstract means that it has to be inherit
     protected BoxCollider2D boxCollider;
     protected Vector3 moveDelta; //holds our position
     protected RaycastHit2D hit;
+    protected float ySpeed = 0.75f;
+    protected float xSpeed = 1.0f;
+
+    
 
     protected virtual void Start()
     {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2833325526380162425}
   - component: {fileID: 1431470220672546036}
   - component: {fileID: 2120853311608965494}
-  - component: {fileID: 4994691365316510336}
+  - component: {fileID: 6328350679821178233}
   m_Layer: 10
   m_Name: throwing_dagger
   m_TagString: Weapon
@@ -134,7 +134,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &4994691365316510336
+--- !u!114 &6328350679821178233
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,8 +177,8 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  weapon: {fileID: 3334614298463244672, guid: a1a252e1299c3fd4e86d3e5ce0739511, type: 3}
+  weapon: {fileID: 0}
   player: {fileID: 0}
   mousePosition: {fileID: 0}
   lifespan: 1
-  projectileSpeed: 2
+  projectileSpeed: 0
