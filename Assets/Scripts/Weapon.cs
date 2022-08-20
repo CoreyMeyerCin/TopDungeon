@@ -68,7 +68,7 @@ public class Weapon : Collidable
 		return Mathf.RoundToInt(damage);
     }
 	
-	private void Attack()
+	public void Attack()
 	{
 		PlayerAnimator.SetAttackAnimation();
 		switch (weaponType)
@@ -103,7 +103,7 @@ public class Weapon : Collidable
 
 	private void Shoot()
     {
-		Instantiate(Player.instance.transform.GetChild(0).GetComponent<Weapon>().projectilePrefab, currentHoldPosition, GameManager.instance.mousePosition.transform.rotation);
+		Instantiate(Player.instance.weapon.GetComponent<Weapon>().projectilePrefab, Player.instance.currentPosition, GameManager.instance.mousePosition.transform.rotation);
 		attackAvailable = false;
 		lastSwingTime = Time.time;
 	}

@@ -15,7 +15,6 @@ public class Projectile: Collidable
     public MousePosition mousePosition;
     
     public float lifespan = 1f;//MOVED TO PLAYER
-    public float projectileSpeed;
 
     private float spawnTime;
     private Vector2 offset;

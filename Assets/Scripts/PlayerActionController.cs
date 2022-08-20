@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,10 +51,21 @@ public class PlayerActionController : MonoBehaviour
         //Cooldown checker//
         if (Time.time >= dashCooldown && state == State.Normal){ dashAvailable = true; }
         if (Time.time > attackCooldown && state == State.Attacking) {attackAvailable = true; state = State.Normal;}
-
+        
+        //Pressing P calls the testing animation chance method in PlayerAnimationController
+        if (Input.GetKey(KeyCode.P))
+        {
+            Console.WriteLine("PlayerActionController GetKey(P) successful");
+            Player.instance.animationController.TestingChangeAnimationState();
+        
+        }
         switch (state)
         {
+
+            
             case State.Normal:
+
+                
                 if (Input.GetKey(KeyCode.W))
                 {
                     moveY = 1f;
@@ -88,15 +100,15 @@ public class PlayerActionController : MonoBehaviour
                 {
                     Player.instance.animationController.ChangeAnimationState(Player.instance.animationController.PLAYER_IDLE);
                 }
-                if (Input.GetKeyDown(KeyCode.Mouse0) && attackAvailable)//Basic Attack
+                if (Input.GetKeyDown(KeyCode.Mouse0) /*&& attackAvailable*/)//Basic Attack
                 {
                     //Debug.Log("Start the attack animation");
                     isAttackPressed = true;
                     attackAvailable = false;
                     attackTimeLength = Time.time + Player.instance.stats.attackSpeed;
                     attackCooldown = Time.time + Player.instance.stats.attackSpeed;
+                    Player.instance.weapon.Attack();
                     state = State.Attacking;
-                    Player.instance.animationController.ChangeAnimationState(Player.instance.animationController.PLAYER_ATTACK);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Space) && dashAvailable)
@@ -128,6 +140,8 @@ public class PlayerActionController : MonoBehaviour
                 break;//this means ignore the input when we are dashing
 
             case State.Attacking:
+                Player.instance.animationController.ChangeAnimationState(Player.instance.animationController.PLAYER_ATTACK);
+                
                 moveY = 0f;
                 moveX = 0f;
                 if (Input.GetKey(KeyCode.W))

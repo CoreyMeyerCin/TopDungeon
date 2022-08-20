@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System;
-
 public class PlayerAnimationController : MonoBehaviour
 {
     public Animator animator;
@@ -45,6 +43,25 @@ public class PlayerAnimationController : MonoBehaviour
         currentAnimationState = newAnimationState;
         //Debug.Log(currentAnimation);
     }
+    public void TestingChangeAnimationState()//HardCode the values into here
+    {
+        //These next 3 lines only work if we have titled the animations starting with the INT skinId.
+        string currentSkin = skinIds[2];
+        Debug.Log($"Current skin name:{currentSkin}");
+        string weaponName = Player.instance.weapon.weaponName;
+        currentAnimationState = PLAYER_IDLE;
+        /*Example of what the next string should look like:
+        * WindArcherFemaleThrowingDaggerIdle
+        */
+        string currentAnimation = currentSkin + weaponName + PLAYER_IDLE;
+
+        if (currentAnimationState == currentAnimation) return; //stops the animation form interrupting itself
+
+        animator.Play(currentAnimation);
+        //Debug.Log(currentAnimation);
+    }
+
+
 
     public void RefreshSprite()
 	{

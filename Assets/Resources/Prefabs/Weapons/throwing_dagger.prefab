@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6562271377070524713}
   - component: {fileID: 3334614298463244672}
   m_Layer: 10
-  m_Name: dagger
+  m_Name: throwing_dagger
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
   additionalDamage: 0
   knockBack: 1
   weaponName: DaggerThrowing
-  projectilePrefab: {fileID: 4994691365316510336, guid: 2502f902d8f0b8f45bfdcaf484dfc2f2, type: 3}
+  projectilePrefab: {fileID: 6328350679821178233, guid: 2502f902d8f0b8f45bfdcaf484dfc2f2, type: 3}
   swingPrefab: {fileID: 0}
   holdPosition: {x: 0.063, y: -0.121, z: 0}
   currentHoldPosition: {x: 0, y: 0, z: 0}

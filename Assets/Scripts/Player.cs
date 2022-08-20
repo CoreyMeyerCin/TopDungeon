@@ -14,6 +14,8 @@ public class Player : Fighter
     public PlayerActionController actionController;
     public Weapon weapon;
 
+    public Inventory inventory;
+
     public HealthService healthService;
     public PlayerSpriteService spriteService;
 
@@ -31,6 +33,7 @@ public class Player : Fighter
         animationController = GetComponent<PlayerAnimationController>();
         actionController = GetComponent<PlayerActionController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        inventory = GetComponent<Inventory>();
         base.Awake();
     }
 
