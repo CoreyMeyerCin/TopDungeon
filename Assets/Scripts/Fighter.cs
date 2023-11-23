@@ -4,43 +4,70 @@ using UnityEngine;
 
 public class Fighter : MonoBehaviour
 {
-    //Public fields
-    public float hitpoints; //current hitpoints
-    public float maxHitpoints; //maximum hitpoints
-    public float pushRecoverySpeed = 0.2f;//how long it takes to recover after being knocked back
+    protected float immunityDuration = 1.0f;
+    public bool isImmune;
 
-    //Immunity
-    protected float immuneTime = 1.0f;// this is how long you have i-frames
-    protected float lastImmune;//tracks when you started immunity
-    //Push
+    protected Vector3 knockbackDirection;
 
-    protected Vector3 pushDirection; //which direction do you fly
+    public Stats stats;
 
-    //Attack Stats
+	public void Awake()
+	{
+        stats = new Stats();
+        isImmune = false;
+    }
 
-
-    //All fighters can ReceiveDAmage / Die
-
-    protected virtual void ReceiveDamage(Damage dmg){
-
-        if(Time.time - lastImmune > immuneTime) //check to see if we are still immune
-        {
-            lastImmune = Time.time;
-            hitpoints -= dmg.damageAmount;
-            pushDirection = (transform.position - dmg.origin).normalized * dmg.pushForce; // this will make the hit object move AWAY from the dmg.origin(player that hit them.)
+    protected virtual void ReceiveDamage(Damage dmg)
+    {
+        if (!isImmune)
+		{
+            stats.hitpoints -= dmg.damageAmount;
+            knockbackDirection = (transform.position - dmg.origin).normalized * dmg.knockback; //make the hit object move AWAY from the dmg.origin
 
             GameManager.instance.ShowText(dmg.damageAmount.ToString(), 25, Color.red, transform.position, Vector3.zero, 0.5f);
+            StartCoroutine(DoImmunity(immunityDuration));
 
-            if(hitpoints <= 0)
+            if (stats.hitpoints <= 0)
             {
-                hitpoints = 0;
+                stats.hitpoints = 0;
                 Death();
             }
+
+            StartCoroutine(PushToZero(stats.knockbackRecoverySpeed));
         }
+
+    }
+
+    private IEnumerator PushToZero(float recoverySpeed)
+    {
+        yield return new WaitForSeconds(recoverySpeed);
+
+        knockbackDirection = (transform.position).normalized * 0;
+    }
+
+    IEnumerator DoImmunity(float immunityDuration)
+    {
+        isImmune = true;
+        float timer = 0;
+        while (timer < immunityDuration)
+        {
+            yield return null;
+            timer += Time.deltaTime;
+        }
+        isImmune = false;
     }
 
     protected virtual void Death()
     {
+        if (gameObject.CompareTag("Enemy"))
+        {
+            gameObject.GetComponent<EnemyController>().Death();
+        }
 
+        if (gameObject.CompareTag("Player"))
+		{
+            gameObject.GetComponent<Player>().Death();
+		}
     }
+
 }

@@ -7,9 +7,8 @@ using UnityEngine;
 public class Collidable : MonoBehaviour
 {
     public ContactFilter2D filter;
-    private BoxCollider2D boxCollider;
-    private Collider2D[] hits = new Collider2D[10]; // track everything we are making contact with in this frame
-    //where is the 10 coming from? -JP
+    protected BoxCollider2D boxCollider;
+    private Collider2D[] hits = new Collider2D[10];
 
     protected virtual void Start()
     {
@@ -18,28 +17,22 @@ public class Collidable : MonoBehaviour
 
     protected virtual void Update()
     {
-        //Collision work
         boxCollider = GetComponent<BoxCollider2D>();
         boxCollider.OverlapCollider(filter, hits); //take BoxCollider and look for other collision and put its into the hits[]
-        for (int i = 0; i < hits.Length; i++)
+        if (hits.Where(x => x != null).Any())
         {
-            if (hits[i] == null)
+            var validHits = hits.Where(x => x != null).ToList();
+            System.Array.Clear(hits, 0, hits.Length);
+            foreach (var hit in validHits)
             {
-                continue;
+                OnCollide(hit);
             }
-            //Debug.Log(hits[i].name);//this will check all 10 collision slots of our array
-
-            OnCollide(hits[i]);
-
-            //The array is not cleaned up, so we di it ourself
-            hits[i] = null;
-            
         }
 
     }
 
-    protected virtual void OnCollide(Collider2D coll){
-
+    protected virtual void OnCollide(Collider2D coll)
+    {
         //Debug.Log("OnCollide want not implemented in" + this.name); //This check to see if our collision layer is being hit on an object
     }
 }

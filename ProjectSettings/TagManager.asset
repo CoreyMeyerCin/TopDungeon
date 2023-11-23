@@ -12,6 +12,11 @@ TagManager:
   - Weapon
   - Wall
   - Collectable
+  - Portal
+  - EnemySpawner
+  - LootManager
+  - ItemOnFloor
+  - WFCTileMap
   layers:
   - Default
   - TransparentFX
@@ -60,4 +65,7 @@ TagManager:
     locked: 0
   - name: Weapon
     uniqueID: 3295282415
+    locked: 0
+  - name: PlayerHand
+    uniqueID: 987836549
     locked: 0

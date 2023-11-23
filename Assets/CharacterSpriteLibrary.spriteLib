@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 36
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: NPCs
+    m_Hash: 611050210
+    m_CategoryList: []
+    m_OverrideEntries: []
+    m_FromMain: 0
+    m_EntryOverrideCount: 0
+  - m_Name: Enemies
+    m_Hash: -1212189790
+    m_CategoryList: []
+    m_OverrideEntries: []
+    m_FromMain: 0
+    m_EntryOverrideCount: 0
+  - m_Name: ElfBoyWalking
+    m_Hash: 1794419054
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Entry
+      m_Hash: -354373004
+      m_Sprite: {fileID: -1407263982, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1407263982, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+    - m_Name: Entry_0
+      m_Hash: 874506106
+      m_Sprite: {fileID: 710571800, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 710571800, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+    - m_Name: Entry_1
+      m_Hash: 1125701612
+      m_Sprite: {fileID: 2136138351, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2136138351, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+    - m_Name: Entry_2
+      m_Hash: -636385706
+      m_Sprite: {fileID: 1487498301, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1487498301, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+    - m_Name: Entry_3
+      m_Hash: -1391020352
+      m_Sprite: {fileID: -187698351, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -187698351, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+    - m_Name: Entry_4
+      m_Hash: 863118179
+      m_Sprite: {fileID: -1033043079, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1033043079, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+    - m_Name: Entry_5
+      m_Hash: 1148523509
+      m_Sprite: {fileID: -1902896999, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1902896999, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+    - m_Name: Entry_6
+      m_Hash: -579059121
+      m_Sprite: {fileID: 1232751833, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1232751833, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+    - m_Name: Entry_7
+      m_Hash: -1434750247
+      m_Sprite: {fileID: -1278631620, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1278631620, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 9
+  - m_Name: StandingElfBoy
+    m_Hash: 1204617679
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Entry
+      m_Hash: -354373004
+      m_Sprite: {fileID: -1407263982, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1407263982, guid: 7c98224e2e7d47347b8ea946f786cd3f, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 1
+  m_PrimaryLibraryGUID: 
